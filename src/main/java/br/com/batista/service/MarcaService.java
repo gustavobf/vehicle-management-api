@@ -1,32 +1,37 @@
 package br.com.batista.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import br.com.batista.dao.MarcaDAO;
 import br.com.batista.model.Marca;
 
+@Service
 public class MarcaService {
 
-	public static void saveMarca(Marca marca) {
+	public void saveMarca(Marca marca) {
 		MarcaDAO.create(marca);
 	}
 
-	public static void updateMarca(Marca marca) {
+	public void updateMarca(Marca marca) {
 		MarcaDAO.update(marca);
 	}
 
-	public static void deleteMarca(Marca marca) {
+	public void deleteMarca(Marca marca) {
 		MarcaDAO.delete(marca.getIdMarca());
 	}
 
-	public static void deleteMarca(int idMarca) {
+	public void deleteMarca(int idMarca) {
 		MarcaDAO.delete(idMarca);
 	}
 
-	public static void getById(int idMarca) {
-		MarcaDAO.getById(idMarca);
+	public Marca getById(int idMarca) {
+		return MarcaDAO.getById(idMarca);
 	}
 
-	public static void getAll() {
-		MarcaDAO.getAll();
+	public List<Marca> getAll() {
+		return MarcaDAO.getAll();
 	}
 
 }

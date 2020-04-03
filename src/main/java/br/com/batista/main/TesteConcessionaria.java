@@ -27,8 +27,6 @@ public class TesteConcessionaria {
 		c3.setCnpj("7610122669");
 		c2.setIdConcessionaria(1);
 
-		ConcessionariaService.saveConcessionaria(c1);
-		ConcessionariaService.saveConcessionaria(c3);
 
 		System.out.println("Lista de concessionarias antes do update:");
 		ConcessionariaDAO.getAll().forEach(concessionaria -> {
@@ -36,7 +34,6 @@ public class TesteConcessionaria {
 		});
 
 		System.out.println("---------------------");
-		ConcessionariaService.updateConcessionaria(c2);
 
 		System.out.println("Lista de concessionaria depois do update:");
 		ConcessionariaDAO.getAll().forEach(concessionaria -> {

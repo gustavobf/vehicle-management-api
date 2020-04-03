@@ -1,31 +1,36 @@
 package br.com.batista.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import br.com.batista.dao.ConcessionariaDAO;
 import br.com.batista.model.Concessionaria;
 
+@Service
 public class ConcessionariaService {
 
-	public static void saveConcessionaria(Concessionaria concessionaria) {
+	public void saveConcessionaria(Concessionaria concessionaria) {
 		ConcessionariaDAO.create(concessionaria);
 	}
 
-	public static void updateConcessionaria(Concessionaria concessionaria) {
+	public void updateConcessionaria(Concessionaria concessionaria) {
 		ConcessionariaDAO.update(concessionaria);
 	}
 
-	public static void deleteConcessionaria(Concessionaria concessionaria) {
+	public void deleteConcessionaria(Concessionaria concessionaria) {
 		ConcessionariaDAO.delete(concessionaria.getIdConcessionaria());
 	}
 
-	public static void deleteConcessionaria(int idConcessionaria) {
+	public void deleteConcessionaria(int idConcessionaria) {
 		ConcessionariaDAO.delete(idConcessionaria);
 	}
 
-	public static void getById(int idConcessionaria) {
-		ConcessionariaDAO.getById(idConcessionaria);
+	public Concessionaria getById(int idConcessionaria) {
+		return ConcessionariaDAO.getById(idConcessionaria);
 	}
 
-	public static void getAll() {
-		ConcessionariaDAO.getAll();
+	public List<Concessionaria> getAll() {
+		return ConcessionariaDAO.getAll();
 	}
 }

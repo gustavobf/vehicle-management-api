@@ -39,8 +39,6 @@ public class TesteCarro {
 		c3.setPortas(2);
 		c3.setPlaca("POS-9587");
 
-		CarroService.saveCar(c1);
-		CarroService.saveCar(c3);
 
 		System.out.println("Lista de carros antes do update:");
 
@@ -49,7 +47,6 @@ public class TesteCarro {
 		});
 
 		System.out.println("---------------------");
-		CarroService.updateCar(c2);
 
 		System.out.println("Lista de carros depois do update:");
 		CarroDAO.getAll().forEach(carro -> {

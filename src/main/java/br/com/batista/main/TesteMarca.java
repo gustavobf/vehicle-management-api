@@ -27,9 +27,6 @@ public class TesteMarca {
 		m3.setNome("Fiat");
 		m3.setPais("Grecia");
 
-		MarcaService.saveMarca(m1);
-		MarcaService.saveMarca(m3);
-
 		System.out.println("Lista de marcas antes do update:");
 
 		MarcaDAO.getAll().forEach(marca -> {
@@ -37,8 +34,6 @@ public class TesteMarca {
 		});
 
 		System.out.println("---------------------");
-
-		MarcaService.updateMarca(m2);
 
 		System.out.println("Lista de marca depois do update: ");
 

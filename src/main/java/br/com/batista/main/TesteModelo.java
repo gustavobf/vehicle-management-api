@@ -24,9 +24,6 @@ public class TesteModelo {
 		m3.setIdModelo(1);
 		m3.setNome("Sport");
 
-		ModeloService.saveModelo(m1);
-		ModeloService.saveModelo(m3);
-
 		System.out.println("Lista de modelo antes do update: ");
 
 		ModeloDAO.getAll().forEach(modelo -> {
@@ -34,8 +31,6 @@ public class TesteModelo {
 		});
 
 		System.out.println("---------------------");
-
-		ModeloService.updateModelo(m2);
 
 		System.out.println("Lista de modelo depois do update:");
 
