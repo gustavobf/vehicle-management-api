@@ -3,8 +3,9 @@ package br.com.batista.model;
 public class Carro {
 
 	private int idCarro;
-	private int idModelo_fk;
-	private int idMarca_fk;
+	private Modelo idModelo_fk;
+	private Marca idMarca_fk;
+	private Concessionaria idConcessionaria_fk;
 	private String cor;
 	private int potencia;
 	private int portas;
@@ -20,20 +21,28 @@ public class Carro {
 		this.idCarro = idCarro;
 	}
 
-	public int getIdModelo_fk() {
+	public Modelo getIdModelo_fk() {
 		return idModelo_fk;
 	}
 
-	public void setIdModelo_fk(int idModelo_fk) {
+	public void setIdModelo_fk(Modelo idModelo_fk) {
 		this.idModelo_fk = idModelo_fk;
 	}
 
-	public int getIdMarca_fk() {
+	public Marca getIdMarca_fk() {
 		return idMarca_fk;
 	}
 
-	public void setIdMarca_fk(int idMarca_fk) {
+	public void setIdMarca_fk(Marca idMarca_fk) {
 		this.idMarca_fk = idMarca_fk;
+	}
+
+	public Concessionaria getIdConcessionaria_fk() {
+		return idConcessionaria_fk;
+	}
+
+	public void setIdConcessionaria_fk(Concessionaria idConcessionaria_fk) {
+		this.idConcessionaria_fk = idConcessionaria_fk;
 	}
 
 	public String getCor() {
@@ -86,11 +95,9 @@ public class Carro {
 
 	@Override
 	public String toString() {
-		return "Carro [idCarro=" + idCarro + ", idModelo_fk=" + idModelo_fk + ", idMarca_fk=" + idMarca_fk + ", cor="
-				+ cor + ", potencia=" + potencia + ", portas=" + portas + ", ano=" + ano + ", placa=" + placa
-				+ ", nome=" + nome + "]";
+		return "Carro [idCarro=" + idCarro + ", idModelo_fk=" + idModelo_fk + ", idMarca_fk=" + idMarca_fk
+				+ ", idConcessionaria_fk=" + idConcessionaria_fk + ", cor=" + cor + ", potencia=" + potencia
+				+ ", portas=" + portas + ", ano=" + ano + ", placa=" + placa + ", nome=" + nome + "]";
 	}
-	
-	
 
 }
