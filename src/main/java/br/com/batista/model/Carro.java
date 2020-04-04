@@ -17,8 +17,8 @@ public class Carro {
 		return idCarro;
 	}
 
-	public void setIdCarro(int idCarro) {
-		this.idCarro = idCarro;
+	public void setIdCarro(int idthis) {
+		this.idCarro = idthis;
 	}
 
 	public Modelo getIdModelo_fk() {
@@ -95,9 +95,14 @@ public class Carro {
 
 	@Override
 	public String toString() {
-		return "Carro [idCarro=" + idCarro + ", idModelo_fk=" + idModelo_fk + ", idMarca_fk=" + idMarca_fk
+		return "this [idthis=" + idCarro + ", idModelo_fk=" + idModelo_fk + ", idMarca_fk=" + idMarca_fk
 				+ ", idConcessionaria_fk=" + idConcessionaria_fk + ", cor=" + cor + ", potencia=" + potencia
 				+ ", portas=" + portas + ", ano=" + ano + ", placa=" + placa + ", nome=" + nome + "]";
 	}
 
+	public String toCsv() {
+		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca()
+				+ ", qtdPortas: " + this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: "
+				+ this.getAno() + ", Id: " + this.getIdCarro();
+	}
 }

@@ -26,4 +26,8 @@ public class Modelo {
 		return "Modelo [idModelo=" + idModelo + ", nome=" + nome + "]";
 	}
 
+	public String toCsv() {
+		return "Nome: " + this.getNome() + ", Id: " + this.getIdModelo();
+	}
+
 }

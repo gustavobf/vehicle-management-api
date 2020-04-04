@@ -39,5 +39,9 @@ public class Concessionaria {
 	public String toString() {
 		return "Concessionaria [idConcessionaria=" + idConcessionaria + ", cnpj=" + cnpj + ", nome=" + nome + "]";
 	}
+	
+	public String toCsv() {
+		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + this.getIdConcessionaria();
+	}
 
 }

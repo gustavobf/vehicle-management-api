@@ -1,5 +1,9 @@
 package br.com.batista.main;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import br.com.batista.model.Carro;
 import br.com.batista.model.Concessionaria;
 import br.com.batista.model.Marca;
@@ -9,9 +13,14 @@ import br.com.batista.service.ConcessionariaService;
 import br.com.batista.service.MarcaService;
 import br.com.batista.service.ModeloService;
 
-public class TesteCarro {
+public class TesteEscritaDados {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+
+		BufferedWriter lCarro = new BufferedWriter(new FileWriter("listCarros.csv"));
+		BufferedWriter lConcessionaria = new BufferedWriter(new FileWriter("listaConcessionaria.csv"));
+		BufferedWriter lMarca = new BufferedWriter(new FileWriter("listaMarca.csv"));
+		BufferedWriter lModelo = new BufferedWriter(new FileWriter("listModelo.csv"));
 
 		// Criando Carros
 		CarroService carService = new CarroService();
@@ -19,7 +28,6 @@ public class TesteCarro {
 		c1.setNome("Celta");
 		c1.setAno(2005);
 		c1.setPotencia(1000);
-		c1.setIdCarro(0);
 		c1.setCor("Vermelho");
 		c1.setPortas(2);
 		c1.setPlaca("SOJ-9437");
@@ -52,12 +60,12 @@ public class TesteCarro {
 		Concessionaria con2 = new Concessionaria();
 		con2.setNome("Dinamo");
 		con2.setCnpj("1260722660");
-		con2.setIdConcessionaria(1);
+		con2.setIdConcessionaria(2);
 
 		Concessionaria con3 = new Concessionaria();
 		con3.setNome("Caer");
 		con3.setCnpj("7610122669");
-		con3.setIdConcessionaria(2);
+		con3.setIdConcessionaria(3);
 
 		// Criando Marcas
 		MarcaService marcaService = new MarcaService();
@@ -75,7 +83,7 @@ public class TesteCarro {
 		m3.setNome("Fiat");
 		m3.setPais("Grecia");
 		m3.setIdMarca(2);
-
+		
 		// Criando Modelos
 		ModeloService modeloService = new ModeloService();
 		Modelo mode1 = new Modelo();
@@ -110,11 +118,32 @@ public class TesteCarro {
 		carService.saveCar(c2, 1, 1, 0);
 		carService.saveCar(c3, 2, 0, 1);
 
-		// Listando Carros
-		System.out.println("Lista de carros:");
-		carService.getAll().forEach(carro -> {
-			System.out.println(carro.toString());
-		});
+		// Salvando lista de carro em arquivo
+		for (Carro carro : carService.getAll()) {
+			lCarro.write(carro.toCsv());
+			lCarro.newLine();
+		}
+
+		// Criando lista de concessionaria em arquivo
+		for (Concessionaria concessionaria : conService.getAll()) {
+			lConcessionaria.write(concessionaria.toCsv());
+			lConcessionaria.newLine();
+		}
+		// Criando lista de marca em arquivo
+		for (Marca marca : marcaService.getAll()) {
+			lMarca.write(marca.toCsv());
+			lMarca.newLine();
+		}
+		// Criando lista de modelo em arquivo
+		for (Modelo modelo : modeloService.getAll()) {
+			lModelo.write(modelo.toCsv());
+			lModelo.newLine();
+		}
+		
+		lCarro.close();
+		lConcessionaria.close();
+		lMarca.close();
+		lModelo.close();
 
 	}
 

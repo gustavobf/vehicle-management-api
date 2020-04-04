@@ -39,5 +39,9 @@ public class Marca {
 	public String toString() {
 		return "Marca [idMarca=" + idMarca + ", nome=" + nome + ", pais=" + pais + "]";
 	}
+	
+	public String toCsv() {
+		return "Nome: " + this.getNome() + ", Pais: " + this.getPais() + ", Id: " + this.getIdMarca();
+	}
 
 }
