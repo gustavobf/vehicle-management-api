@@ -34,7 +34,7 @@ public class MarcaResource {
 	}
 
 	@DeleteMapping("{id}")
-	public void excluir(int id) {
+	public void excluir(@PathVariable int id) {
 		marcaService.deleteMarca(id);
 	}
 
