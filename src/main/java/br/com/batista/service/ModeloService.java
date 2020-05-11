@@ -1,5 +1,6 @@
 package br.com.batista.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import br.com.batista.dao.ModeloDAO;
@@ -7,27 +8,27 @@ import br.com.batista.model.Modelo;
 
 public class ModeloService {
 
-	public void saveModelo(Modelo modelo) {
+	public void saveModelo(Modelo modelo) throws SQLException {
 		ModeloDAO.create(modelo);
 	}
 
-	public void updateModelo(Modelo modelo) {
+	public void updateModelo(Modelo modelo) throws SQLException {
 		ModeloDAO.update(modelo);
 	}
 
-	public void deleteModelo(Modelo modelo) {
-		ModeloDAO.delete(modelo.getIdModelo());
+	public void deleteModelo(Modelo modelo) throws SQLException {
+		ModeloDAO.delete(modelo.getId());
 	}
 
-	public void deleteModelo(int idModelo) {
-		ModeloDAO.delete(idModelo);
+	public void deleteModelo(int id) throws SQLException {
+		ModeloDAO.delete(id);
 	}
 
-	public Modelo getById(int idModelo) {
-		return ModeloDAO.getById(idModelo);
+	public Modelo getById(int id) throws SQLException {
+		return ModeloDAO.getById(id);
 	}
 
-	public List<Modelo> getAll() {
+	public List<Modelo> getAll() throws SQLException {
 		return ModeloDAO.getAll();
 	}
 

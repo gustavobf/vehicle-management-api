@@ -1,51 +1,61 @@
 package br.com.batista.main;
 
+import java.sql.SQLException;
+
 import br.com.batista.model.Marca;
 import br.com.batista.service.MarcaService;
 
 public class TesteMarca {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		MarcaService service = new MarcaService();
 
 		// Criando Marcas
-		Marca m1 = new Marca();
-		m1.setNome("Ford");
-		m1.setPais("Roma");
+		Marca m1 = new Marca("Ford", "Roma");
 
-		Marca m2 = new Marca();
-		m2.setIdMarca(0);
-		m2.setNome("GM");
-		m2.setPais("EUA");
+		Marca m2 = new Marca("GM", "EUA");
 
-		Marca m3 = new Marca();
-		m3.setIdMarca(1);
-		m3.setNome("Fiat");
-		m3.setPais("Grecia");
+		Marca m3 = new Marca("Fiat", "Grecia");
 
 		service.saveMarca(m1);
+		service.saveMarca(m2);
 		service.saveMarca(m3);
 
-		System.out.println("Lista de marcas antes do update:");
+		System.out.println("--------------------------------------------");
+		System.out.println("Lista de marcas antes do delete:");
 		service.getAll().forEach(marca -> {
 			System.out.println(marca.toString());
 		});
+		System.out.println("--------------------------------------------");
 
-		service.updateMarca(m2);
+		// Deletando Marca
+		service.deleteMarca(56);
 
-		System.out.println("---------------------");
-		System.out.println("Lista de marca depois do update: ");
+		// Listando Marca apos o delete
+		System.out.println("--------------------------------------------");
+		System.out.println("Lista de marcas depois do delete:");
 		service.getAll().forEach(marca -> {
 			System.out.println(marca.toString());
 		});
-		System.out.println("---------------------");
+		System.out.println("--------------------------------------------");
 
+		// Alterando Marca
+		service.updateMarca(m1);
+
+		// Listando Marca apos o update
+		System.out.println("--------------------------------------------");
+		System.out.println("Lista de marca depois do update:");
+		service.getAll().forEach(marca -> {
+			System.out.println(marca.toString());
+		});
+		System.out.println("--------------------------------------------");
+
+		// Lista final de Marca
 		System.out.println("Lista final de marcas:");
 		service.getAll().forEach(marca -> {
 			System.out.println(marca.toString());
 		});
 
 	}
-
 }

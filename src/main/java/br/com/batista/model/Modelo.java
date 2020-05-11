@@ -1,16 +1,11 @@
 package br.com.batista.model;
 
-public class Modelo {
+public class Modelo extends Entidade {
 
-	private int idModelo;
 	private String nome;
 
-	public int getIdModelo() {
-		return idModelo;
-	}
-
-	public void setIdModelo(int idModelo) {
-		this.idModelo = idModelo;
+	public Modelo(String nome) {
+		this.nome = nome;
 	}
 
 	public String getNome() {
@@ -23,11 +18,11 @@ public class Modelo {
 
 	@Override
 	public String toString() {
-		return "Modelo [idModelo=" + idModelo + ", nome=" + nome + "]";
+		return "Modelo [idModelo=" + super.getId() + ", nome=" + nome + "]";
 	}
 
 	public String toCsv() {
-		return "Nome: " + this.getNome() + ", Id: " + this.getIdModelo();
+		return "Nome: " + this.getNome() + ", Id: " + super.getId();
 	}
 
 }

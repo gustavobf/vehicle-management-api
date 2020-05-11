@@ -1,8 +1,7 @@
 package br.com.batista.model;
 
-public class Carro {
+public class Carro extends Entidade {
 
-	private int idCarro;
 	private Modelo idModelo_fk;
 	private Marca idMarca_fk;
 	private Concessionaria idConcessionaria_fk;
@@ -13,12 +12,21 @@ public class Carro {
 	private String placa;
 	private String nome;
 
-	public int getIdCarro() {
-		return idCarro;
+	public Carro(String cor, int potencia, int portas, int ano, String placa, String nome) {
+		this.cor = cor;
+		this.potencia = potencia;
+		this.portas = portas;
+		this.ano = ano;
+		this.placa = placa;
+		this.nome = nome;
 	}
 
-	public void setIdCarro(int idthis) {
-		this.idCarro = idthis;
+	public Carro(String cor, int potencia, int portas, int ano, String nome) {
+		this.cor = cor;
+		this.potencia = potencia;
+		this.portas = portas;
+		this.ano = ano;
+		this.nome = nome;
 	}
 
 	public Modelo getIdModelo_fk() {
@@ -95,14 +103,14 @@ public class Carro {
 
 	@Override
 	public String toString() {
-		return "this [idthis=" + idCarro + ", idModelo_fk=" + idModelo_fk + ", idMarca_fk=" + idMarca_fk
+		return "this [idthis=" + super.getId() + ", idModelo_fk=" + idModelo_fk + ", idMarca_fk=" + idMarca_fk
 				+ ", idConcessionaria_fk=" + idConcessionaria_fk + ", cor=" + cor + ", potencia=" + potencia
 				+ ", portas=" + portas + ", ano=" + ano + ", placa=" + placa + ", nome=" + nome + "]";
 	}
 
 	public String toCsv() {
-		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca()
-				+ ", qtdPortas: " + this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: "
-				+ this.getAno() + ", Id: " + this.getIdCarro();
+		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca() + ", qtdPortas: "
+				+ this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: " + this.getAno() + ", Id: "
+				+ super.getId();
 	}
 }

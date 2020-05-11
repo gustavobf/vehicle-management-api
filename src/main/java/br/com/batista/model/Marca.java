@@ -3,18 +3,14 @@ package br.com.batista.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Marca {
+public class Marca extends Entidade {
 
-	private int idMarca;
 	private String nome;
 	private String pais;
 
-	public int getIdMarca() {
-		return idMarca;
-	}
-
-	public void setIdMarca(int idMarca) {
-		this.idMarca = idMarca;
+	public Marca(String nome, String pais) {
+		this.nome = nome;
+		this.pais = pais;
 	}
 
 	public String getNome() {
@@ -37,11 +33,11 @@ public class Marca {
 
 	@Override
 	public String toString() {
-		return "Marca [idMarca=" + idMarca + ", nome=" + nome + ", pais=" + pais + "]";
+		return "Marca [idMarca=" + super.getId() + ", nome=" + nome + ", pais=" + pais + "]";
 	}
-	
+
 	public String toCsv() {
-		return "Nome: " + this.getNome() + ", Pais: " + this.getPais() + ", Id: " + this.getIdMarca();
+		return "Nome: " + this.getNome() + ", Pais: " + this.getPais() + ", Id: " + super.getId();
 	}
 
 }

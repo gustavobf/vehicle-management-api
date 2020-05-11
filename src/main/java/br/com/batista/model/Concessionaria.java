@@ -3,18 +3,14 @@ package br.com.batista.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Concessionaria {
+public class Concessionaria extends Entidade {
 
-	private int idConcessionaria;
 	private String cnpj;
 	private String nome;
 
-	public int getIdConcessionaria() {
-		return idConcessionaria;
-	}
-
-	public void setIdConcessionaria(int idConcessionaria) {
-		this.idConcessionaria = idConcessionaria;
+	public Concessionaria(String cnpj, String nome) {
+		this.cnpj = cnpj;
+		this.nome = nome;
 	}
 
 	public String getCnpj() {
@@ -37,11 +33,11 @@ public class Concessionaria {
 
 	@Override
 	public String toString() {
-		return "Concessionaria [idConcessionaria=" + idConcessionaria + ", cnpj=" + cnpj + ", nome=" + nome + "]";
+		return "Concessionaria [idConcessionaria=" + super.getId() + ", cnpj=" + cnpj + ", nome=" + nome + "]";
 	}
-	
+
 	public String toCsv() {
-		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + this.getIdConcessionaria();
+		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + super.getId();
 	}
 
 }
