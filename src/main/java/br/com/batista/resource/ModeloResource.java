@@ -11,33 +11,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.batista.model.Marca;
-import br.com.batista.service.MarcaService;
+import br.com.batista.model.Modelo;
+import br.com.batista.service.ModeloService;
 
 @RestController
-@RequestMapping("/marca")
-public class MarcaResource {
-
+@RequestMapping("/modelo")
+public class ModeloResource {
+	
 	@Autowired
-	private MarcaService marcaService;
+	private ModeloService modeloService;
 
 	@GetMapping
-	public List<Marca> obterLista() {
-		return marcaService.getAll();
+	public List<Modelo> obterLista() {
+		return modeloService.getAll();
 	}
 
 	@RequestMapping("{id}")
-	public Marca obterPorId(@PathVariable int id) {
-		return marcaService.getById(id);
+	public Modelo obterPorId(@PathVariable int id) {
+		return modeloService.getById(id);
 	}
 
 	@DeleteMapping("{id}")
 	public void excluir(@PathVariable int id) {
-		marcaService.deleteMarca(id);
+		modeloService.deleteModelo(id);
 	}
 
 	@PostMapping(produces = "application/json", consumes = "application/json")
-	public void salvar(@RequestBody Marca marca) {
-		marcaService.saveMarca(marca);
+	public void salvar(@RequestBody Modelo modelo) {
+		modeloService.saveModelo(modelo);
 	}
 }
