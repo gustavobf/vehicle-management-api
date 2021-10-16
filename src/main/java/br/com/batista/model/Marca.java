@@ -1,14 +1,32 @@
 package br.com.batista.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Objects;
 
-public class Marca extends Entidade {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "marca")
+public class Marca implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	private String nome;
 	private String pais;
 
-	public Marca(String nome, String pais) {
+	public Marca() {
+	}
+
+	public Marca(Long id, String nome, String pais) {
+		super();
+		this.id = id;
 		this.nome = nome;
 		this.pais = pais;
 	}
@@ -29,15 +47,34 @@ public class Marca extends Entidade {
 		this.pais = pais;
 	}
 
-	List<Carro> marca = new ArrayList<Carro>();
+	public Long getId() {
+		return id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Marca other = (Marca) obj;
+		return Objects.equals(id, other.id);
+	}
 
 	@Override
 	public String toString() {
-		return "Marca [idMarca=" + super.getId() + ", nome=" + nome + ", pais=" + pais + "]";
+		return "Marca [id=" + id + ", nome=" + nome + ", pais=" + pais + "]";
 	}
 
-	public String toCsv() {
-		return "Nome: " + this.getNome() + ", Pais: " + this.getPais() + ", Id: " + super.getId();
-	}
+//	public String toCsv() {
+//		return "Nome: " + this.getNome() + ", Pais: " + this.getPais() + ", Id: " + super.getId();
+//	}
 
 }

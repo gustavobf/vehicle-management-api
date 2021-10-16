@@ -1,11 +1,34 @@
 package br.com.batista.model;
 
-public class Modelo extends Entidade {
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "modelo")
+public class Modelo implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	private String nome;
 
+	public Modelo() {
+	}
+
 	public Modelo(String nome) {
 		this.nome = nome;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getNome() {
@@ -17,12 +40,29 @@ public class Modelo extends Entidade {
 	}
 
 	@Override
-	public String toString() {
-		return "Modelo [idModelo=" + super.getId() + ", nome=" + nome + "]";
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
-	public String toCsv() {
-		return "Nome: " + this.getNome() + ", Id: " + super.getId();
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Modelo other = (Modelo) obj;
+		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Modelo [id=" + id + ", nome=" + nome + "]";
+	}
+
+//	public String toCsv() {
+//		return "Nome: " + this.getNome() + ", Id: " + super.getId();
+//	}
 
 }

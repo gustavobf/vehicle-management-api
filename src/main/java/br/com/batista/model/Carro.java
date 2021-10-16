@@ -1,10 +1,23 @@
 package br.com.batista.model;
 
-public class Carro extends Entidade {
+import java.io.Serializable;
+import java.util.Objects;
 
-	private Modelo idModelo_fk;
-	private Marca idMarca_fk;
-	private Concessionaria idConcessionaria_fk;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "carro")
+public class Carro implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String cor;
 	private int potencia;
 	private int portas;
@@ -12,45 +25,18 @@ public class Carro extends Entidade {
 	private String placa;
 	private String nome;
 
-	public Carro(String cor, int potencia, int portas, int ano, String placa, String nome) {
+	public Carro() {
+	}
+
+	public Carro(Long id, String cor, int potencia, int portas, int ano, String placa, String nome) {
+		super();
+		this.id = id;
 		this.cor = cor;
 		this.potencia = potencia;
 		this.portas = portas;
 		this.ano = ano;
 		this.placa = placa;
 		this.nome = nome;
-	}
-
-	public Carro(String cor, int potencia, int portas, int ano, String nome) {
-		this.cor = cor;
-		this.potencia = potencia;
-		this.portas = portas;
-		this.ano = ano;
-		this.nome = nome;
-	}
-
-	public Modelo getIdModelo_fk() {
-		return idModelo_fk;
-	}
-
-	public void setIdModelo_fk(Modelo idModelo_fk) {
-		this.idModelo_fk = idModelo_fk;
-	}
-
-	public Marca getIdMarca_fk() {
-		return idMarca_fk;
-	}
-
-	public void setIdMarca_fk(Marca idMarca_fk) {
-		this.idMarca_fk = idMarca_fk;
-	}
-
-	public Concessionaria getIdConcessionaria_fk() {
-		return idConcessionaria_fk;
-	}
-
-	public void setIdConcessionaria_fk(Concessionaria idConcessionaria_fk) {
-		this.idConcessionaria_fk = idConcessionaria_fk;
 	}
 
 	public String getCor() {
@@ -101,16 +87,36 @@ public class Carro extends Entidade {
 		this.nome = nome;
 	}
 
-	@Override
-	public String toString() {
-		return "this [idthis=" + super.getId() + ", idModelo_fk=" + idModelo_fk + ", idMarca_fk=" + idMarca_fk
-				+ ", idConcessionaria_fk=" + idConcessionaria_fk + ", cor=" + cor + ", potencia=" + potencia
-				+ ", portas=" + portas + ", ano=" + ano + ", placa=" + placa + ", nome=" + nome + "]";
+	public Long getId() {
+		return id;
 	}
 
-	public String toCsv() {
-		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca() + ", qtdPortas: "
-				+ this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: " + this.getAno() + ", Id: "
-				+ super.getId();
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Carro other = (Carro) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Carro [id=" + id + ", cor=" + cor + ", potencia=" + potencia + ", portas=" + portas + ", ano=" + ano
+				+ ", placa=" + placa + ", nome=" + nome + "]";
+	}
+
+//	public String toCsv() {
+//		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca() + ", qtdPortas: "
+//				+ this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: " + this.getAno() + ", Id: "
+//				+ super.getId();
+//	}
 }
