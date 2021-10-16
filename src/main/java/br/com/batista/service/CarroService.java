@@ -2,40 +2,26 @@ package br.com.batista.service;
 
 import java.util.List;
 
-import br.com.batista.dao.CarroDAO;
-import br.com.batista.dao.ConcessionariaDAO;
-import br.com.batista.dao.MarcaDAO;
-import br.com.batista.dao.ModeloDAO;
-import br.com.batista.model.Carro;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import br.com.batista.model.Carro;
+import br.com.batista.repositories.CarroRepository;
+
+@Service
 public class CarroService {
 
-	public void saveCar(Carro carro, int idConcessionaria, int idMarca, int idModelo) {
+	@Autowired
+	CarroRepository carroRepository;
 
-		carro.setIdConcessionaria_fk(ConcessionariaDAO.getById(idConcessionaria));
-		carro.setIdMarca_fk(MarcaDAO.getById(idMarca));
-		carro.setIdModelo_fk(ModeloDAO.getById(idModelo));
-
-		CarroDAO.create(carro);
-	}
-
-	public void updateCar(Carro carro) {
-		CarroDAO.update(carro);
-	}
-
-	public void deleteCar(Carro carro) {
-		CarroDAO.delete(carro.getIdCarro());
-	}
-
-	public void deleteCar(int idCarro) {
-		CarroDAO.delete(idCarro);
-	}
-
-	public Carro getById(int idCarro) {
-		return CarroDAO.getById(idCarro);
+	public Carro saveCar(Carro carro) {
+		Carro carroSalvo = carroRepository.save(carro);
+		return carroSalvo;
 	}
 
 	public List<Carro> getAll() {
-		return CarroDAO.getAll();
+		List<Carro> lista = carroRepository.findAll();
+		return lista;
 	}
+
 }

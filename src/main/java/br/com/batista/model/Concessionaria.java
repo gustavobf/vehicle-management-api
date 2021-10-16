@@ -1,20 +1,30 @@
 package br.com.batista.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Objects;
 
-public class Concessionaria {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private int idConcessionaria;
+@Entity
+@Table(name = "concessionaria")
+public class Concessionaria implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String cnpj;
 	private String nome;
+	
+	public Concessionaria() {}
 
-	public int getIdConcessionaria() {
-		return idConcessionaria;
-	}
-
-	public void setIdConcessionaria(int idConcessionaria) {
-		this.idConcessionaria = idConcessionaria;
+	public Long getId() {
+		return id;
 	}
 
 	public String getCnpj() {
@@ -33,15 +43,30 @@ public class Concessionaria {
 		this.nome = nome;
 	}
 
-	List<Carro> concessionaria = new ArrayList<Carro>();
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Concessionaria other = (Concessionaria) obj;
+		return Objects.equals(id, other.id);
+	}
 
 	@Override
 	public String toString() {
-		return "Concessionaria [idConcessionaria=" + idConcessionaria + ", cnpj=" + cnpj + ", nome=" + nome + "]";
+		return "Concessionaria [id=" + id + ", cnpj=" + cnpj + ", nome=" + nome + "]";
 	}
-	
-	public String toCsv() {
-		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + this.getIdConcessionaria();
-	}
+
+//	public String toCsv() {
+//		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + super.getId();
+//	}
 
 }
