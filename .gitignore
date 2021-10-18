@@ -29,3 +29,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+######
+DER.mwb
+DER.mwb.bak
+listaConcessionaria.csv
+listaMarca.csv
+listCarros.csv
+listModelo.csv

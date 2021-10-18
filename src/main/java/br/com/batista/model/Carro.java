@@ -39,6 +39,10 @@ public class Carro implements Serializable {
 		this.nome = nome;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getCor() {
 		return cor;
 	}
