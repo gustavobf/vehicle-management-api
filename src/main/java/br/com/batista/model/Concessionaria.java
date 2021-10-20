@@ -20,11 +20,23 @@ public class Concessionaria implements Serializable {
 
 	private String cnpj;
 	private String nome;
-	
-	public Concessionaria() {}
+
+	public Concessionaria() {
+	}
+
+	public Concessionaria(Long id, String cnpj, String nome) {
+		super();
+		this.id = id;
+		this.cnpj = cnpj;
+		this.nome = nome;
+	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCnpj() {
