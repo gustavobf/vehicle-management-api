@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.batista.model.Concessionaria;
+import br.com.batista.dto.ConcessionariaDTO;
 import br.com.batista.service.ConcessionariaService;
 
 @RestController
@@ -25,21 +25,21 @@ public class ConcessionariaController {
 	private ConcessionariaService concessionariaService;
 
 	@GetMapping
-	public ResponseEntity<List<Concessionaria>> getAll() {
-		List<Concessionaria> list = concessionariaService.getAll();
-		return ResponseEntity.status(200).body(list);
+	public ResponseEntity<List<ConcessionariaDTO>> getAll() {
+		List<ConcessionariaDTO> lista = concessionariaService.getAll();
+		return ResponseEntity.status(200).body(lista);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Concessionaria> getById(@PathVariable Long id) {
-		Optional<Concessionaria> concessionaria = concessionariaService.getById(id);
+	public ResponseEntity<ConcessionariaDTO> getById(@PathVariable Long id) {
+		Optional<ConcessionariaDTO> concessionaria = concessionariaService.getById(id);
 		return ResponseEntity.status(200).body(concessionaria.get());
 	}
 
 	@PostMapping
-	public ResponseEntity<Concessionaria> create(@RequestBody Concessionaria concessionaria) {
-		concessionaria = concessionariaService.create(concessionaria);
-		return ResponseEntity.status(201).body(concessionaria);
+	public ResponseEntity<ConcessionariaDTO> create(@RequestBody ConcessionariaDTO concessionariaDTO) {
+		concessionariaDTO = concessionariaService.create(concessionariaDTO);
+		return ResponseEntity.status(201).body(concessionariaDTO);
 	}
 
 	@DeleteMapping("/{id}")
@@ -49,10 +49,10 @@ public class ConcessionariaController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Concessionaria> update(@PathVariable Long id,
-			@RequestBody Concessionaria ConcessionariaNova) {
-		Concessionaria concessionaria = concessionariaService.update(id, ConcessionariaNova);
-		return ResponseEntity.status(201).body(concessionaria);
+	public ResponseEntity<ConcessionariaDTO> update(@PathVariable Long id,
+			@RequestBody ConcessionariaDTO concessionariaDTO) {
+		ConcessionariaDTO dto = concessionariaService.update(id, concessionariaDTO);
+		return ResponseEntity.status(201).body(dto);
 	}
 
 }
