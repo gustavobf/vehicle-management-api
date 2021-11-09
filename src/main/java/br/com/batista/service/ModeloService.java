@@ -3,9 +3,11 @@ package br.com.batista.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.batista.dto.ModeloDTO;
 import br.com.batista.model.Modelo;
 import br.com.batista.repositories.ModeloRepository;
 
@@ -15,28 +17,46 @@ public class ModeloService {
 	@Autowired
 	private ModeloRepository modeloRepository;
 
-	public List<Modelo> getAll() {
+	@Autowired
+	private ModelMapper modelMapper;
+
+	public List<ModeloDTO> getAll() {
 		List<Modelo> lista = modeloRepository.findAll();
-		return lista;
+		return lista.stream().map(this::convertToDTO).toList();
 	}
 
-	public Optional<Modelo> getById(Long id) {
+	public Optional<ModeloDTO> getById(Long id) {
 		Optional<Modelo> modelo = modeloRepository.findById(id);
-		return modelo;
+		ModeloDTO modeloDTO = this.convertToDTO(modelo.get());
+		return Optional.of(modeloDTO);
 	}
 
-	public Modelo create(Modelo modelo) {
+	public ModeloDTO create(ModeloDTO modeloDTO) {
+		Modelo modelo = this.convertToEntity(modeloDTO);
 		Modelo modeloSalvo = modeloRepository.save(modelo);
-		return modeloSalvo;
+		ModeloDTO dto = this.convertToDTO(modeloSalvo);
+		return dto;
 	}
 
 	public void delete(Long id) {
 		modeloRepository.deleteById(id);
 	}
 
-	public Modelo update(Long id, Modelo modeloNovo) {
-		modeloNovo.setId(id);
-		Modelo modelo = modeloRepository.save(modeloNovo);
+	public ModeloDTO update(Long id, ModeloDTO modeloDTO) {
+		modeloDTO.setId(id);
+		Modelo modelo = this.convertToEntity(modeloDTO);
+		Modelo modeloSalvo = modeloRepository.save(modelo);
+		ModeloDTO dto = this.convertToDTO(modeloSalvo);
+		return dto;
+	}
+
+	public ModeloDTO convertToDTO(Modelo modelo) {
+		ModeloDTO modeloDTO = modelMapper.map(modelo, ModeloDTO.class);
+		return modeloDTO;
+	}
+
+	public Modelo convertToEntity(ModeloDTO modeloDTO) {
+		Modelo modelo = modelMapper.map(modeloDTO, Modelo.class);
 		return modelo;
 	}
 
