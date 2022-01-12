@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +19,18 @@ public class Carro implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne()
+	@JoinColumn(name = "modelo_id")
+	private Modelo modelo;
+
+	@ManyToOne()
+	@JoinColumn(name = "marca_id")
+	private Marca marca;
+
+	@ManyToOne()
+	@JoinColumn(name = "concessionaria_id")
+	private Concessionaria concessionaria;
 
 	private String cor;
 	private int potencia;
