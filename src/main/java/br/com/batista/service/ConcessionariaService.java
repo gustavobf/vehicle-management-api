@@ -2,6 +2,7 @@ package br.com.batista.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ConcessionariaService {
 
 	public List<ConcessionariaDTO> getAll() {
 		List<Concessionaria> lista = concessionariaRepository.findAll();
-		return lista.stream().map(this::convertToDTO).toList();
+		return lista.stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	public Optional<ConcessionariaDTO> getById(Long id) {

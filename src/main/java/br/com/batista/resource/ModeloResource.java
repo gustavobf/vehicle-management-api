@@ -1,6 +1,7 @@
 package br.com.batista.resource;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,35 +10,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import br.com.batista.model.Modelo;
+import br.com.batista.dto.ModeloDTO;
 import br.com.batista.service.ModeloService;
 
-@RestController
-@RequestMapping("/modelo")
 public class ModeloResource {
-	
+
 	@Autowired
 	private ModeloService modeloService;
 
 	@GetMapping
-	public List<Modelo> obterLista() {
+	public List<ModeloDTO> obterLista() {
 		return modeloService.getAll();
 	}
 
 	@RequestMapping("{id}")
-	public Modelo obterPorId(@PathVariable int id) {
+	public Optional<ModeloDTO> obterPorId(@PathVariable Long id) {
 		return modeloService.getById(id);
 	}
 
 	@DeleteMapping("{id}")
-	public void excluir(@PathVariable int id) {
-		modeloService.deleteModelo(id);
+	public void excluir(@PathVariable Long id) {
+		modeloService.delete(id);
 	}
 
 	@PostMapping(produces = "application/json", consumes = "application/json")
-	public void salvar(@RequestBody Modelo modelo) {
-		modeloService.saveModelo(modelo);
+	public void salvar(@RequestBody ModeloDTO modelo) {
+		modeloService.create(modelo);
 	}
 }
