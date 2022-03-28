@@ -1,4 +1,4 @@
-package br.com.batista.cors;
+package br.com.batista.config;
 
 import org.springframework.stereotype.Component;
 

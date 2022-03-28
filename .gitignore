@@ -3,9 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-DER.mwb
-DER.mwb.bak
-der-print.png
+*.mwb
+*.bak
+*.png
 
 ### STS ###
 .apt_generated
