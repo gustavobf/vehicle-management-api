@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.batista.dto.CarroDTO;
 import br.com.batista.service.CarroService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/api/carro")
@@ -24,30 +25,35 @@ public class CarroController {
 	@Autowired
 	private CarroService carroService;
 
+	@ApiOperation("Returns a list with all cars")
 	@GetMapping
 	public ResponseEntity<List<CarroDTO>> getAll() {
 		List<CarroDTO> lista = carroService.getAll();
 		return ResponseEntity.status(200).body(lista);
 	}
-
+	
+	@ApiOperation("Returns a car based on its id")
 	@GetMapping("/{id}")
 	public ResponseEntity<CarroDTO> getById(@PathVariable Long id) {
 		Optional<CarroDTO> carro = carroService.getById(id);
 		return ResponseEntity.status(200).body(carro.get());
 	}
 
+	@ApiOperation("Saves a car")
 	@PostMapping
 	public ResponseEntity<CarroDTO> create(@RequestBody CarroDTO carroDTO) {
 		carroDTO = carroService.create(carroDTO);
 		return ResponseEntity.status(201).body(carroDTO);
 	}
 
+	@ApiOperation("Deletes a car based on its id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		carroService.delete(id);
 		return ResponseEntity.status(204).build();
 	}
 
+	@ApiOperation("Updates a car based on its id")
 	@PutMapping("/{id}")
 	public ResponseEntity<CarroDTO> update(@PathVariable Long id, @RequestBody CarroDTO carroDTO) {
 		CarroDTO dto = carroService.update(id, carroDTO);

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.batista.dto.ModeloDTO;
 import br.com.batista.service.ModeloService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/api/modelo")
@@ -24,30 +25,35 @@ public class ModeloController {
 	@Autowired
 	private ModeloService modeloService;
 
+	@ApiOperation("Returns a list with all models")
 	@GetMapping
 	public ResponseEntity<List<ModeloDTO>> getAll() {
 		List<ModeloDTO> lista = modeloService.getAll();
 		return ResponseEntity.status(200).body(lista);
 	}
 
+	@ApiOperation("Returns a model based on its id")
 	@GetMapping("/{id}")
 	public ResponseEntity<ModeloDTO> getById(@PathVariable Long id) {
 		Optional<ModeloDTO> modelo = modeloService.getById(id);
 		return ResponseEntity.status(200).body(modelo.get());
 	}
 
+	@ApiOperation("Saves a model")
 	@PostMapping
 	public ResponseEntity<ModeloDTO> create(@RequestBody ModeloDTO modeloDTO) {
 		modeloDTO = modeloService.create(modeloDTO);
 		return ResponseEntity.status(201).body(modeloDTO);
 	}
 
+	@ApiOperation("Deletes a model based on its id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		modeloService.delete(id);
 		return ResponseEntity.status(204).build();
 	}
 
+	@ApiOperation("Updates a model based on its id")
 	@PutMapping("/{id}")
 	public ResponseEntity<ModeloDTO> update(@PathVariable Long id, @RequestBody ModeloDTO modeloDTO) {
 		ModeloDTO dto = modeloService.update(id, modeloDTO);

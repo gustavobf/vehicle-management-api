@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.batista.dto.ConcessionariaDTO;
 import br.com.batista.service.ConcessionariaService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/api/concessionaria")
@@ -24,30 +25,35 @@ public class ConcessionariaController {
 	@Autowired
 	private ConcessionariaService concessionariaService;
 
+	@ApiOperation("Returns a list with all dealership")
 	@GetMapping
 	public ResponseEntity<List<ConcessionariaDTO>> getAll() {
 		List<ConcessionariaDTO> lista = concessionariaService.getAll();
 		return ResponseEntity.status(200).body(lista);
 	}
 
+	@ApiOperation("Returns a dealership based on its id")
 	@GetMapping("/{id}")
 	public ResponseEntity<ConcessionariaDTO> getById(@PathVariable Long id) {
 		Optional<ConcessionariaDTO> concessionaria = concessionariaService.getById(id);
 		return ResponseEntity.status(200).body(concessionaria.get());
 	}
 
+	@ApiOperation("Saves a dealership")
 	@PostMapping
 	public ResponseEntity<ConcessionariaDTO> create(@RequestBody ConcessionariaDTO concessionariaDTO) {
 		concessionariaDTO = concessionariaService.create(concessionariaDTO);
 		return ResponseEntity.status(201).body(concessionariaDTO);
 	}
 
+	@ApiOperation("Deletes a dealership based on its id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		concessionariaService.delete(id);
 		return ResponseEntity.status(204).build();
 	}
 
+	@ApiOperation("Updates a dealership based on its id")
 	@PutMapping("/{id}")
 	public ResponseEntity<ConcessionariaDTO> update(@PathVariable Long id,
 			@RequestBody ConcessionariaDTO concessionariaDTO) {
