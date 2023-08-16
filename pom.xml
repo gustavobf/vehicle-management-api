@@ -10,10 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.batista</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>crup-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Projeto CRUD para Carros e Concessionarias</description>
+	<name>crup-app</name>
 
 	<dependencies>
 		<dependency>
