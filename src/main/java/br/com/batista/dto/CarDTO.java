@@ -1,6 +1,6 @@
 package br.com.batista.dto;
 
-public class CarroDTO {
+public class CarDTO {
 	private Long id;
 	private String cor;
 	private int potencia;

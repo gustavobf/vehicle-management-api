@@ -1,7 +1,6 @@
 package br.com.batista.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,49 +13,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.batista.dto.CarroDTO;
-import br.com.batista.service.CarroService;
+import br.com.batista.dto.CarDTO;
+import br.com.batista.service.CarService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value = "/api/carro")
-public class CarroController {
+@RequestMapping(value = "/api/car")
+public class CarController {
 
 	@Autowired
-	private CarroService carroService;
+	private CarService carService;
 
 	@ApiOperation("Returns a list with all cars")
 	@GetMapping
-	public ResponseEntity<List<CarroDTO>> getAll() {
-		List<CarroDTO> lista = carroService.getAll();
-		return ResponseEntity.status(200).body(lista);
+	public ResponseEntity<List<CarDTO>> getAll() {
+		return ResponseEntity.status(200).body(carService.getAll());
 	}
-	
+
 	@ApiOperation("Returns a car based on its id")
 	@GetMapping("/{id}")
-	public ResponseEntity<CarroDTO> getById(@PathVariable Long id) {
-		Optional<CarroDTO> carro = carroService.getById(id);
-		return ResponseEntity.status(200).body(carro.get());
+	public ResponseEntity<CarDTO> getById(@PathVariable final Long id) {
+		return ResponseEntity.status(200).body(carService.getById(id).get());
 	}
 
 	@ApiOperation("Saves a car")
 	@PostMapping
-	public ResponseEntity<CarroDTO> create(@RequestBody CarroDTO carroDTO) {
-		carroDTO = carroService.create(carroDTO);
-		return ResponseEntity.status(201).body(carroDTO);
+	public ResponseEntity<CarDTO> create(@RequestBody final CarDTO carroDTO) {
+		return ResponseEntity.status(201).body(carService.create(carroDTO));
 	}
 
 	@ApiOperation("Deletes a car based on its id")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
-		carroService.delete(id);
+	public ResponseEntity<?> delete(@PathVariable final Long id) {
+		carService.delete(id);
 		return ResponseEntity.status(204).build();
 	}
 
 	@ApiOperation("Updates a car based on its id")
 	@PutMapping("/{id}")
-	public ResponseEntity<CarroDTO> update(@PathVariable Long id, @RequestBody CarroDTO carroDTO) {
-		CarroDTO dto = carroService.update(id, carroDTO);
+	public ResponseEntity<CarDTO> update(@PathVariable final Long id, @RequestBody final CarDTO carroDTO) {
+		final CarDTO dto = carService.update(id, carroDTO);
 		return ResponseEntity.status(201).body(dto);
 	}
 }

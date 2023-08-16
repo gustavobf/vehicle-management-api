@@ -2,8 +2,8 @@ package br.com.batista.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.batista.model.Marca;
+import br.com.batista.model.Carro;
 
-public interface MarcaRepository extends JpaRepository<Marca, Long>{
+public interface CarRepository extends JpaRepository<Carro, Long>{
 
 }

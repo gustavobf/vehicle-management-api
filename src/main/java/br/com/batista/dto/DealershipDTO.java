@@ -1,6 +1,6 @@
 package br.com.batista.dto;
 
-public class ConcessionariaDTO {
+public class DealershipDTO {
 	private Long id;
 	private String cnpj;
 	private String nome;

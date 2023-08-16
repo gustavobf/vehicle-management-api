@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.batista.model.Modelo;
 
-public interface ModeloRepository extends JpaRepository<Modelo, Long> {
+public interface ModelRepository extends JpaRepository<Modelo, Long> {
 
 }

@@ -1,7 +1,6 @@
 package br.com.batista.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,49 +13,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.batista.dto.ModeloDTO;
-import br.com.batista.service.ModeloService;
+import br.com.batista.dto.ModelDTO;
+import br.com.batista.service.ModelService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value = "/api/modelo")
-public class ModeloController {
+@RequestMapping(value = "/api/model")
+public class ModelController {
 
 	@Autowired
-	private ModeloService modeloService;
+	private ModelService modelService;
 
 	@ApiOperation("Returns a list with all models")
 	@GetMapping
-	public ResponseEntity<List<ModeloDTO>> getAll() {
-		List<ModeloDTO> lista = modeloService.getAll();
-		return ResponseEntity.status(200).body(lista);
+	public ResponseEntity<List<ModelDTO>> getAll() {
+		return ResponseEntity.status(200).body(modelService.getAll());
 	}
 
 	@ApiOperation("Returns a model based on its id")
 	@GetMapping("/{id}")
-	public ResponseEntity<ModeloDTO> getById(@PathVariable Long id) {
-		Optional<ModeloDTO> modelo = modeloService.getById(id);
-		return ResponseEntity.status(200).body(modelo.get());
+	public ResponseEntity<ModelDTO> getById(@PathVariable final Long id) {
+		return ResponseEntity.status(200).body(modelService.getById(id).get());
 	}
 
 	@ApiOperation("Saves a model")
 	@PostMapping
-	public ResponseEntity<ModeloDTO> create(@RequestBody ModeloDTO modeloDTO) {
-		modeloDTO = modeloService.create(modeloDTO);
-		return ResponseEntity.status(201).body(modeloDTO);
+	public ResponseEntity<ModelDTO> create(@RequestBody final ModelDTO modeloDTO) {
+		return ResponseEntity.status(201).body(modelService.create(modeloDTO));
 	}
 
 	@ApiOperation("Deletes a model based on its id")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
-		modeloService.delete(id);
+	public ResponseEntity<?> delete(@PathVariable final Long id) {
+		modelService.delete(id);
 		return ResponseEntity.status(204).build();
 	}
 
 	@ApiOperation("Updates a model based on its id")
 	@PutMapping("/{id}")
-	public ResponseEntity<ModeloDTO> update(@PathVariable Long id, @RequestBody ModeloDTO modeloDTO) {
-		ModeloDTO dto = modeloService.update(id, modeloDTO);
+	public ResponseEntity<ModelDTO> update(@PathVariable final Long id, @RequestBody final ModelDTO modeloDTO) {
+		final ModelDTO dto = modelService.update(id, modeloDTO);
 		return ResponseEntity.status(201).body(dto);
 	}
 }

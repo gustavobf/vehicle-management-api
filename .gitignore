@@ -6,6 +6,8 @@ target/
 *.mwb
 *.bak
 *.png
+mvnw
+mvnw.cmd
 
 ### STS ###
 .apt_generated
