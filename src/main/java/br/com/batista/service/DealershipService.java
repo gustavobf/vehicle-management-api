@@ -39,8 +39,7 @@ public class DealershipService {
 		concessionariaRepository.deleteById(id);
 	}
 
-	public DealershipDTO update(final Long id, final DealershipDTO concessionariaDTO) {
-		concessionariaDTO.setId(id);
+	public DealershipDTO update(final DealershipDTO concessionariaDTO) {
 		final Concessionaria concessionaria = convertToEntity(concessionariaDTO);
 		final Concessionaria concessionariaSalva = concessionariaRepository.save(concessionaria);
 		final DealershipDTO dto = convertToDTO(concessionariaSalva);

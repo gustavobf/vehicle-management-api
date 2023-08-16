@@ -50,9 +50,9 @@ public class ModelController {
 	}
 
 	@ApiOperation("Updates a model based on its id")
-	@PutMapping("/{id}")
-	public ResponseEntity<ModelDTO> update(@PathVariable final Long id, @RequestBody final ModelDTO modeloDTO) {
-		final ModelDTO dto = modelService.update(id, modeloDTO);
+	@PutMapping
+	public ResponseEntity<ModelDTO> update(@RequestBody final ModelDTO modeloDTO) {
+		final ModelDTO dto = modelService.update(modeloDTO);
 		return ResponseEntity.status(201).body(dto);
 	}
 }

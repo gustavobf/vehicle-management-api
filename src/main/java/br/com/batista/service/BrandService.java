@@ -38,8 +38,7 @@ public class BrandService {
 		marcaRepository.deleteById(id);
 	}
 
-	public BrandDTO update(final Long id, final BrandDTO marcaDTO) {
-		marcaDTO.setId(id);
+	public BrandDTO update(final BrandDTO marcaDTO) {
 		final Marca marca = convertToEntity(marcaDTO);
 		final Marca marcaSalva = marcaRepository.save(marca);
 		final BrandDTO dto = convertToDTO(marcaSalva);

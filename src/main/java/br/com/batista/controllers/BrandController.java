@@ -49,10 +49,10 @@ public class BrandController {
 		return ResponseEntity.status(204).build();
 	}
 
-	@ApiOperation("Updates a brand based on its id")
-	@PutMapping("/{id}")
-	public ResponseEntity<BrandDTO> update(@PathVariable final Long id, @RequestBody final BrandDTO marcaDTO) {
-		final BrandDTO dto = brandService.update(id, marcaDTO);
+	@ApiOperation("Updates a brand")
+	@PutMapping
+	public ResponseEntity<BrandDTO> update(@RequestBody final BrandDTO marcaDTO) {
+		final BrandDTO dto = brandService.update(marcaDTO);
 		return ResponseEntity.status(201).body(dto);
 	}
 

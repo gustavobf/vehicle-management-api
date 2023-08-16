@@ -49,11 +49,10 @@ public class DealershipController {
 		return ResponseEntity.status(204).build();
 	}
 
-	@ApiOperation("Updates a dealership based on its id")
-	@PutMapping("/{id}")
-	public ResponseEntity<DealershipDTO> update(@PathVariable final Long id,
-			@RequestBody final DealershipDTO concessionariaDTO) {
-		final DealershipDTO dto = dealershipService.update(id, concessionariaDTO);
+	@ApiOperation("Updates a dealership")
+	@PutMapping
+	public ResponseEntity<DealershipDTO> update(@RequestBody final DealershipDTO concessionariaDTO) {
+		final DealershipDTO dto = dealershipService.update(concessionariaDTO);
 		return ResponseEntity.status(201).body(dto);
 	}
 

@@ -49,10 +49,10 @@ public class CarController {
 		return ResponseEntity.status(204).build();
 	}
 
-	@ApiOperation("Updates a car based on its id")
-	@PutMapping("/{id}")
-	public ResponseEntity<CarDTO> update(@PathVariable final Long id, @RequestBody final CarDTO carroDTO) {
-		final CarDTO dto = carService.update(id, carroDTO);
+	@ApiOperation("Updates a car")
+	@PutMapping
+	public ResponseEntity<CarDTO> update(@RequestBody final CarDTO carroDTO) {
+		final CarDTO dto = carService.update(carroDTO);
 		return ResponseEntity.status(201).body(dto);
 	}
 }

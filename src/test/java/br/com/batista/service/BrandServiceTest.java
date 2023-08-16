@@ -42,50 +42,50 @@ public class BrandServiceTest {
 
 	@Test
 	public void testGetAll() {
-		final List<Marca> listBrands = new ArrayList<>();
-		final Marca brand1 = new Marca(10l, "name", "country");
-		listBrands.add(brand1);
+		final List<Marca> brandList = new ArrayList<>();
+		final Marca newBrand = new Marca(10l, "name", "country");
+		brandList.add(newBrand);
 
-		when(repository.findAll()).thenReturn(listBrands);
+		when(repository.findAll()).thenReturn(brandList);
 
 		final List<BrandDTO> list = service.getAll();
-		final BrandDTO brandDTO1 = list.get(0);
-		assertEquals(10, brandDTO1.getId(), 0);
-		assertEquals(brand1.getNome(), brandDTO1.getNome());
-		assertEquals(brand1.getPais(), brandDTO1.getPais());
+		final BrandDTO brandDTO = list.get(0);
+		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
+		assertEquals(newBrand.getNome(), brandDTO.getNome());
+		assertEquals(newBrand.getPais(), brandDTO.getPais());
 	}
 
 	@Test
 	public void testGetById() {
-		final Marca brand1 = new Marca(10l, "name", "country");
-		when(repository.findById(brand1.getId())).thenReturn(Optional.of(brand1));
+		final Marca newBrand = new Marca(10l, "name", "country");
+		when(repository.findById(newBrand.getId())).thenReturn(Optional.of(newBrand));
 
-		final Optional<BrandDTO> brandReturned = service.getById(brand1.getId());
-		final BrandDTO brandDTO1 = brandReturned.get();
-		assertEquals(10, brandDTO1.getId(), 0);
-		assertEquals(brand1.getNome(), brandDTO1.getNome());
-		assertEquals(brand1.getPais(), brandDTO1.getPais());
+		final Optional<BrandDTO> returnedBrand = service.getById(newBrand.getId());
+		final BrandDTO brandDTO = returnedBrand.get();
+		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
+		assertEquals(newBrand.getNome(), brandDTO.getNome());
+		assertEquals(newBrand.getPais(), brandDTO.getPais());
 	}
 
 	@Test
 	public void testCreate() {
 		final BrandDTO brandDTO = new BrandDTO();
 		brandDTO.setId(10l);
-		brandDTO.setNome("");
-		brandDTO.setPais("");
+		brandDTO.setNome("name");
+		brandDTO.setPais("country");
 
 		when(repository.save(brandCaptor.capture())).thenReturn(service.convertToEntity(brandDTO));
 
-		final BrandDTO brandReturned = service.create(brandDTO);
+		final BrandDTO returnedBrand = service.create(brandDTO);
 
-		assertEquals(10, brandReturned.getId(), 0);
-		assertEquals(brandDTO.getNome(), brandReturned.getNome());
-		assertEquals(brandDTO.getPais(), brandReturned.getPais());
+		assertEquals(brandDTO.getId(), returnedBrand.getId(), 0);
+		assertEquals(brandDTO.getNome(), returnedBrand.getNome());
+		assertEquals(brandDTO.getPais(), returnedBrand.getPais());
 
-		final Marca brandSaved = brandCaptor.getValue();
-		assertEquals(10, brandSaved.getId(), 0);
-		assertEquals(brandDTO.getNome(), brandSaved.getNome());
-		assertEquals(brandDTO.getPais(), brandSaved.getPais());
+		final Marca savedBrand = brandCaptor.getValue();
+		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
+		assertEquals(brandDTO.getNome(), savedBrand.getNome());
+		assertEquals(brandDTO.getPais(), savedBrand.getPais());
 	}
 
 	@Test
@@ -93,6 +93,27 @@ public class BrandServiceTest {
 		service.delete(15l);
 		verify(repository, times(1)).deleteById(brandIdCaptor.capture());
 		assertEquals(15, brandIdCaptor.getValue(), 0);
+	}
+
+	@Test
+	public void testUpdate() {
+		final BrandDTO brandDTO = new BrandDTO();
+		brandDTO.setId(15l);
+		brandDTO.setNome("name");
+		brandDTO.setPais("country");
+
+		when(repository.save(brandCaptor.capture())).thenReturn(service.convertToEntity(brandDTO));
+
+		final BrandDTO updatedBrand = service.update(brandDTO);
+
+		assertEquals(brandDTO.getId(), updatedBrand.getId(), 0);
+		assertEquals(brandDTO.getNome(), updatedBrand.getNome());
+		assertEquals(brandDTO.getPais(), updatedBrand.getPais());
+
+		final Marca savedBrand = brandCaptor.getValue();
+		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
+		assertEquals(brandDTO.getNome(), savedBrand.getNome());
+		assertEquals(brandDTO.getPais(), savedBrand.getPais());
 	}
 
 }

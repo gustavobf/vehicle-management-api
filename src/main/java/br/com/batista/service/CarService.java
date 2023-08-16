@@ -39,15 +39,14 @@ public class CarService {
 		carroRepository.deleteById(id);
 	}
 
-	public CarDTO update(final Long id, final CarDTO carroDTO) {
-		carroDTO.setId(id);
+	public CarDTO update(final CarDTO carroDTO) {
 		final Carro carro = convertToEntity(carroDTO);
 		final Carro carroSalvo = carroRepository.save(carro);
 		final CarDTO dto = convertToDTO(carroSalvo);
 		return dto;
 	}
 
-	private CarDTO convertToDTO(final Carro carro) {
+	public CarDTO convertToDTO(final Carro carro) {
 		final CarDTO carroDTO = new CarDTO();
 		carroDTO.setId(carro.getId());
 		carroDTO.setAno(carro.getAno());
@@ -59,7 +58,7 @@ public class CarService {
 		return carroDTO;
 	}
 
-	private Carro convertToEntity(final CarDTO carroDTO) {
+	public Carro convertToEntity(final CarDTO carroDTO) {
 		final Carro carro = new Carro();
 		carro.setId(carroDTO.getId());
 		carro.setAno(carroDTO.getAno());

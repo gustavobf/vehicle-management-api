@@ -39,8 +39,7 @@ public class ModelService {
 		modeloRepository.deleteById(id);
 	}
 
-	public ModelDTO update(final Long id, final ModelDTO modeloDTO) {
-		modeloDTO.setId(id);
+	public ModelDTO update(final ModelDTO modeloDTO) {
 		final Modelo modelo = convertToEntity(modeloDTO);
 		final Modelo modeloSalvo = modeloRepository.save(modelo);
 		final ModelDTO dto = convertToDTO(modeloSalvo);
