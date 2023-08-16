@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.batista.dto.CarDTO;
-import br.com.batista.model.Carro;
+import br.com.batista.model.Car;
 import br.com.batista.repositories.CarRepository;
 
 public class CarServiceTest {
@@ -30,7 +30,7 @@ public class CarServiceTest {
 	CarService service;
 
 	@Captor
-	ArgumentCaptor<Carro> carCaptor;
+	ArgumentCaptor<Car> carCaptor;
 
 	@Captor
 	ArgumentCaptor<Long> carIdCaptor;
@@ -42,8 +42,8 @@ public class CarServiceTest {
 
 	@Test
 	public void testGetAll() {
-		final List<Carro> carList = new ArrayList<>();
-		final Carro newCar = new Carro(50l, "color", 1500, 4, 1999, "pla", "name");
+		final List<Car> carList = new ArrayList<>();
+		final Car newCar = new Car(50l, "color", 1500, 4, 1999, "pla", "name");
 		carList.add(newCar);
 
 		when(repository.findAll()).thenReturn(carList);
@@ -61,7 +61,7 @@ public class CarServiceTest {
 
 	@Test
 	public void testGetById() {
-		final Carro newCar = new Carro(50l, "color", 1500, 4, 1999, "pla", "name");
+		final Car newCar = new Car(50l, "color", 1500, 4, 1999, "pla", "name");
 		when(repository.findById(newCar.getId())).thenReturn(Optional.of(newCar));
 
 		final Optional<CarDTO> returnedCar = service.getById(newCar.getId());
@@ -99,7 +99,7 @@ public class CarServiceTest {
 		assertEquals(carDTO.getAno(), returnedCar.getAno());
 		assertEquals(carDTO.getPlaca(), returnedCar.getPlaca());
 
-		final Carro savedCar = carCaptor.getValue();
+		final Car savedCar = carCaptor.getValue();
 		assertEquals(carDTO.getId(), savedCar.getId(), 0);
 		assertEquals(carDTO.getNome(), savedCar.getNome());
 		assertEquals(carDTO.getCor(), savedCar.getCor());
@@ -139,7 +139,7 @@ public class CarServiceTest {
 		assertEquals(carDTO.getAno(), updatedCar.getAno());
 		assertEquals(carDTO.getPlaca(), updatedCar.getPlaca());
 
-		final Carro savedCar = carCaptor.getValue();
+		final Car savedCar = carCaptor.getValue();
 		assertEquals(carDTO.getId(), savedCar.getId(), 0);
 		assertEquals(carDTO.getId(), savedCar.getId(), 0);
 		assertEquals(carDTO.getNome(), savedCar.getNome());

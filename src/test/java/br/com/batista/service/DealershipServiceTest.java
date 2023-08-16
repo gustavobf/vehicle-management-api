@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.batista.dto.DealershipDTO;
-import br.com.batista.model.Concessionaria;
+import br.com.batista.model.Dealership;
 import br.com.batista.repositories.DealershipRepository;
 
 public class DealershipServiceTest {
@@ -30,7 +30,7 @@ public class DealershipServiceTest {
 	DealershipService service;
 
 	@Captor
-	ArgumentCaptor<Concessionaria> dealershipCaptor;
+	ArgumentCaptor<Dealership> dealershipCaptor;
 
 	@Captor
 	ArgumentCaptor<Long> dealershipIdCaptor;
@@ -42,8 +42,8 @@ public class DealershipServiceTest {
 
 	@Test
 	public void testGetAll() {
-		final List<Concessionaria> dealershipList = new ArrayList<>();
-		final Concessionaria newDealership = new Concessionaria(105l, "111", "name");
+		final List<Dealership> dealershipList = new ArrayList<>();
+		final Dealership newDealership = new Dealership(105l, "111", "name");
 		dealershipList.add(newDealership);
 
 		when(repository.findAll()).thenReturn(dealershipList);
@@ -57,7 +57,7 @@ public class DealershipServiceTest {
 
 	@Test
 	public void testGetById() {
-		final Concessionaria newDealership = new Concessionaria(10l, "name", "country");
+		final Dealership newDealership = new Dealership(10l, "name", "country");
 		when(repository.findById(newDealership.getId())).thenReturn(Optional.of(newDealership));
 
 		final Optional<DealershipDTO> returnedDealership = service.getById(newDealership.getId());
@@ -81,7 +81,7 @@ public class DealershipServiceTest {
 		assertEquals(dealershipDTO.getCnpj(), returnedDealership.getCnpj());
 		assertEquals(dealershipDTO.getNome(), returnedDealership.getNome());
 
-		final Concessionaria dealershipSaved = dealershipCaptor.getValue();
+		final Dealership dealershipSaved = dealershipCaptor.getValue();
 		assertEquals(dealershipDTO.getId(), dealershipSaved.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), dealershipSaved.getCnpj());
 		assertEquals(dealershipDTO.getNome(), dealershipSaved.getNome());
@@ -109,7 +109,7 @@ public class DealershipServiceTest {
 		assertEquals(dealershipDTO.getCnpj(), updatedDealership.getCnpj());
 		assertEquals(dealershipDTO.getNome(), updatedDealership.getNome());
 
-		final Concessionaria savedDealership = dealershipCaptor.getValue();
+		final Dealership savedDealership = dealershipCaptor.getValue();
 		assertEquals(dealershipDTO.getId(), savedDealership.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), savedDealership.getCnpj());
 		assertEquals(dealershipDTO.getNome(), savedDealership.getNome());

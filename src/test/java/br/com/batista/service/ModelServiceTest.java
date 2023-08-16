@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.batista.dto.ModelDTO;
-import br.com.batista.model.Modelo;
+import br.com.batista.model.Model;
 import br.com.batista.repositories.ModelRepository;
 
 public class ModelServiceTest {
@@ -30,7 +30,7 @@ public class ModelServiceTest {
 	ModelService service;
 
 	@Captor
-	ArgumentCaptor<Modelo> modelCaptor;
+	ArgumentCaptor<Model> modelCaptor;
 
 	@Captor
 	ArgumentCaptor<Long> modelIdCaptor;
@@ -42,8 +42,8 @@ public class ModelServiceTest {
 
 	@Test
 	public void testGetAll() {
-		final List<Modelo> modelList = new ArrayList<>();
-		final Modelo newModel = new Modelo("name");
+		final List<Model> modelList = new ArrayList<>();
+		final Model newModel = new Model("name");
 		modelList.add(newModel);
 
 		when(repository.findAll()).thenReturn(modelList);
@@ -55,7 +55,7 @@ public class ModelServiceTest {
 
 	@Test
 	public void testGetById() {
-		final Modelo newModel = new Modelo("name");
+		final Model newModel = new Model("name");
 		when(repository.findById(newModel.getId())).thenReturn(Optional.of(newModel));
 
 		final Optional<ModelDTO> returnedModel = service.getById(newModel.getId());
@@ -74,7 +74,7 @@ public class ModelServiceTest {
 
 		assertEquals(modelDTO.getNome(), returnedModel.getNome());
 
-		final Modelo savedModel = modelCaptor.getValue();
+		final Model savedModel = modelCaptor.getValue();
 		assertEquals(modelDTO.getNome(), savedModel.getNome());
 	}
 
@@ -95,7 +95,7 @@ public class ModelServiceTest {
 		final ModelDTO updatedModel = service.update(modelDTO);
 		assertEquals(modelDTO.getNome(), updatedModel.getNome());
 
-		final Modelo savedModel = modelCaptor.getValue();
+		final Model savedModel = modelCaptor.getValue();
 		assertEquals(modelDTO.getNome(), savedModel.getNome());
 	}
 

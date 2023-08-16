@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.batista.dto.BrandDTO;
-import br.com.batista.model.Marca;
+import br.com.batista.model.Brand;
 import br.com.batista.repositories.BrandRepository;
 
 public class BrandServiceTest {
@@ -30,7 +30,7 @@ public class BrandServiceTest {
 	BrandService service;
 
 	@Captor
-	ArgumentCaptor<Marca> brandCaptor;
+	ArgumentCaptor<Brand> brandCaptor;
 
 	@Captor
 	ArgumentCaptor<Long> brandIdCaptor;
@@ -42,8 +42,8 @@ public class BrandServiceTest {
 
 	@Test
 	public void testGetAll() {
-		final List<Marca> brandList = new ArrayList<>();
-		final Marca newBrand = new Marca(10l, "name", "country");
+		final List<Brand> brandList = new ArrayList<>();
+		final Brand newBrand = new Brand(10l, "name", "country");
 		brandList.add(newBrand);
 
 		when(repository.findAll()).thenReturn(brandList);
@@ -57,7 +57,7 @@ public class BrandServiceTest {
 
 	@Test
 	public void testGetById() {
-		final Marca newBrand = new Marca(10l, "name", "country");
+		final Brand newBrand = new Brand(10l, "name", "country");
 		when(repository.findById(newBrand.getId())).thenReturn(Optional.of(newBrand));
 
 		final Optional<BrandDTO> returnedBrand = service.getById(newBrand.getId());
@@ -82,7 +82,7 @@ public class BrandServiceTest {
 		assertEquals(brandDTO.getNome(), returnedBrand.getNome());
 		assertEquals(brandDTO.getPais(), returnedBrand.getPais());
 
-		final Marca savedBrand = brandCaptor.getValue();
+		final Brand savedBrand = brandCaptor.getValue();
 		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
 		assertEquals(brandDTO.getNome(), savedBrand.getNome());
 		assertEquals(brandDTO.getPais(), savedBrand.getPais());
@@ -110,7 +110,7 @@ public class BrandServiceTest {
 		assertEquals(brandDTO.getNome(), updatedBrand.getNome());
 		assertEquals(brandDTO.getPais(), updatedBrand.getPais());
 
-		final Marca savedBrand = brandCaptor.getValue();
+		final Brand savedBrand = brandCaptor.getValue();
 		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
 		assertEquals(brandDTO.getNome(), savedBrand.getNome());
 		assertEquals(brandDTO.getPais(), savedBrand.getPais());

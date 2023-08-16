@@ -12,8 +12,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "carro")
-public class Carro implements Serializable {
+@Table(name = "car")
+public class Car implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,15 +22,15 @@ public class Carro implements Serializable {
 
 	@ManyToOne()
 	@JoinColumn(name = "modelo_id")
-	private Modelo modelo;
+	private Model model;
 
 	@ManyToOne()
 	@JoinColumn(name = "marca_id")
-	private Marca marca;
+	private Brand brand;
 
 	@ManyToOne()
 	@JoinColumn(name = "concessionaria_id")
-	private Concessionaria concessionaria;
+	private Dealership dealership;
 
 	private String cor;
 	private int potencia;
@@ -39,10 +39,10 @@ public class Carro implements Serializable {
 	private String placa;
 	private String nome;
 
-	public Carro() {
+	public Car() {
 	}
 
-	public Carro(Long id, String cor, int potencia, int portas, int ano, String placa, String nome) {
+	public Car(final Long id, final String cor, final int potencia, final int portas, final int ano, final String placa, final String nome) {
 		super();
 		this.id = id;
 		this.cor = cor;
@@ -53,7 +53,7 @@ public class Carro implements Serializable {
 		this.nome = nome;
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -61,7 +61,7 @@ public class Carro implements Serializable {
 		return cor;
 	}
 
-	public void setCor(String cor) {
+	public void setCor(final String cor) {
 		this.cor = cor;
 	}
 
@@ -69,7 +69,7 @@ public class Carro implements Serializable {
 		return potencia;
 	}
 
-	public void setPotencia(int potencia) {
+	public void setPotencia(final int potencia) {
 		this.potencia = potencia;
 	}
 
@@ -77,7 +77,7 @@ public class Carro implements Serializable {
 		return portas;
 	}
 
-	public void setPortas(int portas) {
+	public void setPortas(final int portas) {
 		this.portas = portas;
 	}
 
@@ -85,7 +85,7 @@ public class Carro implements Serializable {
 		return ano;
 	}
 
-	public void setAno(int ano) {
+	public void setAno(final int ano) {
 		this.ano = ano;
 	}
 
@@ -93,7 +93,7 @@ public class Carro implements Serializable {
 		return placa;
 	}
 
-	public void setPlaca(String placa) {
+	public void setPlaca(final String placa) {
 		this.placa = placa;
 	}
 
@@ -101,7 +101,7 @@ public class Carro implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(final String nome) {
 		this.nome = nome;
 	}
 
@@ -115,14 +115,14 @@ public class Carro implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Carro other = (Carro) obj;
+		final Car other = (Car) obj;
 		return Objects.equals(id, other.id);
 	}
 
@@ -132,9 +132,9 @@ public class Carro implements Serializable {
 				+ ", placa=" + placa + ", nome=" + nome + "]";
 	}
 
-//	public String toCsv() {
-//		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca() + ", qtdPortas: "
-//				+ this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: " + this.getAno() + ", Id: "
-//				+ super.getId();
-//	}
+	//	public String toCsv() {
+	//		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca() + ", qtdPortas: "
+	//				+ this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: " + this.getAno() + ", Id: "
+	//				+ super.getId();
+	//	}
 }

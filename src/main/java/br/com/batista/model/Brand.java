@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "modelo")
-public class Modelo implements Serializable {
+@Table(name = "brand")
+public class Brand implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -19,19 +19,19 @@ public class Modelo implements Serializable {
 	private Long id;
 
 	private String nome;
+	private String pais;
 
-	public Modelo() {
+	public Brand() {
 	}
 
-	public Modelo(String nome) {
+	public Brand(final Long id, final String nome, final String pais) {
+		super();
+		this.id = id;
 		this.nome = nome;
+		this.pais = pais;
 	}
 
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -39,8 +39,20 @@ public class Modelo implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(final String nome) {
 		this.nome = nome;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(final String pais) {
+		this.pais = pais;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	@Override
@@ -49,24 +61,24 @@ public class Modelo implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Modelo other = (Modelo) obj;
+		final Brand other = (Brand) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Modelo [id=" + id + ", nome=" + nome + "]";
+		return "Marca [id=" + id + ", nome=" + nome + ", pais=" + pais + "]";
 	}
 
-//	public String toCsv() {
-//		return "Nome: " + this.getNome() + ", Id: " + super.getId();
-//	}
+	//	public String toCsv() {
+	//		return "Nome: " + this.getNome() + ", Pais: " + this.getPais() + ", Id: " + super.getId();
+	//	}
 
 }

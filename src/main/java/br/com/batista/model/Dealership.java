@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "concessionaria")
-public class Concessionaria implements Serializable {
+@Table(name = "dealership")
+public class Dealership implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -21,10 +21,10 @@ public class Concessionaria implements Serializable {
 	private String cnpj;
 	private String nome;
 
-	public Concessionaria() {
+	public Dealership() {
 	}
 
-	public Concessionaria(Long id, String cnpj, String nome) {
+	public Dealership(final Long id, final String cnpj, final String nome) {
 		super();
 		this.id = id;
 		this.cnpj = cnpj;
@@ -35,7 +35,7 @@ public class Concessionaria implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -43,7 +43,7 @@ public class Concessionaria implements Serializable {
 		return cnpj;
 	}
 
-	public void setCnpj(String cnpj) {
+	public void setCnpj(final String cnpj) {
 		this.cnpj = cnpj;
 	}
 
@@ -51,7 +51,7 @@ public class Concessionaria implements Serializable {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(final String nome) {
 		this.nome = nome;
 	}
 
@@ -61,14 +61,14 @@ public class Concessionaria implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Concessionaria other = (Concessionaria) obj;
+		final Dealership other = (Dealership) obj;
 		return Objects.equals(id, other.id);
 	}
 
@@ -77,8 +77,8 @@ public class Concessionaria implements Serializable {
 		return "Concessionaria [id=" + id + ", cnpj=" + cnpj + ", nome=" + nome + "]";
 	}
 
-//	public String toCsv() {
-//		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + super.getId();
-//	}
+	//	public String toCsv() {
+	//		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + super.getId();
+	//	}
 
 }

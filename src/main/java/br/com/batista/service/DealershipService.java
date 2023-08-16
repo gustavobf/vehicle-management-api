@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.batista.dto.DealershipDTO;
-import br.com.batista.model.Concessionaria;
+import br.com.batista.model.Dealership;
 import br.com.batista.repositories.DealershipRepository;
 
 @Service
@@ -18,19 +18,19 @@ public class DealershipService {
 	private DealershipRepository concessionariaRepository;
 
 	public List<DealershipDTO> getAll() {
-		final List<Concessionaria> lista = concessionariaRepository.findAll();
+		final List<Dealership> lista = concessionariaRepository.findAll();
 		return lista.stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	public Optional<DealershipDTO> getById(final Long id) {
-		final Optional<Concessionaria> concessionaria = concessionariaRepository.findById(id);
+		final Optional<Dealership> concessionaria = concessionariaRepository.findById(id);
 		final DealershipDTO concessionariaDTO = convertToDTO(concessionaria.get());
 		return Optional.of(concessionariaDTO);
 	}
 
 	public DealershipDTO create(final DealershipDTO concessionariaDTO) {
-		final Concessionaria concessionaria = convertToEntity(concessionariaDTO);
-		final Concessionaria concessionariaSalva = concessionariaRepository.save(concessionaria);
+		final Dealership concessionaria = convertToEntity(concessionariaDTO);
+		final Dealership concessionariaSalva = concessionariaRepository.save(concessionaria);
 		final DealershipDTO dto = convertToDTO(concessionariaSalva);
 		return dto;
 	}
@@ -40,13 +40,13 @@ public class DealershipService {
 	}
 
 	public DealershipDTO update(final DealershipDTO concessionariaDTO) {
-		final Concessionaria concessionaria = convertToEntity(concessionariaDTO);
-		final Concessionaria concessionariaSalva = concessionariaRepository.save(concessionaria);
+		final Dealership concessionaria = convertToEntity(concessionariaDTO);
+		final Dealership concessionariaSalva = concessionariaRepository.save(concessionaria);
 		final DealershipDTO dto = convertToDTO(concessionariaSalva);
 		return dto;
 	}
 
-	public DealershipDTO convertToDTO(final Concessionaria concessionaria) {
+	public DealershipDTO convertToDTO(final Dealership concessionaria) {
 		final DealershipDTO concessionariaDTO = new DealershipDTO();
 		concessionariaDTO.setId(concessionaria.getId());
 		concessionariaDTO.setCnpj(concessionaria.getCnpj());
@@ -54,8 +54,8 @@ public class DealershipService {
 		return concessionariaDTO;
 	}
 
-	public Concessionaria convertToEntity(final DealershipDTO concessionariaDTO) {
-		final Concessionaria concessionaria = new Concessionaria();
+	public Dealership convertToEntity(final DealershipDTO concessionariaDTO) {
+		final Dealership concessionaria = new Dealership();
 		concessionaria.setId(concessionariaDTO.getId());
 		concessionaria.setCnpj(concessionariaDTO.getCnpj());
 		concessionaria.setNome(concessionariaDTO.getNome());
