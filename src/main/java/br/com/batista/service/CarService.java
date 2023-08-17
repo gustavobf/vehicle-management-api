@@ -49,24 +49,24 @@ public class CarService {
 	public CarDTO convertToDTO(final Car carro) {
 		final CarDTO carroDTO = new CarDTO();
 		carroDTO.setId(carro.getId());
-		carroDTO.setAno(carro.getAno());
-		carroDTO.setCor(carro.getCor());
-		carroDTO.setNome(carro.getNome());
-		carroDTO.setPlaca(carro.getPlaca());
-		carroDTO.setPortas(carro.getPortas());
-		carroDTO.setPotencia(carro.getPotencia());
+		carroDTO.setAno(carro.getManufacturing());
+		carroDTO.setCor(carro.getColor());
+		carroDTO.setNome(carro.getName());
+		carroDTO.setPlaca(carro.getPlate());
+		carroDTO.setPortas(carro.getDoor());
+		carroDTO.setPotencia(carro.getPower());
 		return carroDTO;
 	}
 
 	public Car convertToEntity(final CarDTO carroDTO) {
 		final Car carro = new Car();
 		carro.setId(carroDTO.getId());
-		carro.setAno(carroDTO.getAno());
-		carro.setCor(carroDTO.getCor());
-		carro.setNome(carroDTO.getNome());
-		carro.setPlaca(carroDTO.getPlaca());
-		carro.setPortas(carroDTO.getPortas());
-		carro.setPotencia(carroDTO.getPotencia());
+		carro.setManufacturing(carroDTO.getAno());
+		carro.setColor(carroDTO.getCor());
+		carro.setName(carroDTO.getNome());
+		carro.setPlate(carroDTO.getPlaca());
+		carro.setDoor(carroDTO.getPortas());
+		carro.setPower(carroDTO.getPotencia());
 		return carro;
 	}
 

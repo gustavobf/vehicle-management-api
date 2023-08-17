@@ -52,7 +52,7 @@ public class DealershipServiceTest {
 		final DealershipDTO dealershipDTO = list.get(0);
 		assertEquals(newDealership.getId(), dealershipDTO.getId(), 0);
 		assertEquals(newDealership.getCnpj(), dealershipDTO.getCnpj());
-		assertEquals(newDealership.getNome(), dealershipDTO.getNome());
+		assertEquals(newDealership.getName(), dealershipDTO.getNome());
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class DealershipServiceTest {
 		final DealershipDTO dealershipDTO = returnedDealership.get();
 		assertEquals(newDealership.getId(), dealershipDTO.getId(), 0);
 		assertEquals(newDealership.getCnpj(), dealershipDTO.getCnpj());
-		assertEquals(newDealership.getNome(), dealershipDTO.getNome());
+		assertEquals(newDealership.getName(), dealershipDTO.getNome());
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class DealershipServiceTest {
 		final Dealership dealershipSaved = dealershipCaptor.getValue();
 		assertEquals(dealershipDTO.getId(), dealershipSaved.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), dealershipSaved.getCnpj());
-		assertEquals(dealershipDTO.getNome(), dealershipSaved.getNome());
+		assertEquals(dealershipDTO.getNome(), dealershipSaved.getName());
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class DealershipServiceTest {
 		final Dealership savedDealership = dealershipCaptor.getValue();
 		assertEquals(dealershipDTO.getId(), savedDealership.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), savedDealership.getCnpj());
-		assertEquals(dealershipDTO.getNome(), savedDealership.getNome());
+		assertEquals(dealershipDTO.getNome(), savedDealership.getName());
 	}
 
 }

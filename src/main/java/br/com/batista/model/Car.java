@@ -21,88 +21,89 @@ public class Car implements Serializable {
 	private Long id;
 
 	@ManyToOne()
-	@JoinColumn(name = "modelo_id")
+	@JoinColumn(name = "model_id")
 	private Model model;
 
 	@ManyToOne()
-	@JoinColumn(name = "marca_id")
+	@JoinColumn(name = "brand_id")
 	private Brand brand;
 
 	@ManyToOne()
-	@JoinColumn(name = "concessionaria_id")
+	@JoinColumn(name = "dealership_id")
 	private Dealership dealership;
 
-	private String cor;
-	private int potencia;
-	private int portas;
-	private int ano;
-	private String placa;
-	private String nome;
+	private String color;
+	private int power;
+	private int door;
+	private int manufacturing;
+	private String plate;
+	private String name;
 
 	public Car() {
 	}
 
-	public Car(final Long id, final String cor, final int potencia, final int portas, final int ano, final String placa, final String nome) {
+	public Car(final Long id, final String color, final int power, final int door, final int manufacturing,
+			final String plate, final String name) {
 		super();
 		this.id = id;
-		this.cor = cor;
-		this.potencia = potencia;
-		this.portas = portas;
-		this.ano = ano;
-		this.placa = placa;
-		this.nome = nome;
+		this.color = color;
+		this.power = power;
+		this.door = door;
+		this.manufacturing = manufacturing;
+		this.plate = plate;
+		this.name = name;
 	}
 
 	public void setId(final Long id) {
 		this.id = id;
 	}
 
-	public String getCor() {
-		return cor;
+	public String getColor() {
+		return color;
 	}
 
-	public void setCor(final String cor) {
-		this.cor = cor;
+	public void setColor(final String color) {
+		this.color = color;
 	}
 
-	public int getPotencia() {
-		return potencia;
+	public int getPower() {
+		return power;
 	}
 
-	public void setPotencia(final int potencia) {
-		this.potencia = potencia;
+	public void setPower(final int power) {
+		this.power = power;
 	}
 
-	public int getPortas() {
-		return portas;
+	public int getDoor() {
+		return door;
 	}
 
-	public void setPortas(final int portas) {
-		this.portas = portas;
+	public void setDoor(final int door) {
+		this.door = door;
 	}
 
-	public int getAno() {
-		return ano;
+	public int getManufacturing() {
+		return manufacturing;
 	}
 
-	public void setAno(final int ano) {
-		this.ano = ano;
+	public void setManufacturing(final int manufacturing) {
+		this.manufacturing = manufacturing;
 	}
 
-	public String getPlaca() {
-		return placa;
+	public String getPlate() {
+		return plate;
 	}
 
-	public void setPlaca(final String placa) {
-		this.placa = placa;
+	public void setPlate(final String plate) {
+		this.plate = plate;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(final String nome) {
-		this.nome = nome;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -128,13 +129,9 @@ public class Car implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Carro [id=" + id + ", cor=" + cor + ", potencia=" + potencia + ", portas=" + portas + ", ano=" + ano
-				+ ", placa=" + placa + ", nome=" + nome + "]";
+		return "Car [id=" + id + ", model=" + model + ", brand=" + brand + ", dealership=" + dealership + ", color="
+				+ color + ", power=" + power + ", door=" + door + ", manufacturing=" + manufacturing + ", plate="
+				+ plate + ", name=" + name + "]";
 	}
 
-	//	public String toCsv() {
-	//		return "Nome: " + this.getNome() + ", Cor: " + this.getCor() + ", Placa: " + this.getPlaca() + ", qtdPortas: "
-	//				+ this.getPortas() + ", Potencia: " + this.getPotencia() + ", Ano: " + this.getAno() + ", Id: "
-	//				+ super.getId();
-	//	}
 }

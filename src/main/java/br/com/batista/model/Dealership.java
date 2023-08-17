@@ -19,7 +19,7 @@ public class Dealership implements Serializable {
 	private Long id;
 
 	private String cnpj;
-	private String nome;
+	private String name;
 
 	public Dealership() {
 	}
@@ -28,7 +28,7 @@ public class Dealership implements Serializable {
 		super();
 		this.id = id;
 		this.cnpj = cnpj;
-		this.nome = nome;
+		name = nome;
 	}
 
 	public Long getId() {
@@ -47,12 +47,12 @@ public class Dealership implements Serializable {
 		this.cnpj = cnpj;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(final String nome) {
-		this.nome = nome;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -74,11 +74,7 @@ public class Dealership implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Concessionaria [id=" + id + ", cnpj=" + cnpj + ", nome=" + nome + "]";
+		return "Dealership [id=" + id + ", cnpj=" + cnpj + ", name=" + name + "]";
 	}
-
-	//	public String toCsv() {
-	//		return "Nome: " + this.getNome() + ", CNPJ: " + this.getCnpj() + ", Id: " + super.getId();
-	//	}
 
 }

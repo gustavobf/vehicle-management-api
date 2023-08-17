@@ -18,8 +18,8 @@ public class Brand implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String nome;
-	private String pais;
+	private String name;
+	private String country;
 
 	public Brand() {
 	}
@@ -27,28 +27,28 @@ public class Brand implements Serializable {
 	public Brand(final Long id, final String nome, final String pais) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.pais = pais;
+		name = nome;
+		country = pais;
 	}
 
 	public void setId(final Long id) {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(final String nome) {
-		this.nome = nome;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
-	public String getPais() {
-		return pais;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setPais(final String pais) {
-		this.pais = pais;
+	public void setCountry(final String country) {
+		this.country = country;
 	}
 
 	public Long getId() {
@@ -74,11 +74,7 @@ public class Brand implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Marca [id=" + id + ", nome=" + nome + ", pais=" + pais + "]";
+		return "Brand [id=" + id + ", name=" + name + ", country=" + country + "]";
 	}
-
-	//	public String toCsv() {
-	//		return "Nome: " + this.getNome() + ", Pais: " + this.getPais() + ", Id: " + super.getId();
-	//	}
 
 }

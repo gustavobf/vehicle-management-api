@@ -56,7 +56,7 @@ public class ModelService {
 	public Model convertToEntity(final ModelDTO modeloDTO) {
 		final Model modelo = new Model();
 		modelo.setId(modeloDTO.getId());
-		modelo.setNome(modeloDTO.getNome());
+		modelo.setName(modeloDTO.getNome());
 		return modelo;
 	}
 

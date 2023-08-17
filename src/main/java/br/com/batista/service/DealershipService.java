@@ -50,7 +50,7 @@ public class DealershipService {
 		final DealershipDTO concessionariaDTO = new DealershipDTO();
 		concessionariaDTO.setId(concessionaria.getId());
 		concessionariaDTO.setCnpj(concessionaria.getCnpj());
-		concessionariaDTO.setNome(concessionaria.getNome());
+		concessionariaDTO.setNome(concessionaria.getName());
 		return concessionariaDTO;
 	}
 
@@ -58,7 +58,7 @@ public class DealershipService {
 		final Dealership concessionaria = new Dealership();
 		concessionaria.setId(concessionariaDTO.getId());
 		concessionaria.setCnpj(concessionariaDTO.getCnpj());
-		concessionaria.setNome(concessionariaDTO.getNome());
+		concessionaria.setName(concessionariaDTO.getNome());
 		return concessionaria;
 	}
 

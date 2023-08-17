@@ -51,12 +51,12 @@ public class CarServiceTest {
 		final List<CarDTO> list = service.getAll();
 		final CarDTO carDTO = list.get(0);
 		assertEquals(newCar.getId(), carDTO.getId(), 0);
-		assertEquals(newCar.getNome(), carDTO.getNome());
-		assertEquals(newCar.getCor(), carDTO.getCor());
-		assertEquals(newCar.getPotencia(), carDTO.getPotencia());
-		assertEquals(newCar.getPortas(), carDTO.getPortas());
-		assertEquals(newCar.getAno(), carDTO.getAno());
-		assertEquals(newCar.getPlaca(), carDTO.getPlaca());
+		assertEquals(newCar.getName(), carDTO.getNome());
+		assertEquals(newCar.getColor(), carDTO.getCor());
+		assertEquals(newCar.getPower(), carDTO.getPotencia());
+		assertEquals(newCar.getDoor(), carDTO.getPortas());
+		assertEquals(newCar.getManufacturing(), carDTO.getAno());
+		assertEquals(newCar.getPlate(), carDTO.getPlaca());
 	}
 
 	@Test
@@ -67,12 +67,12 @@ public class CarServiceTest {
 		final Optional<CarDTO> returnedCar = service.getById(newCar.getId());
 		final CarDTO carDTO = returnedCar.get();
 		assertEquals(newCar.getId(), carDTO.getId(), 0);
-		assertEquals(newCar.getNome(), carDTO.getNome());
-		assertEquals(newCar.getCor(), carDTO.getCor());
-		assertEquals(newCar.getPotencia(), carDTO.getPotencia());
-		assertEquals(newCar.getPortas(), carDTO.getPortas());
-		assertEquals(newCar.getAno(), carDTO.getAno());
-		assertEquals(newCar.getPlaca(), carDTO.getPlaca());
+		assertEquals(newCar.getName(), carDTO.getNome());
+		assertEquals(newCar.getColor(), carDTO.getCor());
+		assertEquals(newCar.getPower(), carDTO.getPotencia());
+		assertEquals(newCar.getDoor(), carDTO.getPortas());
+		assertEquals(newCar.getManufacturing(), carDTO.getAno());
+		assertEquals(newCar.getPlate(), carDTO.getPlaca());
 	}
 
 	@Test
@@ -101,12 +101,12 @@ public class CarServiceTest {
 
 		final Car savedCar = carCaptor.getValue();
 		assertEquals(carDTO.getId(), savedCar.getId(), 0);
-		assertEquals(carDTO.getNome(), savedCar.getNome());
-		assertEquals(carDTO.getCor(), savedCar.getCor());
-		assertEquals(carDTO.getPotencia(), savedCar.getPotencia());
-		assertEquals(carDTO.getPortas(), savedCar.getPortas());
-		assertEquals(carDTO.getAno(), savedCar.getAno());
-		assertEquals(carDTO.getPlaca(), savedCar.getPlaca());
+		assertEquals(carDTO.getNome(), savedCar.getName());
+		assertEquals(carDTO.getCor(), savedCar.getColor());
+		assertEquals(carDTO.getPotencia(), savedCar.getPower());
+		assertEquals(carDTO.getPortas(), savedCar.getDoor());
+		assertEquals(carDTO.getAno(), savedCar.getManufacturing());
+		assertEquals(carDTO.getPlaca(), savedCar.getPlate());
 	}
 
 	@Test
@@ -131,7 +131,6 @@ public class CarServiceTest {
 
 		final CarDTO updatedCar = service.update(carDTO);
 		assertEquals(carDTO.getId(), updatedCar.getId(), 0);
-		assertEquals(carDTO.getId(), updatedCar.getId(), 0);
 		assertEquals(carDTO.getNome(), updatedCar.getNome());
 		assertEquals(carDTO.getCor(), updatedCar.getCor());
 		assertEquals(carDTO.getPotencia(), updatedCar.getPotencia());
@@ -141,13 +140,12 @@ public class CarServiceTest {
 
 		final Car savedCar = carCaptor.getValue();
 		assertEquals(carDTO.getId(), savedCar.getId(), 0);
-		assertEquals(carDTO.getId(), savedCar.getId(), 0);
-		assertEquals(carDTO.getNome(), savedCar.getNome());
-		assertEquals(carDTO.getCor(), savedCar.getCor());
-		assertEquals(carDTO.getPotencia(), savedCar.getPotencia());
-		assertEquals(carDTO.getPortas(), savedCar.getPortas());
-		assertEquals(carDTO.getAno(), savedCar.getAno());
-		assertEquals(carDTO.getPlaca(), savedCar.getPlaca());
+		assertEquals(carDTO.getNome(), savedCar.getName());
+		assertEquals(carDTO.getCor(), savedCar.getColor());
+		assertEquals(carDTO.getPotencia(), savedCar.getPower());
+		assertEquals(carDTO.getPortas(), savedCar.getDoor());
+		assertEquals(carDTO.getAno(), savedCar.getManufacturing());
+		assertEquals(carDTO.getPlaca(), savedCar.getPlate());
 	}
 
 }

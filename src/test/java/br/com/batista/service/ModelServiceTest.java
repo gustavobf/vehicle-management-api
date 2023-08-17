@@ -43,7 +43,7 @@ public class ModelServiceTest {
 	@Test
 	public void testGetAll() {
 		final List<Model> modelList = new ArrayList<>();
-		final Model newModel = new Model("name");
+		final Model newModel = new Model(1l, "name");
 		modelList.add(newModel);
 
 		when(repository.findAll()).thenReturn(modelList);
@@ -55,7 +55,7 @@ public class ModelServiceTest {
 
 	@Test
 	public void testGetById() {
-		final Model newModel = new Model("name");
+		final Model newModel = new Model(1l, "name");
 		when(repository.findById(newModel.getId())).thenReturn(Optional.of(newModel));
 
 		final Optional<ModelDTO> returnedModel = service.getById(newModel.getId());

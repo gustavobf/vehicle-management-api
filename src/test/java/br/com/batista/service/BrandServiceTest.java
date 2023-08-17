@@ -51,8 +51,8 @@ public class BrandServiceTest {
 		final List<BrandDTO> list = service.getAll();
 		final BrandDTO brandDTO = list.get(0);
 		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
-		assertEquals(newBrand.getNome(), brandDTO.getNome());
-		assertEquals(newBrand.getPais(), brandDTO.getPais());
+		assertEquals(newBrand.getName(), brandDTO.getNome());
+		assertEquals(newBrand.getCountry(), brandDTO.getPais());
 	}
 
 	@Test
@@ -63,8 +63,8 @@ public class BrandServiceTest {
 		final Optional<BrandDTO> returnedBrand = service.getById(newBrand.getId());
 		final BrandDTO brandDTO = returnedBrand.get();
 		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
-		assertEquals(newBrand.getNome(), brandDTO.getNome());
-		assertEquals(newBrand.getPais(), brandDTO.getPais());
+		assertEquals(newBrand.getName(), brandDTO.getNome());
+		assertEquals(newBrand.getCountry(), brandDTO.getPais());
 	}
 
 	@Test
@@ -84,8 +84,8 @@ public class BrandServiceTest {
 
 		final Brand savedBrand = brandCaptor.getValue();
 		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
-		assertEquals(brandDTO.getNome(), savedBrand.getNome());
-		assertEquals(brandDTO.getPais(), savedBrand.getPais());
+		assertEquals(brandDTO.getNome(), savedBrand.getName());
+		assertEquals(brandDTO.getPais(), savedBrand.getCountry());
 	}
 
 	@Test
@@ -112,8 +112,8 @@ public class BrandServiceTest {
 
 		final Brand savedBrand = brandCaptor.getValue();
 		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
-		assertEquals(brandDTO.getNome(), savedBrand.getNome());
-		assertEquals(brandDTO.getPais(), savedBrand.getPais());
+		assertEquals(brandDTO.getNome(), savedBrand.getName());
+		assertEquals(brandDTO.getPais(), savedBrand.getCountry());
 	}
 
 }

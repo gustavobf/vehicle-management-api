@@ -18,13 +18,14 @@ public class Model implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String nome;
+	private String name;
 
 	public Model() {
 	}
 
-	public Model(final String nome) {
-		this.nome = nome;
+	public Model(final Long id, final String name) {
+		this.id = id;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -36,11 +37,11 @@ public class Model implements Serializable {
 	}
 
 	public String getNome() {
-		return nome;
+		return name;
 	}
 
-	public void setNome(final String nome) {
-		this.nome = nome;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -62,11 +63,7 @@ public class Model implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Modelo [id=" + id + ", nome=" + nome + "]";
+		return "Model [id=" + id + ", name=" + name + "]";
 	}
-
-	//	public String toCsv() {
-	//		return "Nome: " + this.getNome() + ", Id: " + super.getId();
-	//	}
 
 }

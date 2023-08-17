@@ -48,16 +48,16 @@ public class BrandService {
 	public BrandDTO convertToDTO(final Brand marca) {
 		final BrandDTO marcaDTO = new BrandDTO();
 		marcaDTO.setId(marca.getId());
-		marcaDTO.setNome(marca.getNome());
-		marcaDTO.setPais(marca.getPais());
+		marcaDTO.setNome(marca.getName());
+		marcaDTO.setPais(marca.getCountry());
 		return marcaDTO;
 	}
 
 	public Brand convertToEntity(final BrandDTO marcaDTO) {
 		final Brand marca = new Brand();
 		marca.setId(marcaDTO.getId());
-		marca.setNome(marcaDTO.getNome());
-		marca.setPais(marcaDTO.getPais());
+		marca.setName(marcaDTO.getNome());
+		marca.setCountry(marcaDTO.getPais());
 		return marca;
 	}
 
