@@ -14,7 +14,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-//TODO fix logic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -22,22 +21,22 @@ public class SecurityConfig {
 	@Autowired
 	private Environment env;
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	@Bean
+	SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-            http.headers(headers -> headers.frameOptions().disable());
+			http.headers(headers -> headers.frameOptions().disable());
 		}
 
-        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.authorizeRequests(requests -> requests.anyRequest().permitAll());
-        http.headers(headers -> headers.frameOptions().disable());
-        http.csrf(csrf -> csrf.disable());
-        return http.build();
+		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.authorizeRequests(requests -> requests.anyRequest().permitAll());
+		http.headers(headers -> headers.frameOptions().disable());
+		http.csrf(csrf -> csrf.disable());
+		return http.build();
 	}
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		final CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
 		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);

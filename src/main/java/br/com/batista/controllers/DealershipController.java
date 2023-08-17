@@ -38,8 +38,8 @@ public class DealershipController {
 
 	@ApiOperation("Saves a dealership")
 	@PostMapping
-	public ResponseEntity<DealershipDTO> create(@RequestBody final DealershipDTO concessionariaDTO) {
-		return ResponseEntity.status(201).body(dealershipService.create(concessionariaDTO));
+	public ResponseEntity<DealershipDTO> create(@RequestBody final DealershipDTO dealershipDTO) {
+		return ResponseEntity.status(201).body(dealershipService.create(dealershipDTO));
 	}
 
 	@ApiOperation("Deletes a dealership based on its id")
@@ -51,9 +51,9 @@ public class DealershipController {
 
 	@ApiOperation("Updates a dealership")
 	@PutMapping
-	public ResponseEntity<DealershipDTO> update(@RequestBody final DealershipDTO concessionariaDTO) {
-		final DealershipDTO dto = dealershipService.update(concessionariaDTO);
-		return ResponseEntity.status(201).body(dto);
+	public ResponseEntity<DealershipDTO> update(@RequestBody final DealershipDTO dealershipDTO) {
+		final DealershipDTO dto = dealershipService.update(dealershipDTO);
+		return ResponseEntity.status(200).body(dto);
 	}
 
 }

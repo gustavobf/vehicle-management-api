@@ -38,8 +38,8 @@ public class ModelController {
 
 	@ApiOperation("Saves a model")
 	@PostMapping
-	public ResponseEntity<ModelDTO> create(@RequestBody final ModelDTO modeloDTO) {
-		return ResponseEntity.status(201).body(modelService.create(modeloDTO));
+	public ResponseEntity<ModelDTO> create(@RequestBody final ModelDTO modelDTO) {
+		return ResponseEntity.status(201).body(modelService.create(modelDTO));
 	}
 
 	@ApiOperation("Deletes a model based on its id")
@@ -49,10 +49,10 @@ public class ModelController {
 		return ResponseEntity.status(204).build();
 	}
 
-	@ApiOperation("Updates a model based on its id")
+	@ApiOperation("Updates a model")
 	@PutMapping
-	public ResponseEntity<ModelDTO> update(@RequestBody final ModelDTO modeloDTO) {
-		final ModelDTO dto = modelService.update(modeloDTO);
-		return ResponseEntity.status(201).body(dto);
+	public ResponseEntity<ModelDTO> update(@RequestBody final ModelDTO modelDTO) {
+		final ModelDTO dto = modelService.update(modelDTO);
+		return ResponseEntity.status(200).body(dto);
 	}
 }

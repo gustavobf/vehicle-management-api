@@ -38,8 +38,8 @@ public class BrandController {
 
 	@ApiOperation("Saves a brand")
 	@PostMapping
-	public ResponseEntity<BrandDTO> create(@RequestBody final BrandDTO marcaDTO) {
-		return ResponseEntity.status(201).body(brandService.create(marcaDTO));
+	public ResponseEntity<BrandDTO> create(@RequestBody final BrandDTO brandDTO) {
+		return ResponseEntity.status(201).body(brandService.create(brandDTO));
 	}
 
 	@ApiOperation("Deletes a brand based on its id")
@@ -51,9 +51,9 @@ public class BrandController {
 
 	@ApiOperation("Updates a brand")
 	@PutMapping
-	public ResponseEntity<BrandDTO> update(@RequestBody final BrandDTO marcaDTO) {
-		final BrandDTO dto = brandService.update(marcaDTO);
-		return ResponseEntity.status(201).body(dto);
+	public ResponseEntity<BrandDTO> update(@RequestBody final BrandDTO brandDTO) {
+		final BrandDTO dto = brandService.update(brandDTO);
+		return ResponseEntity.status(200).body(dto);
 	}
 
 }

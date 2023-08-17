@@ -15,49 +15,48 @@ import br.com.batista.repositories.ModelRepository;
 public class ModelService {
 
 	@Autowired
-	private ModelRepository modeloRepository;
+	private ModelRepository modelRepository;
 
 	public List<ModelDTO> getAll() {
-		final List<Model> lista = modeloRepository.findAll();
-		return lista.stream().map(this::convertToDTO).collect(Collectors.toList());
+		return modelRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	public Optional<ModelDTO> getById(final Long id) {
-		final Optional<Model> modelo = modeloRepository.findById(id);
-		final ModelDTO modeloDTO = convertToDTO(modelo.get());
-		return Optional.of(modeloDTO);
+		final Optional<Model> model = modelRepository.findById(id);
+		final ModelDTO modelDTO = convertToDTO(model.get());
+		return Optional.of(modelDTO);
 	}
 
-	public ModelDTO create(final ModelDTO modeloDTO) {
-		final Model modelo = convertToEntity(modeloDTO);
-		final Model modeloSalvo = modeloRepository.save(modelo);
-		final ModelDTO dto = convertToDTO(modeloSalvo);
+	public ModelDTO create(final ModelDTO modelDTO) {
+		final Model model = convertToEntity(modelDTO);
+		final Model savedModel = modelRepository.save(model);
+		final ModelDTO dto = convertToDTO(savedModel);
 		return dto;
 	}
 
 	public void delete(final Long id) {
-		modeloRepository.deleteById(id);
+		modelRepository.deleteById(id);
 	}
 
-	public ModelDTO update(final ModelDTO modeloDTO) {
-		final Model modelo = convertToEntity(modeloDTO);
-		final Model modeloSalvo = modeloRepository.save(modelo);
-		final ModelDTO dto = convertToDTO(modeloSalvo);
+	public ModelDTO update(final ModelDTO modelDTO) {
+		final Model model = convertToEntity(modelDTO);
+		final Model savedModel = modelRepository.save(model);
+		final ModelDTO dto = convertToDTO(savedModel);
 		return dto;
 	}
 
-	public ModelDTO convertToDTO(final Model modelo) {
-		final ModelDTO modeloDTO = new ModelDTO();
-		modeloDTO.setId(modelo.getId());
-		modeloDTO.setNome(modelo.getNome());
-		return modeloDTO;
+	public ModelDTO convertToDTO(final Model model) {
+		final ModelDTO modelDTO = new ModelDTO();
+		modelDTO.setId(model.getId());
+		modelDTO.setName(model.getNome());
+		return modelDTO;
 	}
 
-	public Model convertToEntity(final ModelDTO modeloDTO) {
-		final Model modelo = new Model();
-		modelo.setId(modeloDTO.getId());
-		modelo.setName(modeloDTO.getNome());
-		return modelo;
+	public Model convertToEntity(final ModelDTO modelDTO) {
+		final Model model = new Model();
+		model.setId(modelDTO.getId());
+		model.setName(modelDTO.getName());
+		return model;
 	}
 
 }

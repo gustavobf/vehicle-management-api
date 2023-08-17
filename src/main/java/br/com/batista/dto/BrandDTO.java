@@ -2,31 +2,31 @@ package br.com.batista.dto;
 
 public class BrandDTO {
 	private Long id;
-	private String nome;
-	private String pais;
+	private String name;
+	private String country;
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
-	public String getPais() {
-		return pais;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setPais(String pais) {
-		this.pais = pais;
+	public void setCountry(final String country) {
+		this.country = country;
 	}
 
 }

@@ -15,59 +15,58 @@ import br.com.batista.repositories.CarRepository;
 public class CarService {
 
 	@Autowired
-	private CarRepository carroRepository;
+	private CarRepository carRepository;
 
 	public List<CarDTO> getAll() {
-		final List<Car> lista = carroRepository.findAll();
-		return lista.stream().map(this::convertToDTO).collect(Collectors.toList());
+		return carRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	public Optional<CarDTO> getById(final Long id) {
-		final Optional<Car> carro = carroRepository.findById(id);
-		final CarDTO carroDTO = convertToDTO(carro.get());
-		return Optional.of(carroDTO);
+		final Optional<Car> car = carRepository.findById(id);
+		final CarDTO carDTO = convertToDTO(car.get());
+		return Optional.of(carDTO);
 	}
 
-	public CarDTO create(final CarDTO carroDTO) {
-		final Car carro = convertToEntity(carroDTO);
-		final Car carroSalvo = carroRepository.save(carro);
-		final CarDTO dto = convertToDTO(carroSalvo);
+	public CarDTO create(final CarDTO carDTO) {
+		final Car car = convertToEntity(carDTO);
+		final Car savedCar = carRepository.save(car);
+		final CarDTO dto = convertToDTO(savedCar);
 		return dto;
 	}
 
 	public void delete(final Long id) {
-		carroRepository.deleteById(id);
+		carRepository.deleteById(id);
 	}
 
-	public CarDTO update(final CarDTO carroDTO) {
-		final Car carro = convertToEntity(carroDTO);
-		final Car carroSalvo = carroRepository.save(carro);
-		final CarDTO dto = convertToDTO(carroSalvo);
+	public CarDTO update(final CarDTO carDTO) {
+		final Car car = convertToEntity(carDTO);
+		final Car savedCar = carRepository.save(car);
+		final CarDTO dto = convertToDTO(savedCar);
 		return dto;
 	}
 
-	public CarDTO convertToDTO(final Car carro) {
-		final CarDTO carroDTO = new CarDTO();
-		carroDTO.setId(carro.getId());
-		carroDTO.setAno(carro.getManufacturing());
-		carroDTO.setCor(carro.getColor());
-		carroDTO.setNome(carro.getName());
-		carroDTO.setPlaca(carro.getPlate());
-		carroDTO.setPortas(carro.getDoor());
-		carroDTO.setPotencia(carro.getPower());
-		return carroDTO;
+	public CarDTO convertToDTO(final Car car) {
+		final CarDTO carDTO = new CarDTO();
+		carDTO.setId(car.getId());
+		carDTO.setManufacturing(car.getManufacturing());
+		carDTO.setColor(car.getColor());
+		carDTO.setName(car.getName());
+		carDTO.setPlate(car.getPlate());
+		carDTO.setDoor(car.getDoor());
+		carDTO.setPower(car.getPower());
+		return carDTO;
 	}
 
-	public Car convertToEntity(final CarDTO carroDTO) {
-		final Car carro = new Car();
-		carro.setId(carroDTO.getId());
-		carro.setManufacturing(carroDTO.getAno());
-		carro.setColor(carroDTO.getCor());
-		carro.setName(carroDTO.getNome());
-		carro.setPlate(carroDTO.getPlaca());
-		carro.setDoor(carroDTO.getPortas());
-		carro.setPower(carroDTO.getPotencia());
-		return carro;
+	public Car convertToEntity(final CarDTO carDTO) {
+		final Car car = new Car();
+		car.setId(carDTO.getId());
+		car.setManufacturing(carDTO.getManufacturing());
+		car.setColor(carDTO.getColor());
+		car.setName(carDTO.getName());
+		car.setPlate(carDTO.getPlate());
+		car.setDoor(carDTO.getDoor());
+		car.setPower(carDTO.getPower());
+		return car;
 	}
 
 }

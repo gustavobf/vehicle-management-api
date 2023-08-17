@@ -52,7 +52,7 @@ public class DealershipServiceTest {
 		final DealershipDTO dealershipDTO = list.get(0);
 		assertEquals(newDealership.getId(), dealershipDTO.getId(), 0);
 		assertEquals(newDealership.getCnpj(), dealershipDTO.getCnpj());
-		assertEquals(newDealership.getName(), dealershipDTO.getNome());
+		assertEquals(newDealership.getName(), dealershipDTO.getName());
 	}
 
 	@Test
@@ -64,14 +64,14 @@ public class DealershipServiceTest {
 		final DealershipDTO dealershipDTO = returnedDealership.get();
 		assertEquals(newDealership.getId(), dealershipDTO.getId(), 0);
 		assertEquals(newDealership.getCnpj(), dealershipDTO.getCnpj());
-		assertEquals(newDealership.getName(), dealershipDTO.getNome());
+		assertEquals(newDealership.getName(), dealershipDTO.getName());
 	}
 
 	@Test
 	public void testCreate() {
 		final DealershipDTO dealershipDTO = new DealershipDTO();
 		dealershipDTO.setId(10l);
-		dealershipDTO.setNome("name");
+		dealershipDTO.setName("name");
 		dealershipDTO.setCnpj("123");
 
 		when(repository.save(dealershipCaptor.capture())).thenReturn(service.convertToEntity(dealershipDTO));
@@ -79,12 +79,12 @@ public class DealershipServiceTest {
 		final DealershipDTO returnedDealership = service.create(dealershipDTO);
 		assertEquals(dealershipDTO.getId(), dealershipDTO.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), returnedDealership.getCnpj());
-		assertEquals(dealershipDTO.getNome(), returnedDealership.getNome());
+		assertEquals(dealershipDTO.getName(), returnedDealership.getName());
 
 		final Dealership dealershipSaved = dealershipCaptor.getValue();
 		assertEquals(dealershipDTO.getId(), dealershipSaved.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), dealershipSaved.getCnpj());
-		assertEquals(dealershipDTO.getNome(), dealershipSaved.getName());
+		assertEquals(dealershipDTO.getName(), dealershipSaved.getName());
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class DealershipServiceTest {
 	public void testUpdate() {
 		final DealershipDTO dealershipDTO = new DealershipDTO();
 		dealershipDTO.setId(10l);
-		dealershipDTO.setNome("name");
+		dealershipDTO.setName("name");
 		dealershipDTO.setCnpj("123");
 
 		when(repository.save(dealershipCaptor.capture())).thenReturn(service.convertToEntity(dealershipDTO));
@@ -107,12 +107,12 @@ public class DealershipServiceTest {
 
 		assertEquals(dealershipDTO.getId(), updatedDealership.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), updatedDealership.getCnpj());
-		assertEquals(dealershipDTO.getNome(), updatedDealership.getNome());
+		assertEquals(dealershipDTO.getName(), updatedDealership.getName());
 
 		final Dealership savedDealership = dealershipCaptor.getValue();
 		assertEquals(dealershipDTO.getId(), savedDealership.getId(), 0);
 		assertEquals(dealershipDTO.getCnpj(), savedDealership.getCnpj());
-		assertEquals(dealershipDTO.getNome(), savedDealership.getName());
+		assertEquals(dealershipDTO.getName(), savedDealership.getName());
 	}
 
 }

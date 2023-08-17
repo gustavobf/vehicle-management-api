@@ -15,51 +15,50 @@ import br.com.batista.repositories.DealershipRepository;
 public class DealershipService {
 
 	@Autowired
-	private DealershipRepository concessionariaRepository;
+	private DealershipRepository dealershipRepository;
 
 	public List<DealershipDTO> getAll() {
-		final List<Dealership> lista = concessionariaRepository.findAll();
-		return lista.stream().map(this::convertToDTO).collect(Collectors.toList());
+		return dealershipRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	public Optional<DealershipDTO> getById(final Long id) {
-		final Optional<Dealership> concessionaria = concessionariaRepository.findById(id);
-		final DealershipDTO concessionariaDTO = convertToDTO(concessionaria.get());
-		return Optional.of(concessionariaDTO);
+		final Optional<Dealership> dealership = dealershipRepository.findById(id);
+		final DealershipDTO dealershipDTO = convertToDTO(dealership.get());
+		return Optional.of(dealershipDTO);
 	}
 
-	public DealershipDTO create(final DealershipDTO concessionariaDTO) {
-		final Dealership concessionaria = convertToEntity(concessionariaDTO);
-		final Dealership concessionariaSalva = concessionariaRepository.save(concessionaria);
-		final DealershipDTO dto = convertToDTO(concessionariaSalva);
+	public DealershipDTO create(final DealershipDTO dealershipDTO) {
+		final Dealership dealership = convertToEntity(dealershipDTO);
+		final Dealership savedDealership = dealershipRepository.save(dealership);
+		final DealershipDTO dto = convertToDTO(savedDealership);
 		return dto;
 	}
 
 	public void delete(final Long id) {
-		concessionariaRepository.deleteById(id);
+		dealershipRepository.deleteById(id);
 	}
 
-	public DealershipDTO update(final DealershipDTO concessionariaDTO) {
-		final Dealership concessionaria = convertToEntity(concessionariaDTO);
-		final Dealership concessionariaSalva = concessionariaRepository.save(concessionaria);
-		final DealershipDTO dto = convertToDTO(concessionariaSalva);
+	public DealershipDTO update(final DealershipDTO dealershipDTO) {
+		final Dealership dealership = convertToEntity(dealershipDTO);
+		final Dealership savedDealership = dealershipRepository.save(dealership);
+		final DealershipDTO dto = convertToDTO(savedDealership);
 		return dto;
 	}
 
-	public DealershipDTO convertToDTO(final Dealership concessionaria) {
-		final DealershipDTO concessionariaDTO = new DealershipDTO();
-		concessionariaDTO.setId(concessionaria.getId());
-		concessionariaDTO.setCnpj(concessionaria.getCnpj());
-		concessionariaDTO.setNome(concessionaria.getName());
-		return concessionariaDTO;
+	public DealershipDTO convertToDTO(final Dealership dealership) {
+		final DealershipDTO dealershipDTO = new DealershipDTO();
+		dealershipDTO.setId(dealership.getId());
+		dealershipDTO.setCnpj(dealership.getCnpj());
+		dealershipDTO.setName(dealership.getName());
+		return dealershipDTO;
 	}
 
-	public Dealership convertToEntity(final DealershipDTO concessionariaDTO) {
-		final Dealership concessionaria = new Dealership();
-		concessionaria.setId(concessionariaDTO.getId());
-		concessionaria.setCnpj(concessionariaDTO.getCnpj());
-		concessionaria.setName(concessionariaDTO.getNome());
-		return concessionaria;
+	public Dealership convertToEntity(final DealershipDTO dealershipDTO) {
+		final Dealership dealership = new Dealership();
+		dealership.setId(dealershipDTO.getId());
+		dealership.setCnpj(dealershipDTO.getCnpj());
+		dealership.setName(dealershipDTO.getName());
+		return dealership;
 	}
 
 }

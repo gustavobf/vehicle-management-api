@@ -50,7 +50,7 @@ public class ModelServiceTest {
 
 		final List<ModelDTO> list = service.getAll();
 		final ModelDTO ModelDTO1 = list.get(0);
-		assertEquals(newModel.getNome(), ModelDTO1.getNome());
+		assertEquals(newModel.getNome(), ModelDTO1.getName());
 	}
 
 	@Test
@@ -60,22 +60,22 @@ public class ModelServiceTest {
 
 		final Optional<ModelDTO> returnedModel = service.getById(newModel.getId());
 		final ModelDTO modelDTO = returnedModel.get();
-		assertEquals(newModel.getNome(), modelDTO.getNome());
+		assertEquals(newModel.getNome(), modelDTO.getName());
 	}
 
 	@Test
 	public void testCreate() {
 		final ModelDTO modelDTO = new ModelDTO();
-		modelDTO.setNome("name");
+		modelDTO.setName("name");
 
 		when(repository.save(modelCaptor.capture())).thenReturn(service.convertToEntity(modelDTO));
 
 		final ModelDTO returnedModel = service.create(modelDTO);
 
-		assertEquals(modelDTO.getNome(), returnedModel.getNome());
+		assertEquals(modelDTO.getName(), returnedModel.getName());
 
 		final Model savedModel = modelCaptor.getValue();
-		assertEquals(modelDTO.getNome(), savedModel.getNome());
+		assertEquals(modelDTO.getName(), savedModel.getNome());
 	}
 
 	@Test
@@ -88,15 +88,15 @@ public class ModelServiceTest {
 	@Test
 	public void testUpdate() {
 		final ModelDTO modelDTO = new ModelDTO();
-		modelDTO.setNome("name");
+		modelDTO.setName("name");
 
 		when(repository.save(modelCaptor.capture())).thenReturn(service.convertToEntity(modelDTO));
 
 		final ModelDTO updatedModel = service.update(modelDTO);
-		assertEquals(modelDTO.getNome(), updatedModel.getNome());
+		assertEquals(modelDTO.getName(), updatedModel.getName());
 
 		final Model savedModel = modelCaptor.getValue();
-		assertEquals(modelDTO.getNome(), savedModel.getNome());
+		assertEquals(modelDTO.getName(), savedModel.getNome());
 	}
 
 }

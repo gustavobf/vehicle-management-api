@@ -15,51 +15,49 @@ import br.com.batista.repositories.BrandRepository;
 public class BrandService {
 
 	@Autowired
-	private BrandRepository marcaRepository;
+	private BrandRepository brandRepository;
 
 	public List<BrandDTO> getAll() {
-		final List<Brand> lista = marcaRepository.findAll();
-		return lista.stream().map(this::convertToDTO).collect(Collectors.toList());
+		return brandRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	public Optional<BrandDTO> getById(final Long id) {
-		final Optional<Brand> marca = marcaRepository.findById(id);
-		final BrandDTO marcaDTO = convertToDTO(marca.get());
-		return Optional.of(marcaDTO);
+		final Optional<Brand> brand = brandRepository.findById(id);
+		final BrandDTO brandDTO = convertToDTO(brand.get());
+		return Optional.of(brandDTO);
 	}
 
-	public BrandDTO create(final BrandDTO marcaDTO) {
-		final Brand marca = convertToEntity(marcaDTO);
-		final Brand marcaSalva = marcaRepository.save(marca);
-		return convertToDTO(marcaSalva);
+	public BrandDTO create(final BrandDTO brandDTO) {
+		final Brand brand = convertToEntity(brandDTO);
+		final Brand savedBrand = brandRepository.save(brand);
+		return convertToDTO(savedBrand);
 	}
 
 	public void delete(final Long id) {
-		marcaRepository.deleteById(id);
+		brandRepository.deleteById(id);
 	}
 
-	public BrandDTO update(final BrandDTO marcaDTO) {
-		final Brand marca = convertToEntity(marcaDTO);
-		final Brand marcaSalva = marcaRepository.save(marca);
-		final BrandDTO dto = convertToDTO(marcaSalva);
+	public BrandDTO update(final BrandDTO brandDTO) {
+		final Brand brand = convertToEntity(brandDTO);
+		final Brand savedBrand = brandRepository.save(brand);
+		final BrandDTO dto = convertToDTO(savedBrand);
 		return dto;
 	}
 
-	public BrandDTO convertToDTO(final Brand marca) {
-		final BrandDTO marcaDTO = new BrandDTO();
-		marcaDTO.setId(marca.getId());
-		marcaDTO.setNome(marca.getName());
-		marcaDTO.setPais(marca.getCountry());
-		return marcaDTO;
+	public BrandDTO convertToDTO(final Brand brand) {
+		final BrandDTO brandDTO = new BrandDTO();
+		brandDTO.setId(brand.getId());
+		brandDTO.setName(brand.getName());
+		brandDTO.setCountry(brand.getCountry());
+		return brandDTO;
 	}
 
-	public Brand convertToEntity(final BrandDTO marcaDTO) {
-		final Brand marca = new Brand();
-		marca.setId(marcaDTO.getId());
-		marca.setName(marcaDTO.getNome());
-		marca.setCountry(marcaDTO.getPais());
-		return marca;
+	public Brand convertToEntity(final BrandDTO brandDTO) {
+		final Brand brand = new Brand();
+		brand.setId(brandDTO.getId());
+		brand.setName(brandDTO.getName());
+		brand.setCountry(brandDTO.getCountry());
+		return brand;
 	}
-
 
 }

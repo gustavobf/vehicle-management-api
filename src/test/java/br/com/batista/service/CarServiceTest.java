@@ -51,12 +51,12 @@ public class CarServiceTest {
 		final List<CarDTO> list = service.getAll();
 		final CarDTO carDTO = list.get(0);
 		assertEquals(newCar.getId(), carDTO.getId(), 0);
-		assertEquals(newCar.getName(), carDTO.getNome());
-		assertEquals(newCar.getColor(), carDTO.getCor());
-		assertEquals(newCar.getPower(), carDTO.getPotencia());
-		assertEquals(newCar.getDoor(), carDTO.getPortas());
-		assertEquals(newCar.getManufacturing(), carDTO.getAno());
-		assertEquals(newCar.getPlate(), carDTO.getPlaca());
+		assertEquals(newCar.getName(), carDTO.getName());
+		assertEquals(newCar.getColor(), carDTO.getColor());
+		assertEquals(newCar.getPower(), carDTO.getPower());
+		assertEquals(newCar.getDoor(), carDTO.getDoor());
+		assertEquals(newCar.getManufacturing(), carDTO.getManufacturing());
+		assertEquals(newCar.getPlate(), carDTO.getPlate());
 	}
 
 	@Test
@@ -67,24 +67,24 @@ public class CarServiceTest {
 		final Optional<CarDTO> returnedCar = service.getById(newCar.getId());
 		final CarDTO carDTO = returnedCar.get();
 		assertEquals(newCar.getId(), carDTO.getId(), 0);
-		assertEquals(newCar.getName(), carDTO.getNome());
-		assertEquals(newCar.getColor(), carDTO.getCor());
-		assertEquals(newCar.getPower(), carDTO.getPotencia());
-		assertEquals(newCar.getDoor(), carDTO.getPortas());
-		assertEquals(newCar.getManufacturing(), carDTO.getAno());
-		assertEquals(newCar.getPlate(), carDTO.getPlaca());
+		assertEquals(newCar.getName(), carDTO.getName());
+		assertEquals(newCar.getColor(), carDTO.getColor());
+		assertEquals(newCar.getPower(), carDTO.getPower());
+		assertEquals(newCar.getDoor(), carDTO.getDoor());
+		assertEquals(newCar.getManufacturing(), carDTO.getManufacturing());
+		assertEquals(newCar.getPlate(), carDTO.getPlate());
 	}
 
 	@Test
 	public void testCreate() {
 		final CarDTO carDTO = new CarDTO();
 		carDTO.setId(70l);
-		carDTO.setNome("");
-		carDTO.setAno(1999);
-		carDTO.setPlaca("a2");
-		carDTO.setPortas(2);
-		carDTO.setCor("color");
-		carDTO.setPotencia(2500);
+		carDTO.setName("");
+		carDTO.setManufacturing(1999);
+		carDTO.setPlate("a2");
+		carDTO.setDoor(2);
+		carDTO.setColor("color");
+		carDTO.setPower(2500);
 
 		when(repository.save(carCaptor.capture())).thenReturn(service.convertToEntity(carDTO));
 
@@ -92,21 +92,21 @@ public class CarServiceTest {
 
 		assertEquals(carDTO.getId(), returnedCar.getId(), 0);
 		assertEquals(carDTO.getId(), returnedCar.getId(), 0);
-		assertEquals(carDTO.getNome(), returnedCar.getNome());
-		assertEquals(carDTO.getCor(), returnedCar.getCor());
-		assertEquals(carDTO.getPotencia(), returnedCar.getPotencia());
-		assertEquals(carDTO.getPortas(), returnedCar.getPortas());
-		assertEquals(carDTO.getAno(), returnedCar.getAno());
-		assertEquals(carDTO.getPlaca(), returnedCar.getPlaca());
+		assertEquals(carDTO.getName(), returnedCar.getName());
+		assertEquals(carDTO.getColor(), returnedCar.getColor());
+		assertEquals(carDTO.getPower(), returnedCar.getPower());
+		assertEquals(carDTO.getDoor(), returnedCar.getDoor());
+		assertEquals(carDTO.getManufacturing(), returnedCar.getManufacturing());
+		assertEquals(carDTO.getPlate(), returnedCar.getPlate());
 
 		final Car savedCar = carCaptor.getValue();
 		assertEquals(carDTO.getId(), savedCar.getId(), 0);
-		assertEquals(carDTO.getNome(), savedCar.getName());
-		assertEquals(carDTO.getCor(), savedCar.getColor());
-		assertEquals(carDTO.getPotencia(), savedCar.getPower());
-		assertEquals(carDTO.getPortas(), savedCar.getDoor());
-		assertEquals(carDTO.getAno(), savedCar.getManufacturing());
-		assertEquals(carDTO.getPlaca(), savedCar.getPlate());
+		assertEquals(carDTO.getName(), savedCar.getName());
+		assertEquals(carDTO.getColor(), savedCar.getColor());
+		assertEquals(carDTO.getPower(), savedCar.getPower());
+		assertEquals(carDTO.getDoor(), savedCar.getDoor());
+		assertEquals(carDTO.getManufacturing(), savedCar.getManufacturing());
+		assertEquals(carDTO.getPlate(), savedCar.getPlate());
 	}
 
 	@Test
@@ -120,32 +120,32 @@ public class CarServiceTest {
 	public void testUpdate() {
 		final CarDTO carDTO = new CarDTO();
 		carDTO.setId(70l);
-		carDTO.setNome("");
-		carDTO.setAno(1999);
-		carDTO.setPlaca("a25");
-		carDTO.setPortas(2);
-		carDTO.setCor("color");
-		carDTO.setPotencia(2500);
+		carDTO.setName("");
+		carDTO.setManufacturing(1999);
+		carDTO.setPlate("a25");
+		carDTO.setDoor(2);
+		carDTO.setColor("color");
+		carDTO.setPower(2500);
 
 		when(repository.save(carCaptor.capture())).thenReturn(service.convertToEntity(carDTO));
 
 		final CarDTO updatedCar = service.update(carDTO);
 		assertEquals(carDTO.getId(), updatedCar.getId(), 0);
-		assertEquals(carDTO.getNome(), updatedCar.getNome());
-		assertEquals(carDTO.getCor(), updatedCar.getCor());
-		assertEquals(carDTO.getPotencia(), updatedCar.getPotencia());
-		assertEquals(carDTO.getPortas(), updatedCar.getPortas());
-		assertEquals(carDTO.getAno(), updatedCar.getAno());
-		assertEquals(carDTO.getPlaca(), updatedCar.getPlaca());
+		assertEquals(carDTO.getName(), updatedCar.getName());
+		assertEquals(carDTO.getColor(), updatedCar.getColor());
+		assertEquals(carDTO.getPower(), updatedCar.getPower());
+		assertEquals(carDTO.getDoor(), updatedCar.getDoor());
+		assertEquals(carDTO.getManufacturing(), updatedCar.getManufacturing());
+		assertEquals(carDTO.getPlate(), updatedCar.getPlate());
 
 		final Car savedCar = carCaptor.getValue();
 		assertEquals(carDTO.getId(), savedCar.getId(), 0);
-		assertEquals(carDTO.getNome(), savedCar.getName());
-		assertEquals(carDTO.getCor(), savedCar.getColor());
-		assertEquals(carDTO.getPotencia(), savedCar.getPower());
-		assertEquals(carDTO.getPortas(), savedCar.getDoor());
-		assertEquals(carDTO.getAno(), savedCar.getManufacturing());
-		assertEquals(carDTO.getPlaca(), savedCar.getPlate());
+		assertEquals(carDTO.getName(), savedCar.getName());
+		assertEquals(carDTO.getColor(), savedCar.getColor());
+		assertEquals(carDTO.getPower(), savedCar.getPower());
+		assertEquals(carDTO.getDoor(), savedCar.getDoor());
+		assertEquals(carDTO.getManufacturing(), savedCar.getManufacturing());
+		assertEquals(carDTO.getPlate(), savedCar.getPlate());
 	}
 
 }

@@ -51,8 +51,8 @@ public class BrandServiceTest {
 		final List<BrandDTO> list = service.getAll();
 		final BrandDTO brandDTO = list.get(0);
 		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
-		assertEquals(newBrand.getName(), brandDTO.getNome());
-		assertEquals(newBrand.getCountry(), brandDTO.getPais());
+		assertEquals(newBrand.getName(), brandDTO.getName());
+		assertEquals(newBrand.getCountry(), brandDTO.getCountry());
 	}
 
 	@Test
@@ -63,29 +63,29 @@ public class BrandServiceTest {
 		final Optional<BrandDTO> returnedBrand = service.getById(newBrand.getId());
 		final BrandDTO brandDTO = returnedBrand.get();
 		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
-		assertEquals(newBrand.getName(), brandDTO.getNome());
-		assertEquals(newBrand.getCountry(), brandDTO.getPais());
+		assertEquals(newBrand.getName(), brandDTO.getName());
+		assertEquals(newBrand.getCountry(), brandDTO.getCountry());
 	}
 
 	@Test
 	public void testCreate() {
 		final BrandDTO brandDTO = new BrandDTO();
 		brandDTO.setId(10l);
-		brandDTO.setNome("name");
-		brandDTO.setPais("country");
+		brandDTO.setName("name");
+		brandDTO.setCountry("country");
 
 		when(repository.save(brandCaptor.capture())).thenReturn(service.convertToEntity(brandDTO));
 
 		final BrandDTO returnedBrand = service.create(brandDTO);
 
 		assertEquals(brandDTO.getId(), returnedBrand.getId(), 0);
-		assertEquals(brandDTO.getNome(), returnedBrand.getNome());
-		assertEquals(brandDTO.getPais(), returnedBrand.getPais());
+		assertEquals(brandDTO.getName(), returnedBrand.getName());
+		assertEquals(brandDTO.getCountry(), returnedBrand.getCountry());
 
 		final Brand savedBrand = brandCaptor.getValue();
 		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
-		assertEquals(brandDTO.getNome(), savedBrand.getName());
-		assertEquals(brandDTO.getPais(), savedBrand.getCountry());
+		assertEquals(brandDTO.getName(), savedBrand.getName());
+		assertEquals(brandDTO.getCountry(), savedBrand.getCountry());
 	}
 
 	@Test
@@ -99,21 +99,21 @@ public class BrandServiceTest {
 	public void testUpdate() {
 		final BrandDTO brandDTO = new BrandDTO();
 		brandDTO.setId(15l);
-		brandDTO.setNome("name");
-		brandDTO.setPais("country");
+		brandDTO.setName("name");
+		brandDTO.setCountry("country");
 
 		when(repository.save(brandCaptor.capture())).thenReturn(service.convertToEntity(brandDTO));
 
 		final BrandDTO updatedBrand = service.update(brandDTO);
 
 		assertEquals(brandDTO.getId(), updatedBrand.getId(), 0);
-		assertEquals(brandDTO.getNome(), updatedBrand.getNome());
-		assertEquals(brandDTO.getPais(), updatedBrand.getPais());
+		assertEquals(brandDTO.getName(), updatedBrand.getName());
+		assertEquals(brandDTO.getCountry(), updatedBrand.getCountry());
 
 		final Brand savedBrand = brandCaptor.getValue();
 		assertEquals(brandDTO.getId(), savedBrand.getId(), 0);
-		assertEquals(brandDTO.getNome(), savedBrand.getName());
-		assertEquals(brandDTO.getPais(), savedBrand.getCountry());
+		assertEquals(brandDTO.getName(), savedBrand.getName());
+		assertEquals(brandDTO.getCountry(), savedBrand.getCountry());
 	}
 
 }

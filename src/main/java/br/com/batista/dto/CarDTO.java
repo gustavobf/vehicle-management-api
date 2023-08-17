@@ -2,67 +2,67 @@ package br.com.batista.dto;
 
 public class CarDTO {
 	private Long id;
-	private String cor;
-	private int potencia;
-	private int portas;
-	private int ano;
-	private String placa;
-	private String nome;
+	private String color;
+	private int power;
+	private int door;
+	private int manufacturing;
+	private String plate;
+	private String name;
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
-	public String getCor() {
-		return cor;
+	public String getColor() {
+		return color;
 	}
 
-	public void setCor(String cor) {
-		this.cor = cor;
+	public void setColor(final String color) {
+		this.color = color;
 	}
 
-	public int getPotencia() {
-		return potencia;
+	public int getPower() {
+		return power;
 	}
 
-	public void setPotencia(int potencia) {
-		this.potencia = potencia;
+	public void setPower(final int power) {
+		this.power = power;
 	}
 
-	public int getPortas() {
-		return portas;
+	public int getDoor() {
+		return door;
 	}
 
-	public void setPortas(int portas) {
-		this.portas = portas;
+	public void setDoor(final int door) {
+		this.door = door;
 	}
 
-	public int getAno() {
-		return ano;
+	public int getManufacturing() {
+		return manufacturing;
 	}
 
-	public void setAno(int ano) {
-		this.ano = ano;
+	public void setManufacturing(final int manufacturing) {
+		this.manufacturing = manufacturing;
 	}
 
-	public String getPlaca() {
-		return placa;
+	public String getPlate() {
+		return plate;
 	}
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
+	public void setPlate(final String plate) {
+		this.plate = plate;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 }

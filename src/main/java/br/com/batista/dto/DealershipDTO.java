@@ -3,13 +3,13 @@ package br.com.batista.dto;
 public class DealershipDTO {
 	private Long id;
 	private String cnpj;
-	private String nome;
+	private String name;
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -17,16 +17,16 @@ public class DealershipDTO {
 		return cnpj;
 	}
 
-	public void setCnpj(String cnpj) {
+	public void setCnpj(final String cnpj) {
 		this.cnpj = cnpj;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 }

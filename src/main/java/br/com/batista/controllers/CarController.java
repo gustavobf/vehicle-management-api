@@ -38,8 +38,8 @@ public class CarController {
 
 	@ApiOperation("Saves a car")
 	@PostMapping
-	public ResponseEntity<CarDTO> create(@RequestBody final CarDTO carroDTO) {
-		return ResponseEntity.status(201).body(carService.create(carroDTO));
+	public ResponseEntity<CarDTO> create(@RequestBody final CarDTO carDTO) {
+		return ResponseEntity.status(201).body(carService.create(carDTO));
 	}
 
 	@ApiOperation("Deletes a car based on its id")
@@ -51,8 +51,8 @@ public class CarController {
 
 	@ApiOperation("Updates a car")
 	@PutMapping
-	public ResponseEntity<CarDTO> update(@RequestBody final CarDTO carroDTO) {
-		final CarDTO dto = carService.update(carroDTO);
-		return ResponseEntity.status(201).body(dto);
+	public ResponseEntity<CarDTO> update(@RequestBody final CarDTO carDTO) {
+		final CarDTO dto = carService.update(carDTO);
+		return ResponseEntity.status(200).body(dto);
 	}
 }
