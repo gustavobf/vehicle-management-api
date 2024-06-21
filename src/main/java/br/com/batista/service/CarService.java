@@ -1,72 +1,85 @@
 package br.com.batista.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.batista.dto.CarDTO;
-import br.com.batista.model.Car;
-import br.com.batista.repositories.CarRepository;
+import br.com.batista.dto.RequestCarDTO;
+import br.com.batista.dto.ResponseCarDTO;
+import br.com.batista.entity.Brand;
+import br.com.batista.entity.Car;
+import br.com.batista.entity.Dealership;
+import br.com.batista.entity.Model;
+import br.com.batista.exception.ResourceNotFoundException;
+import br.com.batista.mapper.CarMapper;
+import br.com.batista.repository.BrandRepository;
+import br.com.batista.repository.CarRepository;
+import br.com.batista.repository.DealershipRepository;
+import br.com.batista.repository.ModelRepository;
 
 @Service
 public class CarService {
 
-	@Autowired
 	private CarRepository carRepository;
+	private ModelRepository modelrepository;
+	private BrandRepository brandRepository;
+	private DealershipRepository dealershipRepository;
 
-	public List<CarDTO> getAll() {
-		return carRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+	@Autowired
+	public CarService(CarRepository carRepository, ModelRepository modelrepository, BrandRepository brandRepository,
+			DealershipRepository dealershipRepository) {
+		this.carRepository = carRepository;
+		this.modelrepository = modelrepository;
+		this.brandRepository = brandRepository;
+		this.dealershipRepository = dealershipRepository;
 	}
 
-	public Optional<CarDTO> getById(final Long id) {
+	public Page<ResponseCarDTO> getAll(Pageable pageable) {
+		return carRepository.findAll(pageable)
+				.map(entity -> CarMapper.mapToCarResponseDTO(entity, new ResponseCarDTO()));
+	}
+
+	public ResponseCarDTO getById(final Long id) {
 		final Optional<Car> car = carRepository.findById(id);
-		final CarDTO carDTO = convertToDTO(car.get());
-		return Optional.of(carDTO);
+		final ResponseCarDTO carDTO = CarMapper.mapToCarResponseDTO(car.get(), new ResponseCarDTO());
+		return carDTO;
 	}
 
-	public CarDTO create(final CarDTO carDTO) {
-		final Car car = convertToEntity(carDTO);
+	public ResponseCarDTO create(final RequestCarDTO carDTO) {
+		final Car car = CarMapper.mapToCar(carDTO, new Car());
+
+		Brand brand = brandRepository.findById(carDTO.getBrandId())
+				.orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(carDTO.getBrandId()), "id"));
+
+		Model model = modelrepository.findById(carDTO.getModelId())
+				.orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(carDTO.getModelId()), "id"));
+
+		Dealership dealership = dealershipRepository.findById(carDTO.getDealershipId()).orElseThrow(
+				() -> new ResourceNotFoundException("Dealership", String.valueOf(carDTO.getDealershipId()), "id"));
+
+		car.setBrand(brand);
+		car.setModel(model);
+		car.setDealership(dealership);
+
 		final Car savedCar = carRepository.save(car);
-		final CarDTO dto = convertToDTO(savedCar);
+		final ResponseCarDTO dto = CarMapper.mapToCarResponseDTO(savedCar, new ResponseCarDTO());
 		return dto;
 	}
 
 	public void delete(final Long id) {
-		carRepository.deleteById(id);
+		Car savedCar = carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", String.valueOf(id), "id"));
+		carRepository.deleteById(savedCar.getId());
 	}
 
 	public CarDTO update(final CarDTO carDTO) {
-		final Car car = convertToEntity(carDTO);
+		final Car car = CarMapper.mapToCar(carDTO, new Car());
 		final Car savedCar = carRepository.save(car);
-		final CarDTO dto = convertToDTO(savedCar);
+		final CarDTO dto = CarMapper.mapToCarDTO(savedCar, new CarDTO());
 		return dto;
-	}
-
-	public CarDTO convertToDTO(final Car car) {
-		final CarDTO carDTO = new CarDTO();
-		carDTO.setId(car.getId());
-		carDTO.setManufacturing(car.getManufacturing());
-		carDTO.setColor(car.getColor());
-		carDTO.setName(car.getName());
-		carDTO.setPlate(car.getPlate());
-		carDTO.setDoor(car.getDoor());
-		carDTO.setPower(car.getPower());
-		return carDTO;
-	}
-
-	public Car convertToEntity(final CarDTO carDTO) {
-		final Car car = new Car();
-		car.setId(carDTO.getId());
-		car.setManufacturing(carDTO.getManufacturing());
-		car.setColor(carDTO.getColor());
-		car.setName(carDTO.getName());
-		car.setPlate(carDTO.getPlate());
-		car.setDoor(carDTO.getDoor());
-		car.setPower(carDTO.getPower());
-		return car;
 	}
 
 }

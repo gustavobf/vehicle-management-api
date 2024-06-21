@@ -1,6 +1,7 @@
 package br.com.batista.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,10 +17,15 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import br.com.batista.dto.DealershipDTO;
-import br.com.batista.model.Dealership;
-import br.com.batista.repositories.DealershipRepository;
+import br.com.batista.entity.Dealership;
+import br.com.batista.mapper.DealershipMapper;
+import br.com.batista.repository.DealershipRepository;
 
 public class DealershipServiceTest {
 
@@ -46,10 +52,12 @@ public class DealershipServiceTest {
 		final Dealership newDealership = new Dealership(105l, "111", "name");
 		dealershipList.add(newDealership);
 
-		when(repository.findAll()).thenReturn(dealershipList);
+		Pageable pageable = PageRequest.of(0, 10);
 
-		final List<DealershipDTO> list = service.getAll();
-		final DealershipDTO dealershipDTO = list.get(0);
+		when(repository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(dealershipList));
+
+		final Page<DealershipDTO> list = service.getAll(pageable);
+		final DealershipDTO dealershipDTO = list.getContent().get(0);
 		assertEquals(newDealership.getId(), dealershipDTO.getId(), 0);
 		assertEquals(newDealership.getCnpj(), dealershipDTO.getCnpj());
 		assertEquals(newDealership.getName(), dealershipDTO.getName());
@@ -60,8 +68,7 @@ public class DealershipServiceTest {
 		final Dealership newDealership = new Dealership(10l, "name", "country");
 		when(repository.findById(newDealership.getId())).thenReturn(Optional.of(newDealership));
 
-		final Optional<DealershipDTO> returnedDealership = service.getById(newDealership.getId());
-		final DealershipDTO dealershipDTO = returnedDealership.get();
+		final DealershipDTO dealershipDTO = service.getById(newDealership.getId());
 		assertEquals(newDealership.getId(), dealershipDTO.getId(), 0);
 		assertEquals(newDealership.getCnpj(), dealershipDTO.getCnpj());
 		assertEquals(newDealership.getName(), dealershipDTO.getName());
@@ -74,7 +81,8 @@ public class DealershipServiceTest {
 		dealershipDTO.setName("name");
 		dealershipDTO.setCnpj("123");
 
-		when(repository.save(dealershipCaptor.capture())).thenReturn(service.convertToEntity(dealershipDTO));
+		when(repository.save(dealershipCaptor.capture()))
+		.thenReturn(DealershipMapper.mapToDealership(dealershipDTO, new Dealership()));
 
 		final DealershipDTO returnedDealership = service.create(dealershipDTO);
 		assertEquals(dealershipDTO.getId(), dealershipDTO.getId(), 0);
@@ -101,7 +109,8 @@ public class DealershipServiceTest {
 		dealershipDTO.setName("name");
 		dealershipDTO.setCnpj("123");
 
-		when(repository.save(dealershipCaptor.capture())).thenReturn(service.convertToEntity(dealershipDTO));
+		when(repository.save(dealershipCaptor.capture()))
+		.thenReturn(DealershipMapper.mapToDealership(dealershipDTO, new Dealership()));
 
 		final DealershipDTO updatedDealership = service.update(dealershipDTO);
 

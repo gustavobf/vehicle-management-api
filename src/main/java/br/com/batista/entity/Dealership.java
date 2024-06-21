@@ -1,4 +1,4 @@
-package br.com.batista.model;
+package br.com.batista.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,22 +10,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "model")
-public class Model implements Serializable {
+@Table(name = "dealership")
+public class Dealership implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String cnpj;
 	private String name;
 
-	public Model() {
+	public Dealership() {
 	}
 
-	public Model(final Long id, final String name) {
+	public Dealership(final Long id, final String cnpj, final String nome) {
+		super();
 		this.id = id;
-		this.name = name;
+		this.cnpj = cnpj;
+		name = nome;
 	}
 
 	public Long getId() {
@@ -36,7 +39,15 @@ public class Model implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(final String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getName() {
 		return name;
 	}
 
@@ -57,13 +68,13 @@ public class Model implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Model other = (Model) obj;
+		final Dealership other = (Dealership) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Model [id=" + id + ", name=" + name + "]";
+		return "Dealership [id=" + id + ", cnpj=" + cnpj + ", name=" + name + "]";
 	}
 
 }

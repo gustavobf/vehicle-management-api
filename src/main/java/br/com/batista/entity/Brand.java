@@ -1,4 +1,4 @@
-package br.com.batista.model;
+package br.com.batista.entity;
 
 import java.io.Serializable;
 import java.util.Objects;

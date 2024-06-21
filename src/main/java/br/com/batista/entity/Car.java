@@ -1,4 +1,4 @@
-package br.com.batista.model;
+package br.com.batista.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,16 +20,16 @@ public class Car implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne()
-	@JoinColumn(name = "model_id")
+	@ManyToOne
+	@JoinColumn(name = "model_id", updatable = false)
 	private Model model;
 
-	@ManyToOne()
-	@JoinColumn(name = "brand_id")
+	@ManyToOne
+	@JoinColumn(name = "brand_id", updatable = false)
 	private Brand brand;
 
-	@ManyToOne()
-	@JoinColumn(name = "dealership_id")
+	@ManyToOne
+	@JoinColumn(name = "dealership_id", updatable = false)
 	private Dealership dealership;
 
 	private String color;
@@ -129,9 +129,33 @@ public class Car implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Car [id=" + id + ", model=" + model + ", brand=" + brand + ", dealership=" + dealership + ", color="
-				+ color + ", power=" + power + ", door=" + door + ", manufacturing=" + manufacturing + ", plate="
-				+ plate + ", name=" + name + "]";
+		return "Car [id=" + id + ", model=" + getModel() + ", brand=" + getBrand() + ", dealership=" + getDealership()
+		+ ", color=" + color + ", power=" + power + ", door=" + door + ", manufacturing=" + manufacturing
+		+ ", plate=" + plate + ", name=" + name + "]";
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+
+	public Dealership getDealership() {
+		return dealership;
+	}
+
+	public void setDealership(Dealership dealership) {
+		this.dealership = dealership;
 	}
 
 }

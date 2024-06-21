@@ -1,36 +1,41 @@
 package br.com.batista.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.batista.dto.ModelDTO;
-import br.com.batista.model.Model;
-import br.com.batista.repositories.ModelRepository;
+import br.com.batista.entity.Model;
+import br.com.batista.mapper.ModelMapper;
+import br.com.batista.repository.ModelRepository;
 
 @Service
 public class ModelService {
 
-	@Autowired
 	private ModelRepository modelRepository;
 
-	public List<ModelDTO> getAll() {
-		return modelRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+	@Autowired
+	public ModelService(ModelRepository modelRepository) {
+		this.modelRepository = modelRepository;
 	}
 
-	public Optional<ModelDTO> getById(final Long id) {
+	public Page<ModelDTO> getAll(Pageable pageable) {
+		return modelRepository.findAll(pageable).map(entity -> ModelMapper.mapToModelDto(entity, new ModelDTO()));
+	}
+
+	public ModelDTO getById(final Long id) {
 		final Optional<Model> model = modelRepository.findById(id);
-		final ModelDTO modelDTO = convertToDTO(model.get());
-		return Optional.of(modelDTO);
+		final ModelDTO modelDTO = ModelMapper.mapToModelDto(model.get(), new ModelDTO());
+		return modelDTO;
 	}
 
 	public ModelDTO create(final ModelDTO modelDTO) {
-		final Model model = convertToEntity(modelDTO);
+		final Model model = ModelMapper.mapToModel(modelDTO, new Model());
 		final Model savedModel = modelRepository.save(model);
-		final ModelDTO dto = convertToDTO(savedModel);
+		final ModelDTO dto = ModelMapper.mapToModelDto(savedModel, new ModelDTO());
 		return dto;
 	}
 
@@ -39,24 +44,10 @@ public class ModelService {
 	}
 
 	public ModelDTO update(final ModelDTO modelDTO) {
-		final Model model = convertToEntity(modelDTO);
+		final Model model = ModelMapper.mapToModel(modelDTO, new Model());
 		final Model savedModel = modelRepository.save(model);
-		final ModelDTO dto = convertToDTO(savedModel);
+		final ModelDTO dto = ModelMapper.mapToModelDto(savedModel, new ModelDTO());
 		return dto;
-	}
-
-	public ModelDTO convertToDTO(final Model model) {
-		final ModelDTO modelDTO = new ModelDTO();
-		modelDTO.setId(model.getId());
-		modelDTO.setName(model.getNome());
-		return modelDTO;
-	}
-
-	public Model convertToEntity(final ModelDTO modelDTO) {
-		final Model model = new Model();
-		model.setId(modelDTO.getId());
-		model.setName(modelDTO.getName());
-		return model;
 	}
 
 }

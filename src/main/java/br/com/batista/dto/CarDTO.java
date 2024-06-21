@@ -1,6 +1,7 @@
 package br.com.batista.dto;
 
 public class CarDTO {
+
 	private Long id;
 	private String color;
 	private int power;

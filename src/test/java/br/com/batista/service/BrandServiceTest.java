@@ -1,6 +1,7 @@
 package br.com.batista.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,10 +17,15 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import br.com.batista.dto.BrandDTO;
-import br.com.batista.model.Brand;
-import br.com.batista.repositories.BrandRepository;
+import br.com.batista.entity.Brand;
+import br.com.batista.mapper.BrandMapper;
+import br.com.batista.repository.BrandRepository;
 
 public class BrandServiceTest {
 
@@ -46,10 +52,12 @@ public class BrandServiceTest {
 		final Brand newBrand = new Brand(10l, "name", "country");
 		brandList.add(newBrand);
 
-		when(repository.findAll()).thenReturn(brandList);
+		Pageable pageable = PageRequest.of(0, 10);
 
-		final List<BrandDTO> list = service.getAll();
-		final BrandDTO brandDTO = list.get(0);
+		when(repository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(brandList));
+
+		final Page<BrandDTO> list = service.getAll(pageable);
+		final BrandDTO brandDTO = list.getContent().get(0);
 		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
 		assertEquals(newBrand.getName(), brandDTO.getName());
 		assertEquals(newBrand.getCountry(), brandDTO.getCountry());
@@ -60,8 +68,7 @@ public class BrandServiceTest {
 		final Brand newBrand = new Brand(10l, "name", "country");
 		when(repository.findById(newBrand.getId())).thenReturn(Optional.of(newBrand));
 
-		final Optional<BrandDTO> returnedBrand = service.getById(newBrand.getId());
-		final BrandDTO brandDTO = returnedBrand.get();
+		final BrandDTO brandDTO = service.getById(newBrand.getId());
 		assertEquals(newBrand.getId(), brandDTO.getId(), 0);
 		assertEquals(newBrand.getName(), brandDTO.getName());
 		assertEquals(newBrand.getCountry(), brandDTO.getCountry());
@@ -74,7 +81,7 @@ public class BrandServiceTest {
 		brandDTO.setName("name");
 		brandDTO.setCountry("country");
 
-		when(repository.save(brandCaptor.capture())).thenReturn(service.convertToEntity(brandDTO));
+		when(repository.save(brandCaptor.capture())).thenReturn(BrandMapper.mapToBrand(brandDTO, new Brand()));
 
 		final BrandDTO returnedBrand = service.create(brandDTO);
 
@@ -102,7 +109,7 @@ public class BrandServiceTest {
 		brandDTO.setName("name");
 		brandDTO.setCountry("country");
 
-		when(repository.save(brandCaptor.capture())).thenReturn(service.convertToEntity(brandDTO));
+		when(repository.save(brandCaptor.capture())).thenReturn(BrandMapper.mapToBrand(brandDTO, new Brand()));
 
 		final BrandDTO updatedBrand = service.update(brandDTO);
 

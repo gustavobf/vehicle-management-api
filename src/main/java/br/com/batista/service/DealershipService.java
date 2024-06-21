@@ -1,36 +1,42 @@
 package br.com.batista.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.batista.dto.DealershipDTO;
-import br.com.batista.model.Dealership;
-import br.com.batista.repositories.DealershipRepository;
+import br.com.batista.entity.Dealership;
+import br.com.batista.mapper.DealershipMapper;
+import br.com.batista.repository.DealershipRepository;
 
 @Service
 public class DealershipService {
 
-	@Autowired
 	private DealershipRepository dealershipRepository;
 
-	public List<DealershipDTO> getAll() {
-		return dealershipRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+	@Autowired
+	public DealershipService(DealershipRepository dealershipRepository) {
+		this.dealershipRepository = dealershipRepository;
 	}
 
-	public Optional<DealershipDTO> getById(final Long id) {
+	public Page<DealershipDTO> getAll(Pageable pageable) {
+		return dealershipRepository.findAll(pageable)
+				.map(entity -> DealershipMapper.mapToDealershipDto(entity, new DealershipDTO()));
+	}
+
+	public DealershipDTO getById(final Long id) {
 		final Optional<Dealership> dealership = dealershipRepository.findById(id);
-		final DealershipDTO dealershipDTO = convertToDTO(dealership.get());
-		return Optional.of(dealershipDTO);
+		final DealershipDTO dealershipDTO = DealershipMapper.mapToDealershipDto(dealership.get(), new DealershipDTO());
+		return dealershipDTO;
 	}
 
 	public DealershipDTO create(final DealershipDTO dealershipDTO) {
-		final Dealership dealership = convertToEntity(dealershipDTO);
+		final Dealership dealership = DealershipMapper.mapToDealership(dealershipDTO, new Dealership());
 		final Dealership savedDealership = dealershipRepository.save(dealership);
-		final DealershipDTO dto = convertToDTO(savedDealership);
+		final DealershipDTO dto = DealershipMapper.mapToDealershipDto(savedDealership, new DealershipDTO());
 		return dto;
 	}
 
@@ -39,26 +45,10 @@ public class DealershipService {
 	}
 
 	public DealershipDTO update(final DealershipDTO dealershipDTO) {
-		final Dealership dealership = convertToEntity(dealershipDTO);
+		final Dealership dealership = DealershipMapper.mapToDealership(dealershipDTO, new Dealership());
 		final Dealership savedDealership = dealershipRepository.save(dealership);
-		final DealershipDTO dto = convertToDTO(savedDealership);
+		final DealershipDTO dto = DealershipMapper.mapToDealershipDto(savedDealership, new DealershipDTO());
 		return dto;
-	}
-
-	public DealershipDTO convertToDTO(final Dealership dealership) {
-		final DealershipDTO dealershipDTO = new DealershipDTO();
-		dealershipDTO.setId(dealership.getId());
-		dealershipDTO.setCnpj(dealership.getCnpj());
-		dealershipDTO.setName(dealership.getName());
-		return dealershipDTO;
-	}
-
-	public Dealership convertToEntity(final DealershipDTO dealershipDTO) {
-		final Dealership dealership = new Dealership();
-		dealership.setId(dealershipDTO.getId());
-		dealership.setCnpj(dealershipDTO.getCnpj());
-		dealership.setName(dealershipDTO.getName());
-		return dealership;
 	}
 
 }

@@ -1,63 +1,65 @@
 package br.com.batista.service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.batista.dto.BrandDTO;
-import br.com.batista.model.Brand;
-import br.com.batista.repositories.BrandRepository;
+import br.com.batista.entity.Brand;
+import br.com.batista.entity.Car;
+import br.com.batista.exception.ResourceNotFoundException;
+import br.com.batista.mapper.BrandMapper;
+import br.com.batista.repository.BrandRepository;
+import br.com.batista.repository.CarRepository;
 
 @Service
 public class BrandService {
 
-	@Autowired
 	private BrandRepository brandRepository;
+	private CarRepository carRepository;
 
-	public List<BrandDTO> getAll() {
-		return brandRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+	@Autowired
+	public BrandService(BrandRepository brandRepository, CarRepository carRepository) {
+		this.brandRepository = brandRepository;
+		this.carRepository = carRepository;
 	}
 
-	public Optional<BrandDTO> getById(final Long id) {
-		final Optional<Brand> brand = brandRepository.findById(id);
-		final BrandDTO brandDTO = convertToDTO(brand.get());
-		return Optional.of(brandDTO);
+	public Page<BrandDTO> getAll(Pageable pageable) {
+		return brandRepository.findAll(pageable).map(entity -> BrandMapper.mapToBrandDto(entity, new BrandDTO()));
 	}
 
-	public BrandDTO create(final BrandDTO brandDTO) {
-		final Brand brand = convertToEntity(brandDTO);
-		final Brand savedBrand = brandRepository.save(brand);
-		return convertToDTO(savedBrand);
-	}
-
-	public void delete(final Long id) {
-		brandRepository.deleteById(id);
-	}
-
-	public BrandDTO update(final BrandDTO brandDTO) {
-		final Brand brand = convertToEntity(brandDTO);
-		final Brand savedBrand = brandRepository.save(brand);
-		final BrandDTO dto = convertToDTO(savedBrand);
-		return dto;
-	}
-
-	public BrandDTO convertToDTO(final Brand brand) {
-		final BrandDTO brandDTO = new BrandDTO();
-		brandDTO.setId(brand.getId());
-		brandDTO.setName(brand.getName());
-		brandDTO.setCountry(brand.getCountry());
+	public BrandDTO getById(final Long id) {
+		final Brand brand = brandRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(id), "id"));
+		final BrandDTO brandDTO = BrandMapper.mapToBrandDto(brand, new BrandDTO());
 		return brandDTO;
 	}
 
-	public Brand convertToEntity(final BrandDTO brandDTO) {
-		final Brand brand = new Brand();
-		brand.setId(brandDTO.getId());
-		brand.setName(brandDTO.getName());
-		brand.setCountry(brandDTO.getCountry());
-		return brand;
+	public BrandDTO create(final BrandDTO brandDTO) {
+		final Brand brand = BrandMapper.mapToBrand(brandDTO, new Brand());
+		final Brand savedBrand = brandRepository.save(brand);
+		return BrandMapper.mapToBrandDto(savedBrand, new BrandDTO());
+	}
+
+	public void delete(final Long id) {
+		Brand brand = brandRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(id), "id"));
+
+		List<Car> cars = carRepository.findByBrand(brand);
+
+		if (!cars.isEmpty()) {
+			carRepository.deleteAll(cars);
+		}
+
+		brandRepository.deleteById(brand.getId());
+	}
+
+	public BrandDTO update(final BrandDTO brandDTO) {
+		final Brand brand = BrandMapper.mapToBrand(brandDTO, new Brand());
+		final Brand savedBrand = brandRepository.save(brand);
+		final BrandDTO dto = BrandMapper.mapToBrandDto(savedBrand, new BrandDTO());
+		return dto;
 	}
 
 }
