@@ -54,6 +54,7 @@ public class ModelController {
 	@ApiOperation("Deletes a model based on its id")
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
+		//TODO delete all cars together with the dealership
 		modelService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));

@@ -1,0 +1,529 @@
+{
+	"info": {
+		"_postman_id": "54023180-886c-412f-b5c2-7e7faf4ab496",
+		"name": "crud-app-spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15674393"
+	},
+	"item": [
+		{
+			"name": "car",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/car/getbyid?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"car",
+								"getbyid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"color\": \"Teste\",\r\n    \"power\": 1000,\r\n    \"door\": 2,\r\n    \"manufacturing\": 2050,\r\n    \"plate\": \"Teste\",\r\n    \"name\": \"Teste\",\r\n    \"brandId\": 0,\r\n    \"modelId\": 0,\r\n    \"dealershipId\": 0\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/car/create",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"car",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/car/getall",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"car",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"color\": \"Red\",\r\n    \"power\": 2658,\r\n    \"door\": 4,\r\n    \"manufacturing\": 2020,\r\n    \"plate\": \"ABC-356\",\r\n    \"name\": \"Car Name Zero But Red\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/car/update",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"car",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/car/delete?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"car",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dealership",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/dealership/getbyid?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"dealership",
+								"getbyid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"cnpj\": \"987555\",\r\n    \"name\": \"teste3\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/dealership",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"dealership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/dealership/getall",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"dealership",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"cnpj\": \"8956168\",\r\n    \"name\": \"Test Dealership Zero But Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/dealership/update",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"dealership",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/dealership/delete?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"dealership",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "model",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/model/getbyid?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"model",
+								"getbyid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"name\": \"New Model\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/model/create",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"model",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/model/getall",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"model",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Sedan But Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/model/update",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"model",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/model/delete?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"model",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "brand",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/brand/getbyid?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"brand",
+								"getbyid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test New Brand\",\r\n    \"country\": \"France\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/brand/create",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"brand",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/brand/getall",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"brand",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Test Brand Updated\",\r\n    \"country\": \"Netherlands\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/brand/update",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"brand",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/brand/delete?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"brand",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
