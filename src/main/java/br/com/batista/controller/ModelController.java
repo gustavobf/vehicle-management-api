@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.batista.dto.ModelDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.ModelService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(value = "/api/model", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -30,19 +31,19 @@ public class ModelController {
 		this.modelService = modelService;
 	}
 
-	//@Operation("Returns a list with all models")
+	@Operation(summary = "Returns a list with all models")
 	@GetMapping("/getall")
 	public ResponseEntity<Page<ModelDTO>> getAll(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(modelService.getAll(pageable));
 	}
 
-	//@Operation("Returns a model based on its id")
+	@Operation(summary = "Returns a model based on its id")
 	@GetMapping("/getbyid")
 	public ResponseEntity<ModelDTO> getById(@RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(modelService.getById(id));
 	}
 
-	//@Operation("Saves a model")
+	@Operation(summary = "Creates a model")
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> create(@RequestBody final ModelDTO modelDTO) {
 		modelService.create(modelDTO);
@@ -50,7 +51,7 @@ public class ModelController {
 				.body(new ResponseDto(HttpStatus.CREATED.value(), HttpStatus.CREATED.getReasonPhrase()));
 	}
 
-	//@Operation("Deletes a model based on its id")
+	@Operation(summary = "Deletes a model based on its id")
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
 		//TODO delete all cars together with the dealership
@@ -60,7 +61,7 @@ public class ModelController {
 
 	}
 
-	//@Operation("Updates a model")
+	@Operation(summary = "Updates a model")
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> update(@RequestBody final ModelDTO modelDTO) {
 		modelService.update(modelDTO);
