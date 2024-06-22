@@ -20,7 +20,6 @@ import br.com.batista.dto.RequestCarDTO;
 import br.com.batista.dto.ResponseCarDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.CarService;
-import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/api/car", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -33,19 +32,19 @@ public class CarController {
 		this.carService = carService;
 	}
 
-	@ApiOperation("Returns a list with all cars")
+	//@Operation("Returns a list with all cars")
 	@GetMapping("/getall")
 	public ResponseEntity<Page<ResponseCarDTO>> getAll(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(carService.getAll(pageable));
 	}
 
-	@ApiOperation("Returns a car based on its id")
+	//@Operation("Returns a car based on its id")
 	@GetMapping("/getbyid")
 	public ResponseEntity<ResponseCarDTO> getById(@RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(carService.getById(id));
 	}
 
-	@ApiOperation("Saves a car")
+	//@Operation("Saves a car")
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> create(@RequestBody final RequestCarDTO carDTO) {
 		carService.create(carDTO);
@@ -54,7 +53,7 @@ public class CarController {
 
 	}
 
-	@ApiOperation("Deletes a car based on its id")
+	//@Operation("Deletes a car based on its id")
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
 		carService.delete(id);
@@ -62,7 +61,7 @@ public class CarController {
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));
 	}
 
-	@ApiOperation("Updates a car")
+	//@Operation("Updates a car")
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> update(@RequestBody final CarDTO carDTO) {
 		carService.update(carDTO);

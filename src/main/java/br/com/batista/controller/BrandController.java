@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.batista.dto.BrandDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.BrandService;
-import io.swagger.annotations.ApiOperation;
+
 
 @RestController
 @RequestMapping(value = "/api/brand", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -31,19 +31,19 @@ public class BrandController {
 		this.brandService = brandService;
 	}
 
-	@ApiOperation("Returns a list with all brands")
+	//@Operation("Returns a list with all brands")
 	@GetMapping("/getall")
 	public ResponseEntity<Page<BrandDTO>> getAll(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(brandService.getAll(pageable));
 	}
 
-	@ApiOperation("Returns a brand based on its id")
+	//@Operation("Returns a brand based on its id")
 	@GetMapping("/getbyid")
 	public ResponseEntity<BrandDTO> getById(@RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(brandService.getById(id));
 	}
 
-	@ApiOperation("Saves a brand")
+	//@Operation("Saves a brand")
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> create(@RequestBody final BrandDTO brandDTO) {
 		brandService.create(brandDTO);
@@ -52,7 +52,7 @@ public class BrandController {
 
 	}
 
-	@ApiOperation("Deletes a brand based on its id")
+	//@Operation("Deletes a brand based on its id")
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
 		brandService.delete(id);
@@ -60,7 +60,7 @@ public class BrandController {
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));
 	}
 
-	@ApiOperation("Updates a brand")
+	//@Operation("Updates a brand")
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> update(@RequestBody final BrandDTO brandDTO) {
 		brandService.update(brandDTO);

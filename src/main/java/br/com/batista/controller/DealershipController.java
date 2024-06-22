@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.batista.dto.DealershipDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.DealershipService;
-import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/api/dealership", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -31,19 +30,19 @@ public class DealershipController {
 		this.dealershipService = dealershipService;
 	}
 
-	@ApiOperation("Returns a list with all dealerships")
+	//@Operation("Returns a list with all dealerships")
 	@GetMapping("/getall")
 	public ResponseEntity<Page<DealershipDTO>> getAll(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(dealershipService.getAll(pageable));
 	}
 
-	@ApiOperation("Returns a dealership based on its id")
+	//@Operation("Returns a dealership based on its id")
 	@GetMapping("/getbyid")
 	public ResponseEntity<DealershipDTO> getById(@RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(dealershipService.getById(id));
 	}
 
-	@ApiOperation("Saves a dealership")
+	//@Operation("Saves a dealership")
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> create(@RequestBody final DealershipDTO dealershipDTO) {
 		dealershipService.create(dealershipDTO);
@@ -51,7 +50,7 @@ public class DealershipController {
 				.body(new ResponseDto(HttpStatus.CREATED.value(), HttpStatus.CREATED.getReasonPhrase()));
 	}
 
-	@ApiOperation("Deletes a dealership based on its id")
+	//@Operation("Deletes a dealership based on its id")
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
 		//TODO delete all cars together with the dealership
@@ -61,7 +60,7 @@ public class DealershipController {
 
 	}
 
-	@ApiOperation("Updates a dealership")
+	//@Operation("Updates a dealership")
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> update(@RequestBody final DealershipDTO dealershipDTO) {
 		dealershipService.update(dealershipDTO);
