@@ -14,7 +14,7 @@
 	</properties>
 	<groupId>br.com.batista</groupId>
 	<artifactId>crup-app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>crup-app</name>
 
 	<dependencies>

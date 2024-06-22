@@ -26,11 +26,15 @@ import br.com.batista.dto.BrandDTO;
 import br.com.batista.entity.Brand;
 import br.com.batista.mapper.BrandMapper;
 import br.com.batista.repository.BrandRepository;
+import br.com.batista.repository.CarRepository;
 
 public class BrandServiceTest {
 
 	@Mock
 	BrandRepository repository;
+
+	@Mock
+	CarRepository carRepository;
 
 	@InjectMocks
 	BrandService service;
@@ -97,6 +101,13 @@ public class BrandServiceTest {
 
 	@Test
 	public void testDelete() {
+
+		Brand brand = new Brand();
+		brand.setId(15l);
+
+		when(repository.findById(any(Long.class))).thenReturn(Optional.of(brand));
+
+
 		service.delete(15l);
 		verify(repository, times(1)).deleteById(brandIdCaptor.capture());
 		assertEquals(15, brandIdCaptor.getValue(), 0);
