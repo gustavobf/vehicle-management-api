@@ -19,6 +19,7 @@ import br.com.batista.dto.ModelDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.ModelService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,26 +37,29 @@ public class ModelController {
 	}
 
 	@Operation(summary = "Returns a list with all models")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successful operation"),
-			@ApiResponse(responseCode = "500", description = "Internal server error") })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@GetMapping("/getall")
 	public ResponseEntity<Page<ModelDTO>> getAll(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(modelService.getAll(pageable));
 	}
 
 	@Operation(summary = "Returns a model based on its id")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successful operation"),
-			@ApiResponse(responseCode = "404", description = "Model not found"),
-			@ApiResponse(responseCode = "500", description = "Internal server error") })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@GetMapping("/getbyid")
 	public ResponseEntity<ModelDTO> getById(@RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(modelService.getById(id));
 	}
 
 	@Operation(summary = "Creates a model")
-	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Model created successfully"),
-			@ApiResponse(responseCode = "400", description = "Invalid input"),
-			@ApiResponse(responseCode = "500", description = "Internal server error") })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Model created successfully", content = @Content),
+			@ApiResponse(responseCode = "400", description = "Invalid input", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> create(@RequestBody final ModelDTO modelDTO) {
 		modelService.create(modelDTO);
@@ -64,9 +68,10 @@ public class ModelController {
 	}
 
 	@Operation(summary = "Deletes a model based on its id")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Model deleted successfully"),
-			@ApiResponse(responseCode = "404", description = "Model not found"),
-			@ApiResponse(responseCode = "500", description = "Internal server error") })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Model deleted successfully", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
 		modelService.delete(id);
@@ -75,10 +80,11 @@ public class ModelController {
 	}
 
 	@Operation(summary = "Updates a model")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Model updated successfully"),
-			@ApiResponse(responseCode = "400", description = "Invalid input"),
-			@ApiResponse(responseCode = "404", description = "Model not found"),
-			@ApiResponse(responseCode = "500", description = "Internal server error") })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Model updated successfully", content = @Content),
+			@ApiResponse(responseCode = "400", description = "Invalid input", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> update(@RequestBody final ModelDTO modelDTO) {
 		modelService.update(modelDTO);
