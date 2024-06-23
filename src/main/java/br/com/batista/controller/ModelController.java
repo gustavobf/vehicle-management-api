@@ -19,6 +19,7 @@ import br.com.batista.dto.ModelDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.ModelService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -51,7 +52,8 @@ public class ModelController {
 			@ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@GetMapping("/getbyid")
-	public ResponseEntity<ModelDTO> getById(@RequestParam final Long id) {
+	public ResponseEntity<ModelDTO> getById(
+			@Parameter(description = "ID of the model to be retrieved", required = true) @RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(modelService.getById(id));
 	}
 
@@ -73,7 +75,8 @@ public class ModelController {
 			@ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@DeleteMapping("/delete")
-	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
+	public ResponseEntity<ResponseDto> delete(
+			@Parameter(description = "ID of the model to be deleted", required = true) @RequestParam final Long id) {
 		modelService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));

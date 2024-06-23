@@ -19,6 +19,7 @@ import br.com.batista.dto.BrandDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.BrandService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -52,7 +53,8 @@ public class BrandController {
 			@ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Brand not found", content = @Content) })
 	@GetMapping("/getbyid")
-	public ResponseEntity<BrandDTO> getById(@RequestParam Long id) {
+	public ResponseEntity<BrandDTO> getById(
+			@Parameter(description = "ID of the brand to be retrieved", required = true) @RequestParam Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(brandService.getById(id));
 	}
 
@@ -75,7 +77,8 @@ public class BrandController {
 			@ApiResponse(responseCode = "404", description = "Brand not found", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@DeleteMapping("/delete")
-	public ResponseEntity<ResponseDto> delete(@RequestParam Long id) {
+	public ResponseEntity<ResponseDto> delete(
+			@Parameter(description = "ID of the brand to be deleted", required = true) @RequestParam Long id) {
 		brandService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));

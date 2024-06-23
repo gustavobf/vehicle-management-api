@@ -21,6 +21,7 @@ import br.com.batista.dto.ResponseCarDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -53,7 +54,8 @@ public class CarController {
 			@ApiResponse(responseCode = "404", description = "Car not found", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@GetMapping("/getbyid")
-	public ResponseEntity<ResponseCarDTO> getById(@RequestParam final Long id) {
+	public ResponseEntity<ResponseCarDTO> getById(
+			@Parameter(description = "ID of the car to be retrieved", required = true) @RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(carService.getById(id));
 	}
 
@@ -75,7 +77,7 @@ public class CarController {
 			@ApiResponse(responseCode = "404", description = "Car not found", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content) })
 	@DeleteMapping("/delete")
-	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
+	public ResponseEntity<ResponseDto> delete(@Parameter(description = "ID of the car to be deleted", required = true)@RequestParam final Long id) {
 		carService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));

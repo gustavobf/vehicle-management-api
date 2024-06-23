@@ -3,18 +3,21 @@ package br.com.batista.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class BrandDTO {
+
+	@Schema(description = "Brand ID", example = "1")
 	private Long id;
+
+	@Schema(description = "Brand name", example = "Toyota")
 	private String name;
 
-	//TODO analyze
-	@Schema(description = "first name of the user", name = "firstName", type = "string", example = "Vatsal")
+	@Schema(description = "Country of origin", example = "Japan")
 	private String country;
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(final String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -22,7 +25,7 @@ public class BrandDTO {
 		return country;
 	}
 
-	public void setCountry(final String country) {
+	public void setCountry(String country) {
 		this.country = country;
 	}
 
@@ -33,5 +36,4 @@ public class BrandDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 }
