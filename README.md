@@ -1,10 +1,11 @@
-# CRUD App using Spring Boot
 
-A simple CRUD (Create, Read, Update, Delete) application built with Spring Boot, demonstrating basic RESTful API operations.
+# Vehicle Management API using Spring Boot
+
+A simple CRUD (Create, Read, Update, Delete) application built with Spring Boot, demonstrating basic RESTful API operations for managing vehicles, brands, and models.
 
 ## Introduction
 
-This project is a basic CRUD application developed using Spring Boot. It provides RESTful API endpoints for managing entities, demonstrating how to perform standard CRUD operations within a Spring Boot application.
+This project is a basic CRUD application developed using Spring Boot. It provides RESTful API endpoints for managing vehicle-related entities, demonstrating how to perform standard CRUD operations within a Spring Boot application.
 
 ## Features
 
@@ -23,34 +24,31 @@ This project is a basic CRUD application developed using Spring Boot. It provide
 
 ## Setup
 
-To run this application locally, follow these steps:
+To run this application locally using Docker, follow these steps:
 
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/gustavobf/crud-app-spring.git
-   cd crud-app-spring
-
-2. **Build the application:**
+1. **Pull the Docker image from Docker Hub:**
 
    ```bash
-   mvn package
+   docker pull gustavobfig/vehicle-management-api:latest
+   ```
 
-3. **Run the application:**
+2. **Run the Docker container:**
 
    ```bash
-   java -jar target/crud-app-spring-1.0.jar
+   docker run -p 8080:8080 gustavobfig/vehicle-management-api:latest
+   ```
 
+3. **Access the API documentation:**
+
+   Open your web browser and navigate to [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) to access the Swagger UI and interact with the API.
 
 ### Explanation:
 
-- **Clone the repository:** This command clones the project repository from GitHub to your local machine and navigates into the project directory.
-
-- **Build the application:** This command uses Maven (`mvn`) to build the application. The `package` phase compiles the code, runs tests, and packages the application into a JAR file located in the `target` directory.
-
-- **Run the application:** This command executes the generated JAR file to start the Spring Boot application locally on your machine.
+- **Pull the Docker image:** This command pulls the pre-built Docker image from Docker Hub.
+- **Run the Docker container:** This command runs a Docker container from the pulled image, mapping port 8080 of the host to port 8080 of the container so you can access the application via `http://localhost:8080`.
+- **Access the API documentation:** Open the specified URL in your web browser to access the Swagger UI, which provides an interactive interface for testing the API endpoints.
 
 ### Notes:
 
-- Make sure you have Maven installed and configured properly on your local machine.
-- Adjust the commands (`git clone`, `mvn package`, `java -jar ...`) as per your project's specific requirements and environment setup.
+- Ensure Docker is installed and running on your local machine.
+- Adjust the commands (`docker pull`, `docker run`) to match your specific Docker Hub username and image tag if necessary.
