@@ -14,7 +14,7 @@ public class SwaggerConfig {
 
 	@Bean
 	public GroupedOpenApi publicApi() {
-		return GroupedOpenApi.builder().group("crud-app-spring").pathsToMatch("/api/**").build();
+		return GroupedOpenApi.builder().group("vehicle-management-api").pathsToMatch("/api/**").build();
 	}
 
 	@Bean
@@ -26,7 +26,7 @@ public class SwaggerConfig {
 						.license(new License().name("Apache 2.0")
 								.url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 				.externalDocs(new ExternalDocumentation().description("Vehicle Management API Documentation")
-						.url("https://github.com/gustavobf/crud-app-spring"));
+						.url("https://github.com/gustavobf/vehicle-management-api"));
 	}
 
 }

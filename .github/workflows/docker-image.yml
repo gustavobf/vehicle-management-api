@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: gustavobfig/crud-app-spring:latest
+          tags: gustavobfig/vehicle-management-api:latest

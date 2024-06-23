@@ -13,8 +13,8 @@
 		<java.version>17</java.version>
 	</properties>
 	<groupId>br.com.batista</groupId>
-	<artifactId>crup-app</artifactId>
-	<version>1</version>
+	<artifactId>vehicle-management-api</artifactId>
+	<version>1.0.0</version>
 	<name>crup-app</name>
 
 	<dependencies>
