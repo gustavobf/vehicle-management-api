@@ -1,7 +1,7 @@
 
 # Vehicle Management API using Spring Boot
 
-A simple CRUD (Create, Read, Update, Delete) application built with Spring Boot, demonstrating basic RESTful API operations for managing vehicles, brands, and models.
+A simple CRUD (Create, Read, Update, Delete) application built with Spring Boot, demonstrating basic RESTful API operations for managing vehicles, brands, and models in a dealership system.
 
 ## Introduction
 
