@@ -19,9 +19,13 @@ import br.com.batista.dto.DealershipDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.DealershipService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping(value = "/api/dealership", produces = { MediaType.APPLICATION_JSON_VALUE })
+@Tag(name = "Dealership Controller", description = "Controller for managing dealership operations")
 public class DealershipController {
 
 	private DealershipService dealershipService;
@@ -32,18 +36,26 @@ public class DealershipController {
 	}
 
 	@Operation(summary = "Returns a list with all dealerships")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successful operation"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@GetMapping("/getall")
 	public ResponseEntity<Page<DealershipDTO>> getAll(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(dealershipService.getAll(pageable));
 	}
 
 	@Operation(summary = "Returns a dealership based on its id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successful operation"),
+			@ApiResponse(responseCode = "404", description = "Dealership not found"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@GetMapping("/getbyid")
 	public ResponseEntity<DealershipDTO> getById(@RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(dealershipService.getById(id));
 	}
 
 	@Operation(summary = "Creates a dealership")
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Dealership created successfully"),
+			@ApiResponse(responseCode = "400", description = "Invalid input"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> create(@RequestBody final DealershipDTO dealershipDTO) {
 		dealershipService.create(dealershipDTO);
@@ -52,22 +64,26 @@ public class DealershipController {
 	}
 
 	@Operation(summary = "Deletes a dealership based on its id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Dealership deleted successfully"),
+			@ApiResponse(responseCode = "404", description = "Dealership not found"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
-		//TODO delete all cars together with the dealership
+		// TODO delete all cars together with the dealership
 		dealershipService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));
-
 	}
 
 	@Operation(summary = "Updates a dealership")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Dealership updated successfully"),
+			@ApiResponse(responseCode = "400", description = "Invalid input"),
+			@ApiResponse(responseCode = "404", description = "Dealership not found"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> update(@RequestBody final DealershipDTO dealershipDTO) {
 		dealershipService.update(dealershipDTO);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));
-
 	}
-
 }

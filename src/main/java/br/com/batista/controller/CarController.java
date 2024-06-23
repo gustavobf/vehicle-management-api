@@ -21,9 +21,13 @@ import br.com.batista.dto.ResponseCarDTO;
 import br.com.batista.dto.ResponseDto;
 import br.com.batista.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping(value = "/api/car", produces = { MediaType.APPLICATION_JSON_VALUE })
+@Tag(name = "Car Controller", description = "Controller for managing car operations")
 public class CarController {
 
 	private CarService carService;
@@ -34,27 +38,37 @@ public class CarController {
 	}
 
 	@Operation(summary = "Returns a list with all cars")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successful operation"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@GetMapping("/getall")
 	public ResponseEntity<Page<ResponseCarDTO>> getAll(Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(carService.getAll(pageable));
 	}
 
 	@Operation(summary = "Returns a car based on its id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successful operation"),
+			@ApiResponse(responseCode = "404", description = "Car not found"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@GetMapping("/getbyid")
 	public ResponseEntity<ResponseCarDTO> getById(@RequestParam final Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(carService.getById(id));
 	}
 
 	@Operation(summary = "Creates a car")
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Car created successfully"),
+			@ApiResponse(responseCode = "400", description = "Invalid input"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDto> create(@RequestBody final RequestCarDTO carDTO) {
 		carService.create(carDTO);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(new ResponseDto(HttpStatus.CREATED.value(), HttpStatus.CREATED.getReasonPhrase()));
-
 	}
 
 	@Operation(summary = "Deletes a car based on its id")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Car deleted successfully"),
+			@ApiResponse(responseCode = "404", description = "Car not found"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDto> delete(@RequestParam final Long id) {
 		carService.delete(id);
@@ -63,11 +77,14 @@ public class CarController {
 	}
 
 	@Operation(summary = "Updates a car")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Car updated successfully"),
+			@ApiResponse(responseCode = "400", description = "Invalid input"),
+			@ApiResponse(responseCode = "404", description = "Car not found"),
+			@ApiResponse(responseCode = "500", description = "Internal server error") })
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDto> update(@RequestBody final CarDTO carDTO) {
 		carService.update(carDTO);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));
-
 	}
 }

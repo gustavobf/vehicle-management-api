@@ -18,12 +18,15 @@ public class SwaggerConfig {
 	}
 
 	@Bean
-	public OpenAPI crudAppSpring() {
+	public OpenAPI customOpenAPI() {
 		return new OpenAPI()
-				.info(new Info().title("CRUD Apring API").description("Spring CRUD sample application").version("v1")
-						.license(new License().name("Apache 2.0").url("http://springdoc.org")))
-				.externalDocs(new ExternalDocumentation().description("Example Wiki Documentation")
-						.url("https://github.com"));
+				.info(new Info().title("Vehicle Management API")
+						.description("API for managing vehicles, brands, and models in a dealership system")
+						.version("1.0.0")
+						.license(new License().name("Apache 2.0")
+								.url("https://www.apache.org/licenses/LICENSE-2.0.html")))
+				.externalDocs(new ExternalDocumentation().description("Vehicle Management API Documentation")
+						.url("https://github.com/gustavobf/crud-app-spring"));
 	}
 
 }
