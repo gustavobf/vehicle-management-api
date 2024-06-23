@@ -25,15 +25,19 @@ import org.springframework.data.domain.Pageable;
 import br.com.batista.dto.DealershipDTO;
 import br.com.batista.entity.Dealership;
 import br.com.batista.mapper.DealershipMapper;
+import br.com.batista.repository.CarRepository;
 import br.com.batista.repository.DealershipRepository;
 
 public class DealershipServiceTest {
 
+	@InjectMocks
+	DealershipService service;
+
 	@Mock
 	DealershipRepository repository;
 
-	@InjectMocks
-	DealershipService service;
+	@Mock
+	CarRepository carRepository;
 
 	@Captor
 	ArgumentCaptor<Dealership> dealershipCaptor;
@@ -97,6 +101,12 @@ public class DealershipServiceTest {
 
 	@Test
 	public void testDelete() {
+
+		Dealership dealership = new Dealership();
+		dealership.setId(15l);
+
+		when(repository.findById(any(Long.class))).thenReturn(Optional.of(dealership));
+
 		service.delete(15l);
 		verify(repository, times(1)).deleteById(dealershipIdCaptor.capture());
 		assertEquals(15, dealershipIdCaptor.getValue(), 0);

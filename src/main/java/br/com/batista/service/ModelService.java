@@ -1,5 +1,6 @@
 package br.com.batista.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +9,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.batista.dto.ModelDTO;
+import br.com.batista.entity.Car;
 import br.com.batista.entity.Model;
+import br.com.batista.exception.ResourceNotFoundException;
 import br.com.batista.mapper.ModelMapper;
+import br.com.batista.repository.CarRepository;
 import br.com.batista.repository.ModelRepository;
 
 @Service
 public class ModelService {
 
 	private ModelRepository modelRepository;
+	private CarRepository carRepository;
 
 	@Autowired
-	public ModelService(ModelRepository modelRepository) {
+	public ModelService(ModelRepository modelRepository, CarRepository carRepository) {
 		this.modelRepository = modelRepository;
+		this.carRepository = carRepository;
 	}
 
 	public Page<ModelDTO> getAll(Pageable pageable) {
@@ -40,6 +46,15 @@ public class ModelService {
 	}
 
 	public void delete(final Long id) {
+
+		Model model = modelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(id), "id"));
+
+		List<Car> cars = carRepository.findByModel(model);
+
+		if (!cars.isEmpty()) {
+			carRepository.deleteAll(cars);
+		}
+
 		modelRepository.deleteById(id);
 	}
 

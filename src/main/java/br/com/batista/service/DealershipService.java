@@ -1,5 +1,6 @@
 package br.com.batista.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +9,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.batista.dto.DealershipDTO;
+import br.com.batista.entity.Car;
 import br.com.batista.entity.Dealership;
+import br.com.batista.exception.ResourceNotFoundException;
 import br.com.batista.mapper.DealershipMapper;
+import br.com.batista.repository.CarRepository;
 import br.com.batista.repository.DealershipRepository;
 
 @Service
 public class DealershipService {
 
 	private DealershipRepository dealershipRepository;
+	private CarRepository carRepository;
 
 	@Autowired
-	public DealershipService(DealershipRepository dealershipRepository) {
+	public DealershipService(DealershipRepository dealershipRepository, CarRepository carRepository) {
 		this.dealershipRepository = dealershipRepository;
+		this.carRepository = carRepository;
 	}
 
 	public Page<DealershipDTO> getAll(Pageable pageable) {
@@ -41,6 +47,15 @@ public class DealershipService {
 	}
 
 	public void delete(final Long id) {
+
+		Dealership dealership = dealershipRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Dealership", String.valueOf(id), "id"));
+
+		List<Car> cars = carRepository.findByDealership(dealership);
+
+		if (!cars.isEmpty()) {
+			carRepository.deleteAll(cars);
+		}
+
 		dealershipRepository.deleteById(id);
 	}
 

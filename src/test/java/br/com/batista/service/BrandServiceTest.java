@@ -30,14 +30,14 @@ import br.com.batista.repository.CarRepository;
 
 public class BrandServiceTest {
 
+	@InjectMocks
+	BrandService service;
+
 	@Mock
 	BrandRepository repository;
 
 	@Mock
 	CarRepository carRepository;
-
-	@InjectMocks
-	BrandService service;
 
 	@Captor
 	ArgumentCaptor<Brand> brandCaptor;
@@ -106,7 +106,6 @@ public class BrandServiceTest {
 		brand.setId(15l);
 
 		when(repository.findById(any(Long.class))).thenReturn(Optional.of(brand));
-
 
 		service.delete(15l);
 		verify(repository, times(1)).deleteById(brandIdCaptor.capture());

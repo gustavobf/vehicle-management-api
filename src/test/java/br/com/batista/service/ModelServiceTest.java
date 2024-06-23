@@ -25,15 +25,19 @@ import org.springframework.data.domain.Pageable;
 import br.com.batista.dto.ModelDTO;
 import br.com.batista.entity.Model;
 import br.com.batista.mapper.ModelMapper;
+import br.com.batista.repository.CarRepository;
 import br.com.batista.repository.ModelRepository;
 
 public class ModelServiceTest {
 
+	@InjectMocks
+	ModelService service;
+
 	@Mock
 	ModelRepository repository;
 
-	@InjectMocks
-	ModelService service;
+	@Mock
+	CarRepository carRepository;
 
 	@Captor
 	ArgumentCaptor<Model> modelCaptor;
@@ -87,6 +91,12 @@ public class ModelServiceTest {
 
 	@Test
 	public void testDelete() {
+
+		Model model = new Model();
+		model.setId(15l);
+
+		when(repository.findById(any(Long.class))).thenReturn(Optional.of(model));
+
 		service.delete(10l);
 		verify(repository, times(1)).deleteById(modelIdCaptor.capture());
 		assertEquals(10, modelIdCaptor.getValue(), 0);

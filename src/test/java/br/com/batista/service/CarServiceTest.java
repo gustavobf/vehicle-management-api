@@ -37,6 +37,9 @@ import br.com.batista.repository.ModelRepository;
 
 public class CarServiceTest {
 
+	@InjectMocks
+	CarService service;
+
 	@Mock
 	CarRepository repository;
 
@@ -48,9 +51,6 @@ public class CarServiceTest {
 
 	@Mock
 	DealershipRepository dealershipRepository;
-
-	@InjectMocks
-	CarService service;
 
 	@Captor
 	ArgumentCaptor<Car> carCaptor;
