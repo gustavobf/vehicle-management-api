@@ -1,85 +1,77 @@
 package br.com.batista.service;
 
-import java.util.Optional;
+import br.com.batista.dto.api.response.*;
+import br.com.batista.dto.car.*;
+import br.com.batista.dto.car.request.*;
+import br.com.batista.dto.car.response.*;
+import br.com.batista.entity.*;
+import br.com.batista.exception.*;
+import br.com.batista.mapper.*;
+import br.com.batista.repository.*;
+import jakarta.validation.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import br.com.batista.dto.CarDTO;
-import br.com.batista.dto.RequestCarDTO;
-import br.com.batista.dto.ResponseCarDTO;
-import br.com.batista.entity.Brand;
-import br.com.batista.entity.Car;
-import br.com.batista.entity.Dealership;
-import br.com.batista.entity.Model;
-import br.com.batista.exception.ResourceNotFoundException;
-import br.com.batista.mapper.CarMapper;
-import br.com.batista.repository.BrandRepository;
-import br.com.batista.repository.CarRepository;
-import br.com.batista.repository.DealershipRepository;
-import br.com.batista.repository.ModelRepository;
+import java.util.*;
 
 @Service
 public class CarService {
 
-	private CarRepository carRepository;
-	private ModelRepository modelrepository;
-	private BrandRepository brandRepository;
-	private DealershipRepository dealershipRepository;
+    private final CarRepository carRepository;
+    private final ModelRepository modelrepository;
+    private final BrandRepository brandRepository;
+    private final DealershipRepository dealershipRepository;
 
-	@Autowired
-	public CarService(CarRepository carRepository, ModelRepository modelrepository, BrandRepository brandRepository,
-			DealershipRepository dealershipRepository) {
-		this.carRepository = carRepository;
-		this.modelrepository = modelrepository;
-		this.brandRepository = brandRepository;
-		this.dealershipRepository = dealershipRepository;
-	}
+    @Autowired
+    public CarService (CarRepository carRepository, ModelRepository modelrepository, BrandRepository brandRepository,
+                       DealershipRepository dealershipRepository) {
+        this.carRepository = carRepository;
+        this.modelrepository = modelrepository;
+        this.brandRepository = brandRepository;
+        this.dealershipRepository = dealershipRepository;
+    }
 
-	public Page<ResponseCarDTO> getAll(Pageable pageable) {
-		return carRepository.findAll(pageable)
-				.map(entity -> CarMapper.mapToCarResponseDTO(entity, new ResponseCarDTO()));
-	}
+    public PageResponse<CarResponse> getAll (Pageable pageable) {
+        Page<Car> page = carRepository.findAll(pageable);
+        return new PageResponse<>(page.map(CarMapper::mapToCarResponseDTO));
+    }
 
-	public ResponseCarDTO getById(final Long id) {
-		final Optional<Car> car = carRepository.findById(id);
-		final ResponseCarDTO carDTO = CarMapper.mapToCarResponseDTO(car.get(), new ResponseCarDTO());
-		return carDTO;
-	}
+    public CarResponse getById (final Long id) {
+        final Optional<Car> car = carRepository.findById(id);
+        return CarMapper.mapToCarResponseDTO(car.get());
+    }
 
-	public ResponseCarDTO create(final RequestCarDTO carDTO) {
-		final Car car = CarMapper.mapToCar(carDTO, new Car());
+    public CarResponse create (final @Valid CreateCarRequest carDTO) {
+        final Car car = CarMapper.mapToCar(carDTO);
 
-		Brand brand = brandRepository.findById(carDTO.getBrandId())
-				.orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(carDTO.getBrandId()), "id"));
+        Brand brand = brandRepository.findById(carDTO.getBrandId())
+                .orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(carDTO.getBrandId()), "id"));
 
-		Model model = modelrepository.findById(carDTO.getModelId())
-				.orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(carDTO.getModelId()), "id"));
+        Model model = modelrepository.findById(carDTO.getModelId())
+                .orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(carDTO.getModelId()), "id"));
 
-		Dealership dealership = dealershipRepository.findById(carDTO.getDealershipId()).orElseThrow(
-				() -> new ResourceNotFoundException("Dealership", String.valueOf(carDTO.getDealershipId()), "id"));
+        Dealership dealership = dealershipRepository.findById(carDTO.getDealershipId()).orElseThrow(
+                () -> new ResourceNotFoundException("Dealership", String.valueOf(carDTO.getDealershipId()), "id"));
 
-		car.setBrand(brand);
-		car.setModel(model);
-		car.setDealership(dealership);
+        car.setBrand(brand);
+        car.setModel(model);
+        car.setDealership(dealership);
 
-		final Car savedCar = carRepository.save(car);
-		final ResponseCarDTO dto = CarMapper.mapToCarResponseDTO(savedCar, new ResponseCarDTO());
-		return dto;
-	}
+        final Car savedCar = carRepository.save(car);
+        return CarMapper.mapToCarResponseDTO(savedCar);
+    }
 
-	public void delete(final Long id) {
-		Car savedCar = carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", String.valueOf(id), "id"));
-		carRepository.deleteById(savedCar.getId());
-	}
+    public void delete (final Long id) {
+        Car savedCar = carRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Car", String.valueOf(id), "id"));
+        carRepository.deleteById(savedCar.getId());
+    }
 
-	public CarDTO update(final CarDTO carDTO) {
-		final Car car = CarMapper.mapToCar(carDTO, new Car());
-		final Car savedCar = carRepository.save(car);
-		final CarDTO dto = CarMapper.mapToCarDTO(savedCar, new CarDTO());
-		return dto;
-	}
+    public CarResponse update (final UpdateCarRequest carDTO) {
+        final Car car = CarMapper.mapToCar(carDTO);
+        final Car savedCar = carRepository.save(car);
+        return CarMapper.mapToCarResponseDTO(savedCar);
+    }
 
 }

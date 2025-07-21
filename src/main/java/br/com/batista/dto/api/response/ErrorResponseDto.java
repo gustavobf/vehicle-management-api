@@ -1,4 +1,4 @@
-package br.com.batista.dto;
+package br.com.batista.dto.api.response;
 
 import java.time.LocalDateTime;
 

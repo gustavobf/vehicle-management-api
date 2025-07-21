@@ -20,10 +20,33 @@ public class User {
 
     private boolean active;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roles = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<UserRole> userRoles = new HashSet<>();
 
     public User () {
+    }
+
+    public Set<String> getRoleNames () {
+        Set<String> names = new HashSet<>();
+        for (UserRole ur : userRoles) {
+            names.add(ur.getRole().getName());
+        }
+        return names;
+    }
+
+    public Set<UserRole> getUserRoles () {
+        return Collections.unmodifiableSet(userRoles);
+    }
+
+    public void addUserRole(UserRole userRole) {
+        userRoles.add(userRole);
+        userRole.setUser(this);
+    }
+
+    public void removeUserRole(UserRole userRole) {
+        userRoles.remove(userRole);
+        userRole.setUser(null);
     }
 
     public Long getId () {
@@ -48,14 +71,6 @@ public class User {
 
     public void setPassword (String password) {
         this.password = password;
-    }
-
-    public Set<String> getRoles () {
-        return roles;
-    }
-
-    public void setRoles (Set<String> roles) {
-        this.roles = roles;
     }
 
     public String getEmail () {

@@ -2,7 +2,6 @@ package br.com.batista.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.*;
-import jakarta.annotation.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.userdetails.*;

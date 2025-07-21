@@ -1,4 +1,4 @@
-package br.com.batista.dto;
+package br.com.batista.dto.car;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

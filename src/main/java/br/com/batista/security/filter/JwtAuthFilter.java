@@ -1,6 +1,5 @@
-package br.com.batista.config;
+package br.com.batista.security.filter;
 
-import br.com.batista.utils.*;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.*;
 import jakarta.servlet.*;

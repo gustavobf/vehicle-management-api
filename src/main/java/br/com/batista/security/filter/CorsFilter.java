@@ -1,4 +1,4 @@
-package br.com.batista.config;
+package br.com.batista.security.filter;
 
 import org.springframework.stereotype.Component;
 

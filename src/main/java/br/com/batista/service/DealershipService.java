@@ -1,69 +1,65 @@
 package br.com.batista.service;
 
-import java.util.List;
-import java.util.Optional;
+import br.com.batista.dto.api.response.*;
+import br.com.batista.dto.dealership.*;
+import br.com.batista.dto.dealership.request.*;
+import br.com.batista.dto.dealership.response.*;
+import br.com.batista.entity.*;
+import br.com.batista.exception.*;
+import br.com.batista.mapper.*;
+import br.com.batista.repository.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import br.com.batista.dto.DealershipDTO;
-import br.com.batista.entity.Car;
-import br.com.batista.entity.Dealership;
-import br.com.batista.exception.ResourceNotFoundException;
-import br.com.batista.mapper.DealershipMapper;
-import br.com.batista.repository.CarRepository;
-import br.com.batista.repository.DealershipRepository;
+import java.util.*;
 
 @Service
 public class DealershipService {
 
-	private DealershipRepository dealershipRepository;
-	private CarRepository carRepository;
+    private final DealershipRepository dealershipRepository;
+    private final CarRepository carRepository;
 
-	@Autowired
-	public DealershipService(DealershipRepository dealershipRepository, CarRepository carRepository) {
-		this.dealershipRepository = dealershipRepository;
-		this.carRepository = carRepository;
-	}
+    @Autowired
+    public DealershipService (DealershipRepository dealershipRepository, CarRepository carRepository) {
+        this.dealershipRepository = dealershipRepository;
+        this.carRepository = carRepository;
+    }
 
-	public Page<DealershipDTO> getAll(Pageable pageable) {
-		return dealershipRepository.findAll(pageable)
-				.map(entity -> DealershipMapper.mapToDealershipDto(entity, new DealershipDTO()));
-	}
+    public PageResponse<DealershipResponse> getAll (Pageable pageable) {
+        Page<Dealership> page = dealershipRepository.findAll(pageable);
+        return new PageResponse<>(page.map(DealershipMapper::mapToDealershipResponseDto));
+    }
 
-	public DealershipDTO getById(final Long id) {
-		final Optional<Dealership> dealership = dealershipRepository.findById(id);
-		final DealershipDTO dealershipDTO = DealershipMapper.mapToDealershipDto(dealership.get(), new DealershipDTO());
-		return dealershipDTO;
-	}
+    public DealershipResponse getById (final Long id) {
+        final Optional<Dealership> dealership = dealershipRepository.findById(id);
+        return DealershipMapper.mapToDealershipResponseDto(dealership.get());
+    }
 
-	public DealershipDTO create(final DealershipDTO dealershipDTO) {
-		final Dealership dealership = DealershipMapper.mapToDealership(dealershipDTO, new Dealership());
-		final Dealership savedDealership = dealershipRepository.save(dealership);
-		final DealershipDTO dto = DealershipMapper.mapToDealershipDto(savedDealership, new DealershipDTO());
-		return dto;
-	}
+    public DealershipResponse create (final CreateDealershipRequest dealershipDTO) {
+        final Dealership dealership = DealershipMapper.mapToDealership(dealershipDTO);
+        final Dealership savedDealership = dealershipRepository.save(dealership);
+        return DealershipMapper.mapToDealershipResponseDto(savedDealership);
+    }
 
-	public void delete(final Long id) {
+    public void delete (final Long id) {
 
-		Dealership dealership = dealershipRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Dealership", String.valueOf(id), "id"));
+        Dealership dealership = dealershipRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Dealership", String.valueOf(id), "id"));
 
-		List<Car> cars = carRepository.findByDealership(dealership);
+        List<Car> cars = carRepository.findByDealership(dealership);
 
-		if (!cars.isEmpty()) {
-			carRepository.deleteAll(cars);
-		}
+        if (!cars.isEmpty()) {
+            carRepository.deleteAll(cars);
+        }
 
-		dealershipRepository.deleteById(id);
-	}
+        dealershipRepository.deleteById(id);
+    }
 
-	public DealershipDTO update(final DealershipDTO dealershipDTO) {
-		final Dealership dealership = DealershipMapper.mapToDealership(dealershipDTO, new Dealership());
-		final Dealership savedDealership = dealershipRepository.save(dealership);
-		final DealershipDTO dto = DealershipMapper.mapToDealershipDto(savedDealership, new DealershipDTO());
-		return dto;
-	}
+    public DealershipResponse update (final UpdateDealershipRequest dealershipDTO) {
+        final Dealership dealership = DealershipMapper.mapToDealership(dealershipDTO);
+        final Dealership savedDealership = dealershipRepository.save(dealership);
+        return DealershipMapper.mapToDealershipResponseDto(savedDealership);
+    }
 
 }

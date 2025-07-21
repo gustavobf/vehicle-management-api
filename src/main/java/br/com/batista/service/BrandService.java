@@ -2,12 +2,15 @@ package br.com.batista.service;
 
 import java.util.List;
 
+import br.com.batista.dto.api.response.*;
+import br.com.batista.dto.brand.*;
+import br.com.batista.dto.brand.request.*;
+import br.com.batista.dto.brand.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.batista.dto.BrandDTO;
 import br.com.batista.entity.Brand;
 import br.com.batista.entity.Car;
 import br.com.batista.exception.ResourceNotFoundException;
@@ -18,8 +21,8 @@ import br.com.batista.repository.CarRepository;
 @Service
 public class BrandService {
 
-	private BrandRepository brandRepository;
-	private CarRepository carRepository;
+	private final BrandRepository brandRepository;
+	private final CarRepository carRepository;
 
 	@Autowired
 	public BrandService(BrandRepository brandRepository, CarRepository carRepository) {
@@ -27,20 +30,20 @@ public class BrandService {
 		this.carRepository = carRepository;
 	}
 
-	public Page<BrandDTO> getAll(Pageable pageable) {
-		return brandRepository.findAll(pageable).map(entity -> BrandMapper.mapToBrandDto(entity, new BrandDTO()));
+	public PageResponse<BrandResponse> getAll(Pageable pageable) {
+		Page<Brand> page = brandRepository.findAll(pageable);
+		return new PageResponse<>(page.map(BrandMapper::mapToBrandResponseDto));
 	}
 
-	public BrandDTO getById(final Long id) {
+	public BrandResponse getById (final Long id) {
 		final Brand brand = brandRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(id), "id"));
-		final BrandDTO brandDTO = BrandMapper.mapToBrandDto(brand, new BrandDTO());
-		return brandDTO;
+		return BrandMapper.mapToBrandResponseDto(brand);
 	}
 
-	public BrandDTO create(final BrandDTO brandDTO) {
-		final Brand brand = BrandMapper.mapToBrand(brandDTO, new Brand());
+	public BrandResponse create(final CreateBrandRequest brandDTO) {
+		final Brand brand = BrandMapper.mapToBrand(brandDTO);
 		final Brand savedBrand = brandRepository.save(brand);
-		return BrandMapper.mapToBrandDto(savedBrand, new BrandDTO());
+		return BrandMapper.mapToBrandResponseDto(savedBrand);
 	}
 
 	public void delete(final Long id) {
@@ -55,11 +58,10 @@ public class BrandService {
 		brandRepository.deleteById(brand.getId());
 	}
 
-	public BrandDTO update(final BrandDTO brandDTO) {
-		final Brand brand = BrandMapper.mapToBrand(brandDTO, new Brand());
+	public BrandResponse update(final UpdateBrandRequest brandDTO) {
+		final Brand brand = BrandMapper.mapToBrand(brandDTO);
 		final Brand savedBrand = brandRepository.save(brand);
-		final BrandDTO dto = BrandMapper.mapToBrandDto(savedBrand, new BrandDTO());
-		return dto;
+		return BrandMapper.mapToBrandResponseDto(savedBrand);
 	}
 
 }
