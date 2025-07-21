@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.security.config.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,12 +26,12 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-			http.headers(headers -> headers.frameOptions().disable());
+			http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 		}
 
 		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-		http.authorizeRequests(requests -> requests.anyRequest().permitAll());
-		http.headers(headers -> headers.frameOptions().disable());
+		http.authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
+		http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}

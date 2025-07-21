@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.2</version>
+		<version>3.5.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>23</java.version>
 	</properties>
 	<groupId>br.com.batista</groupId>
 	<artifactId>vehicle-management-api</artifactId>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.5.0</version>
+			<version>2.8.9</version>
 		</dependency>
 
 
