@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+  sql:
+    init:
+      mode: always
+
+jwt:
+  secret: ${JWT_SECRET}
+
+logging:
+  level:
+    org.hibernate.orm.connections.pooling: warn

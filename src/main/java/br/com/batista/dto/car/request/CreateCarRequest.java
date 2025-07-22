@@ -1,6 +1,8 @@
 package br.com.batista.dto.car.request;
 
 import br.com.batista.dto.car.base.*;
+import io.swagger.v3.oas.annotations.media.*;
+import jakarta.validation.constraints.*;
 
 public class CreateCarRequest implements CarBase {
 
@@ -10,8 +12,17 @@ public class CreateCarRequest implements CarBase {
     private int manufacturing;
     private String plate;
     private String name;
+
+    @NotNull(message = "Brand ID is required")
+    @Schema(description = "ID of the brand", example = "5", required = true)
     private Long brandId;
+
+    @NotNull(message = "Model ID is required")
+    @Schema(description = "ID of the model", example = "10", required = true)
     private Long modelId;
+
+    @NotNull(message = "Dealership ID is required")
+    @Schema(description = "ID of the dealership", example = "3", required = true)
     private Long dealershipId;
 
     public CreateCarRequest() {

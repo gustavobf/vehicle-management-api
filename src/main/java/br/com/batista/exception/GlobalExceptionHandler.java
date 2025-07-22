@@ -13,7 +13,7 @@ import java.util.*;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({ResourceNotFoundException.class, NoSuchElementException.class, UserAlreadyExistsException.class})
-    public ResponseEntity<ErrorResponseDto> handleExceptions(RuntimeException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponseDto> handleExceptions (RuntimeException ex, WebRequest request) {
         HttpStatus status;
         String message;
 
@@ -36,12 +36,8 @@ public class GlobalExceptionHandler {
             }
         }
 
-        ErrorResponseDto error = new ErrorResponseDto(
-                request.getDescription(false),
-                status,
-                message,
-                LocalDateTime.now()
-        );
+        ErrorResponseDto error = new ErrorResponseDto(request.getDescription(false), status, message,
+                LocalDateTime.now());
 
         return new ResponseEntity<>(error, status);
     }

@@ -1,7 +1,6 @@
 package br.com.batista.service;
 
 import br.com.batista.dto.api.response.*;
-import br.com.batista.dto.car.*;
 import br.com.batista.dto.car.request.*;
 import br.com.batista.dto.car.response.*;
 import br.com.batista.entity.*;
@@ -13,23 +12,21 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
-import java.util.*;
-
 @Service
 public class CarService {
 
     private final CarRepository carRepository;
-    private final ModelRepository modelrepository;
-    private final BrandRepository brandRepository;
-    private final DealershipRepository dealershipRepository;
+    private final ModelService modelService;
+    private final BrandService brandService;
+    private final DealershipService dealershipService;
 
     @Autowired
-    public CarService (CarRepository carRepository, ModelRepository modelrepository, BrandRepository brandRepository,
-                       DealershipRepository dealershipRepository) {
+    public CarService (CarRepository carRepository, ModelService modelService, BrandService brandService,
+                       DealershipService dealershipService) {
         this.carRepository = carRepository;
-        this.modelrepository = modelrepository;
-        this.brandRepository = brandRepository;
-        this.dealershipRepository = dealershipRepository;
+        this.modelService = modelService;
+        this.brandService = brandService;
+        this.dealershipService = dealershipService;
     }
 
     public PageResponse<CarResponse> getAll (Pageable pageable) {
@@ -38,21 +35,22 @@ public class CarService {
     }
 
     public CarResponse getById (final Long id) {
-        final Optional<Car> car = carRepository.findById(id);
-        return CarMapper.mapToCarResponseDTO(car.get());
+        return CarMapper.mapToCarResponseDTO(this.getEntityById(id));
+    }
+
+    public Car getEntityById (final Long id) {
+        return carRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Car", String.valueOf(id), "id"));
     }
 
     public CarResponse create (final @Valid CreateCarRequest carDTO) {
         final Car car = CarMapper.mapToCar(carDTO);
 
-        Brand brand = brandRepository.findById(carDTO.getBrandId())
-                .orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(carDTO.getBrandId()), "id"));
+        Brand brand = brandService.getEntityById(carDTO.getBrandId());
 
-        Model model = modelrepository.findById(carDTO.getModelId())
-                .orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(carDTO.getModelId()), "id"));
+        Model model = modelService.getEntityById(carDTO.getModelId());
 
-        Dealership dealership = dealershipRepository.findById(carDTO.getDealershipId()).orElseThrow(
-                () -> new ResourceNotFoundException("Dealership", String.valueOf(carDTO.getDealershipId()), "id"));
+        Dealership dealership = dealershipService.getEntityById(carDTO.getDealershipId());
 
         car.setBrand(brand);
         car.setModel(model);

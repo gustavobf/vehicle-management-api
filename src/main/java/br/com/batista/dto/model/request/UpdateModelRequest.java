@@ -1,11 +1,13 @@
 package br.com.batista.dto.model.request;
 
 import br.com.batista.dto.model.base.*;
-import jakarta.validation.constraints.NotNull;
+import io.swagger.v3.oas.annotations.media.*;
+import jakarta.validation.constraints.*;
 
 public class UpdateModelRequest implements ModelBase {
 
     @NotNull(message = "ID is required")
+    @Schema(description = "Model ID", example = "123", required = true)
     private Long id;
 
     private String name;

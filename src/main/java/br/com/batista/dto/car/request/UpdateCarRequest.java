@@ -1,11 +1,13 @@
 package br.com.batista.dto.car.request;
 
 import br.com.batista.dto.car.base.*;
+import io.swagger.v3.oas.annotations.media.*;
 import jakarta.validation.constraints.*;
 
 public class UpdateCarRequest implements CarBase {
 
     @NotNull(message = "ID is required")
+    @Schema(description = "Car ID", example = "123", required = true)
     private Long id;
 
     private String color;

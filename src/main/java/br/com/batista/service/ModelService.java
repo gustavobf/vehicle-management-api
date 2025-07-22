@@ -1,23 +1,17 @@
 package br.com.batista.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import br.com.batista.dto.api.response.*;
-import br.com.batista.dto.model.*;
 import br.com.batista.dto.model.request.*;
 import br.com.batista.dto.model.response.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import br.com.batista.entity.*;
+import br.com.batista.exception.*;
+import br.com.batista.mapper.*;
+import br.com.batista.repository.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.*;
 
-import br.com.batista.entity.Car;
-import br.com.batista.entity.Model;
-import br.com.batista.exception.ResourceNotFoundException;
-import br.com.batista.mapper.ModelMapper;
-import br.com.batista.repository.CarRepository;
-import br.com.batista.repository.ModelRepository;
+import java.util.*;
 
 @Service
 public class ModelService {
@@ -36,9 +30,13 @@ public class ModelService {
         return new PageResponse<>(page.map(ModelMapper::mapToModelResponseDto));
     }
 
+    public Model getEntityById (final Long id) {
+        return modelRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(id), "id"));
+    }
+
     public ModelResponse getById (final Long id) {
-        final Optional<Model> model = modelRepository.findById(id);
-        return ModelMapper.mapToModelResponseDto(model.get());
+        return ModelMapper.mapToModelResponseDto(this.getEntityById(id));
     }
 
     public ModelResponse create (final CreateModelRequest modelDTO) {

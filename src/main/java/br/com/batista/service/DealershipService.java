@@ -1,7 +1,6 @@
 package br.com.batista.service;
 
 import br.com.batista.dto.api.response.*;
-import br.com.batista.dto.dealership.*;
 import br.com.batista.dto.dealership.request.*;
 import br.com.batista.dto.dealership.response.*;
 import br.com.batista.entity.*;
@@ -32,8 +31,12 @@ public class DealershipService {
     }
 
     public DealershipResponse getById (final Long id) {
-        final Optional<Dealership> dealership = dealershipRepository.findById(id);
-        return DealershipMapper.mapToDealershipResponseDto(dealership.get());
+        return DealershipMapper.mapToDealershipResponseDto(this.getEntityById(id));
+    }
+
+    public Dealership getEntityById (final Long id) {
+        return dealershipRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Dealership", String.valueOf(id), "id"));
     }
 
     public DealershipResponse create (final CreateDealershipRequest dealershipDTO) {

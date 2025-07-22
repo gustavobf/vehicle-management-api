@@ -1,11 +1,13 @@
 package br.com.batista.dto.dealership.request;
 
 import br.com.batista.dto.dealership.base.*;
+import io.swagger.v3.oas.annotations.media.*;
 import jakarta.validation.constraints.NotNull;
 
 public class UpdateDealershipRequest implements DealershipBase {
 
     @NotNull(message = "ID is required")
+    @Schema(description = "Dealership ID", example = "123", required = true)
     private Long id;
 
     private String cnpj;

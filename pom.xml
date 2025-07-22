@@ -15,7 +15,7 @@
 	<groupId>br.com.batista</groupId>
 	<artifactId>vehicle-management-api</artifactId>
 	<version>1.0.0</version>
-	<name>crup-app</name>
+	<name>vehicle_management_app</name>
 
 	<dependencies>
 		<dependency>
@@ -85,6 +85,11 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.7</version>
 		</dependency>
 	</dependencies>
 	<build>

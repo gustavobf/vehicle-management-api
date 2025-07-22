@@ -30,39 +30,45 @@ public class ModelController {
     }
 
     @Operation(summary = "Returns a list with all models")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = PageResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping("/getall")
     public ResponseEntity<PageResponse<ModelResponse>> getAll (
             @ParameterObject @PageableDefault(sort = "name") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(modelService.getAll(pageable));
     }
 
-    @Operation(summary = "Returns a model based on its id")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @Operation(summary = "Returns a model based on its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Model found", content = @Content(schema = @Schema(implementation = ModelResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Model not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping("/getbyid")
     public ResponseEntity<ModelResponse> getById (
             @Parameter(description = "ID of the model to be retrieved", required = true) @RequestParam final Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(modelService.getById(id));
     }
 
-    @Operation(summary = "Creates a model")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Model created successfully", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @Operation(summary = "Creates a model", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CreateModelRequest.class), examples = @ExampleObject(name = "Create model", value = """
+            {
+                "name": "Civic",
+                "brand": "Honda"
+            }
+            """))), responses = {
+            @ApiResponse(responseCode = "201", description = "Model created successfully", content = @Content(schema = @Schema(implementation = ModelResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @PostMapping("/create")
     public ResponseEntity<ModelResponse> create (@Valid @RequestBody final CreateModelRequest modelDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(modelService.create(modelDTO));
     }
 
-    @Operation(summary = "Deletes a model based on its id")
+    @Operation(summary = "Deletes a model based on its ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Model deleted successfully", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+            @ApiResponse(responseCode = "200", description = "Model deleted successfully", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Model not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> delete (
             @Parameter(description = "ID of the model to be deleted", required = true) @RequestParam final Long id) {
@@ -71,12 +77,17 @@ public class ModelController {
                 .body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));
     }
 
-    @Operation(summary = "Updates a model")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Model updated successfully", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Model not found", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @Operation(summary = "Updates a model", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UpdateModelRequest.class), examples = @ExampleObject(name = "Update model", value = """
+            {
+                "id": 1,
+                "name": "Civic LX",
+                "brand": "Honda"
+            }
+            """))), responses = {
+            @ApiResponse(responseCode = "200", description = "Model updated successfully", content = @Content(schema = @Schema(implementation = ModelResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Model not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @PutMapping("/update")
     public ResponseEntity<ModelResponse> update (@Valid @RequestBody final UpdateModelRequest modelDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(modelService.update(modelDTO));

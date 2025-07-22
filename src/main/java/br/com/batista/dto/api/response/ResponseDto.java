@@ -1,33 +1,38 @@
 package br.com.batista.dto.api.response;
 
+import io.swagger.v3.oas.annotations.media.*;
+
 public class ResponseDto {
 
-	private int statusCode;
-	private String message;
+    @Schema(description = "HTTP status code of the response", example = "200", required = true)
+    private int statusCode;
 
-	public ResponseDto() {
-	}
+    @Schema(description = "Response message", example = "Operation completed successfully", required = true)
+    private String message;
 
-	public ResponseDto(int statusCode, String message) {
-		super();
-		this.setStatusCode(statusCode);
-		this.setMessage(message);
-	}
+    public ResponseDto () {
+    }
 
-	public int getStatusCode() {
-		return statusCode;
-	}
+    public ResponseDto (int statusCode, String message) {
+        super();
+        this.setStatusCode(statusCode);
+        this.setMessage(message);
+    }
 
-	public void setStatusCode(int statusCode) {
-		this.statusCode = statusCode;
-	}
+    public int getStatusCode () {
+        return statusCode;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public void setStatusCode (int statusCode) {
+        this.statusCode = statusCode;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage () {
+        return message;
+    }
+
+    public void setMessage (String message) {
+        this.message = message;
+    }
 
 }

@@ -30,39 +30,47 @@ public class CarController {
     }
 
     @Operation(summary = "Returns a list with all cars")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = PageResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping("/getall")
     public ResponseEntity<PageResponse<CarResponse>> getAll (
             @ParameterObject @PageableDefault(sort = "name") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(carService.getAll(pageable));
     }
 
-    @Operation(summary = "Returns a car based on its id")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Car not found", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @Operation(summary = "Returns a car based on its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Car found", content = @Content(schema = @Schema(implementation = CarResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Car not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping("/getbyid")
     public ResponseEntity<CarResponse> getById (
             @Parameter(description = "ID of the car to be retrieved", required = true) @RequestParam final Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(carService.getById(id));
     }
 
-    @Operation(summary = "Creates a car")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Car created successfully", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @Operation(summary = "Creates a car", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CreateCarRequest.class), examples = @ExampleObject(name = "Create car", value = """
+            {
+                "name": "Corolla",
+                "year": 2023,
+                "price": 120000,
+                "brandId": 1
+            }
+            """))), responses = {
+            @ApiResponse(responseCode = "201", description = "Car created successfully", content = @Content(schema = @Schema(implementation = CarResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @PostMapping("/create")
     public ResponseEntity<CarResponse> create (@Valid @RequestBody final CreateCarRequest carDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.create(carDTO));
     }
 
-    @Operation(summary = "Deletes a car based on its id")
+    @Operation(summary = "Deletes a car based on its ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Car deleted successfully", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Car not found", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+            @ApiResponse(responseCode = "200", description = "Car deleted successfully", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Car not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> delete (
             @Parameter(description = "ID of the car to be deleted", required = true) @RequestParam final Long id) {
@@ -71,12 +79,19 @@ public class CarController {
                 .body(new ResponseDto(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase()));
     }
 
-    @Operation(summary = "Updates a car")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Car updated successfully", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Car not found", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+    @Operation(summary = "Updates a car", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UpdateCarRequest.class), examples = @ExampleObject(name = "Update car", value = """
+            {
+                "id": 1,
+                "name": "Corolla Altis",
+                "year": 2024,
+                "price": 130000,
+                "brandId": 1
+            }
+            """))), responses = {
+            @ApiResponse(responseCode = "200", description = "Car updated successfully", content = @Content(schema = @Schema(implementation = CarResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Car not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
     @PutMapping("/update")
     public ResponseEntity<CarResponse> update (@Valid @RequestBody final UpdateCarRequest carDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(carService.update(carDTO));

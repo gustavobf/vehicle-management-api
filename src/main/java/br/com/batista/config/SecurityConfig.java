@@ -2,6 +2,8 @@ package br.com.batista.config;
 
 import br.com.batista.security.filter.*;
 import br.com.batista.security.handler.*;
+import br.com.batista.security.service.*;
+import br.com.batista.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.security.web.*;
@@ -24,22 +27,25 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final UserService userService;
+
+    private static final String[] PUBLIC_URLS = {"/h2-console/**", "/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**",
+            "/swagger-ui.html"};
+
+    private static final String[] USER_URLS = {"/api/brand/**", "/api/model/**", "/api/dealership/**", "/api/order/**",
+            "/api/ad/**", "/api/car/**"};
 
     @Autowired
-    public SecurityConfig (JwtAuthFilter jwtAuthFilter, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
+    public SecurityConfig (UserService userService, JwtAuthFilter jwtAuthFilter, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+        this.userService = userService;
     }
 
     @Bean
     SecurityFilterChain filterChain (final HttpSecurity http) throws Exception {
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.authorizeHttpRequests(
-                requests -> requests.requestMatchers("/h2-console/**", "/api/auth/**", "/swagger-ui/**",
-                                "/v3/api-docs/**", "/swagger-ui.html").permitAll().requestMatchers("/api/brand/**")
-                        .hasRole("USER").requestMatchers("/api/model/**").hasRole("USER")
-                        .requestMatchers("/api/dealership/**").hasRole("USER").requestMatchers("/api/car/**")
-                        .hasRole("USER").anyRequest().authenticated());
+        this.configureAuthorization(http);
         http.exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthenticationEntryPoint));
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
@@ -66,5 +72,12 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder () {
         return new BCryptPasswordEncoder();
     }
+
+    private void configureAuthorization (HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(
+                requests -> requests.requestMatchers(PUBLIC_URLS).permitAll().requestMatchers(USER_URLS).hasRole("USER")
+                        .anyRequest().authenticated());
+    }
+
 
 }
