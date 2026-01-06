@@ -1,5 +1,6 @@
 package br.com.batista.controller;
 
+import br.com.batista.constants.*;
 import br.com.batista.dto.api.response.*;
 import br.com.batista.dto.dealership.request.*;
 import br.com.batista.dto.dealership.response.*;
@@ -18,7 +19,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/dealership", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(ControllerConstants.DEALERSHIP_BASE_PATH)
 @Tag(name = "Dealership Controller", description = "Controller for managing dealership operations")
 public class DealershipController {
 
@@ -33,7 +34,7 @@ public class DealershipController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = PageResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @GetMapping("/getall")
+    @GetMapping(ControllerConstants.GET_ALL)
     public ResponseEntity<PageResponse<DealershipResponse>> getAll (
             @ParameterObject @PageableDefault(sort = "name") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(dealershipService.getAll(pageable));
@@ -44,7 +45,7 @@ public class DealershipController {
             @ApiResponse(responseCode = "200", description = "Dealership found", content = @Content(schema = @Schema(implementation = DealershipResponse.class))),
             @ApiResponse(responseCode = "404", description = "Dealership not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @GetMapping("/getbyid")
+    @GetMapping(ControllerConstants.GET_BY_ID)
     public ResponseEntity<DealershipResponse> getById (
             @Parameter(description = "ID of the dealership to be retrieved", required = true) @RequestParam final Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(dealershipService.getById(id));
@@ -59,7 +60,7 @@ public class DealershipController {
             @ApiResponse(responseCode = "201", description = "Dealership created successfully", content = @Content(schema = @Schema(implementation = DealershipResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @PostMapping("/create")
+    @PostMapping(ControllerConstants.CREATE)
     public ResponseEntity<DealershipResponse> create (@Valid @RequestBody final CreateDealershipRequest dealershipDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(dealershipService.create(dealershipDTO));
     }
@@ -69,7 +70,7 @@ public class DealershipController {
             @ApiResponse(responseCode = "200", description = "Dealership deleted successfully", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "Dealership not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @DeleteMapping("/delete")
+    @DeleteMapping(ControllerConstants.DELETE)
     public ResponseEntity<ResponseDto> delete (
             @Parameter(description = "ID of the dealership to be deleted", required = true) @RequestParam final Long id) {
         dealershipService.delete(id);
@@ -88,7 +89,7 @@ public class DealershipController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Dealership not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @PutMapping("/update")
+    @PutMapping(ControllerConstants.UPDATE)
     public ResponseEntity<DealershipResponse> update (@Valid @RequestBody final UpdateDealershipRequest dealershipDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(dealershipService.update(dealershipDTO));
     }

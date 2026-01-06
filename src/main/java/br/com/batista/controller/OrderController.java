@@ -1,5 +1,6 @@
 package br.com.batista.controller;
 
+import br.com.batista.constants.*;
 import br.com.batista.dto.api.response.*;
 import br.com.batista.dto.order.request.*;
 import br.com.batista.dto.order.response.*;
@@ -18,7 +19,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/order", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(ControllerConstants.ORDER_BASE_PATH)
 @Tag(name = "Order Controller", description = "Controller for managing orders")
 public class OrderController {
 
@@ -33,7 +34,7 @@ public class OrderController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = PageResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @GetMapping("/getall")
+    @GetMapping(ControllerConstants.GET_ALL)
     public ResponseEntity<PageResponse<OrderResponse>> getAll (@ParameterObject @PageableDefault Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.getAllByUser(pageable));
     }
@@ -43,7 +44,7 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = "Order found", content = @Content(schema = @Schema(implementation = OrderResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
             @ApiResponse(responseCode = "404", description = "Order not found")})
-    @GetMapping("/getbyid")
+    @GetMapping(ControllerConstants.GET_BY_ID)
     public ResponseEntity<OrderResponse> getById (
             @Parameter(description = "ID of the order to be retrieved", required = true) @RequestParam Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.getById(id));
@@ -60,7 +61,7 @@ public class OrderController {
             @ApiResponse(responseCode = "201", description = "Order created successfully", content = @Content(schema = @Schema(implementation = OrderResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @PostMapping("/create")
+    @PostMapping(ControllerConstants.CREATE)
     public ResponseEntity<OrderResponse> create (@Valid @RequestBody CreateOrderRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.newOrder(request));
     }
@@ -70,7 +71,7 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = "Order deleted successfully", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
             @ApiResponse(responseCode = "404", description = "Order not found")})
-    @DeleteMapping("/delete")
+    @DeleteMapping(ControllerConstants.DELETE)
     public ResponseEntity<ResponseDto> delete (
             @Parameter(description = "ID of the order to be deleted", required = true) @RequestParam Long id) {
         orderService.delete(id);

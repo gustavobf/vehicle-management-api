@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-public class ModelServiceTest {
+public class ModelServiceImplTest {
 
     @InjectMocks
     ModelService service;

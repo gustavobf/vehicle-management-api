@@ -1,5 +1,6 @@
 package br.com.batista.controller;
 
+import br.com.batista.constants.*;
 import br.com.batista.dto.api.response.*;
 import br.com.batista.dto.model.request.*;
 import br.com.batista.dto.model.response.*;
@@ -18,7 +19,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/model", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(ControllerConstants.MODEL_BASE_PATH)
 @Tag(name = "Model Controller", description = "Controller for managing model operations")
 public class ModelController {
 
@@ -33,7 +34,7 @@ public class ModelController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = PageResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @GetMapping("/getall")
+    @GetMapping(ControllerConstants.GET_ALL)
     public ResponseEntity<PageResponse<ModelResponse>> getAll (
             @ParameterObject @PageableDefault(sort = "name") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(modelService.getAll(pageable));
@@ -44,7 +45,7 @@ public class ModelController {
             @ApiResponse(responseCode = "200", description = "Model found", content = @Content(schema = @Schema(implementation = ModelResponse.class))),
             @ApiResponse(responseCode = "404", description = "Model not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @GetMapping("/getbyid")
+    @GetMapping(ControllerConstants.GET_BY_ID)
     public ResponseEntity<ModelResponse> getById (
             @Parameter(description = "ID of the model to be retrieved", required = true) @RequestParam final Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(modelService.getById(id));
@@ -59,7 +60,7 @@ public class ModelController {
             @ApiResponse(responseCode = "201", description = "Model created successfully", content = @Content(schema = @Schema(implementation = ModelResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @PostMapping("/create")
+    @PostMapping(ControllerConstants.CREATE)
     public ResponseEntity<ModelResponse> create (@Valid @RequestBody final CreateModelRequest modelDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(modelService.create(modelDTO));
     }
@@ -69,7 +70,7 @@ public class ModelController {
             @ApiResponse(responseCode = "200", description = "Model deleted successfully", content = @Content(schema = @Schema(implementation = ResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "Model not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @DeleteMapping("/delete")
+    @DeleteMapping(ControllerConstants.DELETE)
     public ResponseEntity<ResponseDto> delete (
             @Parameter(description = "ID of the model to be deleted", required = true) @RequestParam final Long id) {
         modelService.delete(id);
@@ -88,7 +89,7 @@ public class ModelController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Model not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @PutMapping("/update")
+    @PutMapping(ControllerConstants.UPDATE)
     public ResponseEntity<ModelResponse> update (@Valid @RequestBody final UpdateModelRequest modelDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(modelService.update(modelDTO));
     }

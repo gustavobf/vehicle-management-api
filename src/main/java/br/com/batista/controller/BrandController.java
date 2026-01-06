@@ -1,5 +1,6 @@
 package br.com.batista.controller;
 
+import br.com.batista.constants.*;
 import br.com.batista.dto.api.response.*;
 import br.com.batista.dto.brand.request.*;
 import br.com.batista.dto.brand.response.*;
@@ -18,7 +19,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/brand", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(ControllerConstants.BRAND_BASE_PATH)
 @Tag(name = "Brand Controller", description = "Controller for managing brand operations")
 public class BrandController {
 
@@ -33,7 +34,7 @@ public class BrandController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = PageResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @GetMapping("/getall")
+    @GetMapping(ControllerConstants.GET_ALL)
     public ResponseEntity<PageResponse<BrandResponse>> getAll (
             @ParameterObject @PageableDefault(sort = "name") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(brandService.getAll(pageable));
@@ -44,7 +45,7 @@ public class BrandController {
             @ApiResponse(responseCode = "200", description = "Found the brand", content = @Content(schema = @Schema(implementation = BrandResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
             @ApiResponse(responseCode = "404", description = "Brand not found")})
-    @GetMapping("/getbyid")
+    @GetMapping(ControllerConstants.GET_BY_ID)
     public ResponseEntity<BrandResponse> getById (
             @Parameter(description = "ID of the brand to be retrieved", required = true) @RequestParam Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(brandService.getById(id));
@@ -58,7 +59,7 @@ public class BrandController {
             @ApiResponse(responseCode = "201", description = "Brand created successfully", content = @Content(schema = @Schema(implementation = BrandResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @PostMapping("/create")
+    @PostMapping(ControllerConstants.CREATE)
     public ResponseEntity<BrandResponse> create (@Valid @RequestBody CreateBrandRequest brandDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(brandService.create(brandDTO));
     }
@@ -69,7 +70,7 @@ public class BrandController {
             @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
             @ApiResponse(responseCode = "404", description = "Brand not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @DeleteMapping("/delete")
+    @DeleteMapping(ControllerConstants.DELETE)
     public ResponseEntity<ResponseDto> delete (
             @Parameter(description = "ID of the brand to be deleted", required = true) @RequestParam Long id) {
         brandService.delete(id);
@@ -87,7 +88,7 @@ public class BrandController {
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "Brand not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
-    @PutMapping("/update")
+    @PutMapping(ControllerConstants.UPDATE)
     public ResponseEntity<BrandResponse> update (@Valid @RequestBody UpdateBrandRequest brandDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(brandService.update(brandDTO));
     }

@@ -1,5 +1,6 @@
 package br.com.batista.controller;
 
+import br.com.batista.constants.*;
 import br.com.batista.dto.auth.request.*;
 import br.com.batista.dto.auth.response.*;
 import br.com.batista.security.service.*;
@@ -13,7 +14,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/auth", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(ControllerConstants.AUTH_BASE_PATH)
 @Tag(name = "Authentication Controller", description = "Endpoints for user authentication, including login and token management")
 public class AuthController {
 
