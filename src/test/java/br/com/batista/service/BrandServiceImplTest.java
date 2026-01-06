@@ -1,42 +1,42 @@
 package br.com.batista.service;
 
+
 import br.com.batista.dto.api.response.*;
 import br.com.batista.dto.brand.request.*;
 import br.com.batista.dto.brand.response.*;
 import br.com.batista.entity.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
-import org.junit.*;
+import br.com.batista.service.impl.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.*;
 import org.mockito.*;
+import org.mockito.junit.jupiter.*;
 import org.springframework.data.domain.*;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-public class BrandServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class BrandServiceImplTest {
 
     @InjectMocks
-    BrandService service;
+    private BrandServiceImpl service;
 
     @Mock
-    BrandRepository repository;
+    private BrandRepository repository;
 
     @Mock
-    CarRepository carRepository;
+    private CarRepository carRepository;
 
     @Captor
     ArgumentCaptor<Brand> brandCaptor;
 
     @Captor
     ArgumentCaptor<Long> brandIdCaptor;
-
-    @Before
-    public void setUp () {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testGetAll () {
@@ -90,6 +90,7 @@ public class BrandServiceTest {
         Brand brand = new Brand();
         brand.setId(15l);
 
+        when(carRepository.findByBrand(any(Brand.class))).thenReturn(Collections.emptyList());
         when(repository.findById(any(Long.class))).thenReturn(Optional.of(brand));
 
         service.delete(15l);

@@ -6,17 +6,20 @@ import br.com.batista.dto.dealership.response.*;
 import br.com.batista.entity.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
-import org.junit.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.*;
 import org.mockito.*;
+import org.mockito.junit.jupiter.*;
 import org.springframework.data.domain.*;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-public class DealershipServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class DealershipServiceImplTest {
 
     @InjectMocks
     DealershipService service;
@@ -32,11 +35,6 @@ public class DealershipServiceTest {
 
     @Captor
     ArgumentCaptor<Long> dealershipIdCaptor;
-
-    @Before
-    public void setUp () {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testGetAll () {

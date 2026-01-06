@@ -6,17 +6,20 @@ import br.com.batista.dto.car.response.*;
 import br.com.batista.entity.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
-import org.junit.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.*;
 import org.mockito.*;
+import org.mockito.junit.jupiter.*;
 import org.springframework.data.domain.*;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-public class CarServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class CarServiceImplTest {
 
     @InjectMocks
     CarService service;
@@ -38,11 +41,6 @@ public class CarServiceTest {
 
     @Captor
     ArgumentCaptor<Long> carIdCaptor;
-
-    @Before
-    public void setUp () {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testGetAll () {

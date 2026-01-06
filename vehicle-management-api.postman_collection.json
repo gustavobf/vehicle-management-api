@@ -10,7 +10,7 @@
 			"name": "car",
 			"item": [
 				{
-					"name": "getById",
+					"name": "get-by-id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -25,19 +25,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/car/getbyid?id=999",
+							"raw": "{{local}}/api/car/get-by-id?id=1",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"car",
-								"getbyid"
+								"get-by-id"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "999"
+									"value": "1"
 								}
 							]
 						}
@@ -61,7 +61,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"color\": \"Teste\",\r\n    \"power\": 1000,\r\n    \"door\": 2,\r\n    \"manufacturing\": 2050,\r\n    \"plate\": \"Teste\",\r\n    \"name\": \"Teste\",\r\n    \"brandId\": 0,\r\n    \"modelId\": 0,\r\n    \"dealershipId\": 0\r\n\r\n}",
+							"raw": "{\r\n    \"color\": \"Teste\",\r\n    \"power\": 1000,\r\n    \"door\": 2,\r\n    \"manufacturing\": 2050,\r\n    \"plate\": \"Teste\",\r\n    \"name\": \"Teste\",\r\n    \"price\": 6000,\r\n    \"brandId\": 0,\r\n    \"modelId\": 0,\r\n    \"dealershipId\": 0\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,7 +83,7 @@
 					"response": []
 				},
 				{
-					"name": "getAll",
+					"name": "get-all",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -98,14 +98,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/car/getall",
+							"raw": "{{local}}/api/car/get-all",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"car",
-								"getall"
+								"get-all"
 							]
 						}
 					},
@@ -128,7 +128,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"color\": \"Red\",\r\n    \"power\": 2658,\r\n    \"door\": 4,\r\n    \"manufacturing\": 2020,\r\n    \"plate\": \"ABC-356\",\r\n    \"name\": \"Car Name Zero But Red\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"color\": \"Red\",\r\n    \"power\": 2658,\r\n    \"door\": 4,\r\n    \"price\": 6000,\r\n    \"manufacturing\": 2020,\r\n    \"plate\": \"ABC-356\",\r\n    \"name\": \"Car Name Zero But Red\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -187,10 +187,10 @@
 			]
 		},
 		{
-			"name": "dealership",
+			"name": "ad",
 			"item": [
 				{
-					"name": "getById",
+					"name": "get-by-id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -205,14 +205,336 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/dealership/getbyid?id=0",
+							"raw": "{{local}}/api/ad/get-by-id?id=999",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"ad",
+								"get-by-id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "999"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"carId\": 1,\r\n  \"price\": 6000,\r\n  \"description\": \"Used car in excellent condition\",\r\n  \"userId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/ad/create",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"ad",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/ad/get-all",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"ad",
+								"get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"carId\": 1,\r\n  \"price\": 6500,\r\n  \"description\": \"Price reduced, great condition\",\r\n  \"userId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/ad/update",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"ad",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/ad/delete?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"ad",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "get-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/order/get-by-id?id=1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"get-by-id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"adId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/order/create",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/order/get-all",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"get-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/order/delete?id=0",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dealership",
+			"item": [
+				{
+					"name": "get-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/dealership/get-by-id?id=0",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"dealership",
-								"getbyid"
+								"get-by-id"
 							],
 							"query": [
 								{
@@ -262,7 +584,7 @@
 					"response": []
 				},
 				{
-					"name": "getAll",
+					"name": "get-all",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -277,14 +599,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/dealership/getall",
+							"raw": "{{local}}/api/dealership/get-all",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"dealership",
-								"getall"
+								"get-all"
 							]
 						}
 					},
@@ -369,7 +691,7 @@
 			"name": "model",
 			"item": [
 				{
-					"name": "getById",
+					"name": "get-by-id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -384,14 +706,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/model/getbyid?id=0",
+							"raw": "{{local}}/api/model/get-by-id?id=0",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"model",
-								"getbyid"
+								"get-by-id"
 							],
 							"query": [
 								{
@@ -442,7 +764,7 @@
 					"response": []
 				},
 				{
-					"name": "getAll",
+					"name": "get-all",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -457,14 +779,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/model/getall",
+							"raw": "{{local}}/api/model/get-all",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"model",
-								"getall"
+								"get-all"
 							]
 						}
 					},
@@ -549,7 +871,7 @@
 			"name": "brand",
 			"item": [
 				{
-					"name": "getById",
+					"name": "get-by-id",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -564,14 +886,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/brand/getbyid?id=999",
+							"raw": "{{local}}/api/brand/get-by-id?id=999",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"brand",
-								"getbyid"
+								"get-by-id"
 							],
 							"query": [
 								{
@@ -622,7 +944,7 @@
 					"response": []
 				},
 				{
-					"name": "getAll",
+					"name": "get-all",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -637,14 +959,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/api/brand/getall",
+							"raw": "{{local}}/api/brand/get-all",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"api",
 								"brand",
-								"getall"
+								"get-all"
 							]
 						}
 					},
@@ -756,7 +1078,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"username1\",\r\n    \"password\": \"password123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"john@email.com\",\r\n    \"password\": \"password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -784,7 +1106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"username1\",\r\n    \"password\": \"password123\",\r\n    \"email\": \"email@email.com\"\r\n\r\n}",
+							"raw": "{\r\n    \"username\": \"username\",\r\n    \"password\": \"password\",\r\n    \"email\": \"email@emailtest.com\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
