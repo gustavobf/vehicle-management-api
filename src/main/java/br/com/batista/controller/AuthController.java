@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.*;
 import jakarta.validation.*;
+import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ControllerConstants.AUTH_BASE_PATH)
 @Tag(name = "Authentication Controller", description = "Endpoints for user authentication, including login and token management")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
-
-    @Autowired
-    public AuthController (AuthService authService) {
-        this.authService = authService;
-    }
 
     @Operation(summary = "User registration", description = "Register a new user with username, email and password", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RegisterRequest.class), examples = @ExampleObject(name = "Example request", value = """
             {

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.*;
 import jakarta.validation.*;
+import lombok.*;
 import org.springdoc.core.annotations.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
@@ -21,14 +22,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ControllerConstants.BRAND_BASE_PATH)
 @Tag(name = "Brand Controller", description = "Controller for managing brand operations")
+@RequiredArgsConstructor
 public class BrandController {
 
     private final BrandService brandService;
-
-    @Autowired
-    public BrandController (BrandService brandService) {
-        this.brandService = brandService;
-    }
 
     @Operation(summary = "Returns a list with all brands")
     @ApiResponses(value = {

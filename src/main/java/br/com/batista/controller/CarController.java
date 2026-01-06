@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.*;
 import jakarta.validation.*;
+import lombok.*;
 import org.springdoc.core.annotations.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
@@ -21,14 +22,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ControllerConstants.CAR_BASE_PATH)
 @Tag(name = "Car Controller", description = "Controller for managing car operations")
+@RequiredArgsConstructor
 public class CarController {
 
     private final CarService carService;
-
-    @Autowired
-    public CarController (CarService carService) {
-        this.carService = carService;
-    }
 
     @Operation(summary = "Returns a list with all cars")
     @ApiResponses(value = {

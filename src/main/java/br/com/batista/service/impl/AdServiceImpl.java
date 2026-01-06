@@ -8,23 +8,18 @@ import br.com.batista.exception.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 @Service
+@RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
 
     private final AdRepository adRepository;
     private final CarService carService;
     private final UserService userService;
-
-    @Autowired
-    public AdServiceImpl (AdRepository adRepository, CarService carService, UserService userService) {
-        this.adRepository = adRepository;
-        this.carService = carService;
-        this.userService = userService;
-    }
 
     public PageResponse<AdResponse> getAll (Pageable pageable) {
         Page<Ad> page = adRepository.findAll(pageable);

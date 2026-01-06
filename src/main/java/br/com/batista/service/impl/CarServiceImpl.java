@@ -9,26 +9,19 @@ import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
 import jakarta.validation.*;
+import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 @Service
+@RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
     private final ModelService modelService;
     private final BrandService brandService;
     private final DealershipService dealershipService;
-
-    @Autowired
-    public CarServiceImpl (CarRepository carRepository, ModelService modelService, BrandService brandService,
-                           DealershipService dealershipService) {
-        this.carRepository = carRepository;
-        this.modelService = modelService;
-        this.brandService = brandService;
-        this.dealershipService = dealershipService;
-    }
 
     public PageResponse<CarResponse> getAll (Pageable pageable) {
         Page<Car> page = carRepository.findAll(pageable);

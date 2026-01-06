@@ -8,6 +8,7 @@ import br.com.batista.exception.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
@@ -15,16 +16,11 @@ import org.springframework.stereotype.*;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
     private final CarRepository carRepository;
-
-    @Autowired
-    public BrandServiceImpl (BrandRepository brandRepository, CarRepository carRepository) {
-        this.brandRepository = brandRepository;
-        this.carRepository = carRepository;
-    }
 
     public PageResponse<BrandResponse> getAll (Pageable pageable) {
         Page<Brand> page = brandRepository.findAll(pageable);

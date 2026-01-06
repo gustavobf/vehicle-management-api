@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.*;
 import jakarta.validation.*;
+import lombok.*;
 import org.springdoc.core.annotations.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
@@ -21,14 +22,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ControllerConstants.MODEL_BASE_PATH)
 @Tag(name = "Model Controller", description = "Controller for managing model operations")
+@RequiredArgsConstructor
 public class ModelController {
 
     private final ModelService modelService;
-
-    @Autowired
-    public ModelController (ModelService modelService) {
-        this.modelService = modelService;
-    }
 
     @Operation(summary = "Returns a list with all models")
     @ApiResponses(value = {

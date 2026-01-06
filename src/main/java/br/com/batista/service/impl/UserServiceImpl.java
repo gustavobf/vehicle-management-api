@@ -4,19 +4,16 @@ import br.com.batista.entity.User;
 import br.com.batista.exception.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserServiceImpl (UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public User findByEmail (String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));

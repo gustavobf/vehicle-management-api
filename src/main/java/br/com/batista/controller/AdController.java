@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.*;
 import jakarta.validation.*;
+import lombok.*;
+import org.slf4j.*;
 import org.springdoc.core.annotations.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
@@ -21,14 +23,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ControllerConstants.AD_BASE_PATH)
 @Tag(name = "Ad Controller", description = "Controller for managing car advertisements")
+@RequiredArgsConstructor
 public class AdController {
 
     private final AdService adService;
-
-    @Autowired
-    public AdController (AdService adService) {
-        this.adService = adService;
-    }
 
     @Operation(summary = "Returns a list with all active ads")
     @ApiResponses(value = {

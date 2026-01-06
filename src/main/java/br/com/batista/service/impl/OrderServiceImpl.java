@@ -9,26 +9,18 @@ import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.security.utils.*;
 import br.com.batista.service.*;
+import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private final CarService carService;
     private final UserService userService;
     private final AdService adService;
-
-    @Autowired
-    public OrderServiceImpl (AdService adService, OrderRepository orderRepository, CarService carService,
-                             UserService userService) {
-        this.orderRepository = orderRepository;
-        this.carService = carService;
-        this.userService = userService;
-        this.adService = adService;
-    }
 
     public PageResponse<OrderResponse> getAll (Pageable pageable) {
         Page<Order> page = orderRepository.findAll(pageable);

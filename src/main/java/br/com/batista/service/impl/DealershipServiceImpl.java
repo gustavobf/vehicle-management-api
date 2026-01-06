@@ -8,6 +8,7 @@ import br.com.batista.exception.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
@@ -15,16 +16,11 @@ import org.springframework.stereotype.*;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class DealershipServiceImpl implements DealershipService {
 
     private final DealershipRepository dealershipRepository;
     private final CarRepository carRepository;
-
-    @Autowired
-    public DealershipServiceImpl (DealershipRepository dealershipRepository, CarRepository carRepository) {
-        this.dealershipRepository = dealershipRepository;
-        this.carRepository = carRepository;
-    }
 
     public PageResponse<DealershipResponse> getAll (Pageable pageable) {
         Page<Dealership> page = dealershipRepository.findAll(pageable);
