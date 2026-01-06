@@ -13,8 +13,8 @@ public final class ControllerConstants {
     public static final String MODEL_BASE_PATH = "/api/model";
     public static final String ORDER_BASE_PATH = "/api/order";
     public static final String AUTH_BASE_PATH = "/api/auth";
-    public static final String GET_ALL = "/getall";
-    public static final String GET_BY_ID = "/getbyid";
+    public static final String GET_ALL = "/get-all";
+    public static final String GET_BY_ID = "/get-by-id";
     public static final String CREATE = "/create";
     public static final String UPDATE = "/update";
     public static final String DELETE = "/delete";
