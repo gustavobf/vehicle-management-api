@@ -8,8 +8,9 @@ import br.com.batista.exception.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import jakarta.transaction.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
@@ -18,6 +19,8 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class ModelServiceImpl implements ModelService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ModelServiceImpl.class);
 
     private final ModelRepository modelRepository;
     private final CarRepository carRepository;
@@ -36,30 +39,47 @@ public class ModelServiceImpl implements ModelService {
         return ModelMapper.mapToModelResponseDto(this.getEntityById(id));
     }
 
+    @Transactional
     public ModelResponse create (final CreateModelRequest modelDTO) {
-        final Model model = ModelMapper.mapToModel(modelDTO);
-        final Model savedModel = modelRepository.save(model);
-        return ModelMapper.mapToModelResponseDto(savedModel);
-    }
-
-    public void delete (final Long id) {
-
-        Model model = modelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(id), "id"));
-
-        List<Car> cars = carRepository.findByModel(model);
-
-        if (!cars.isEmpty()) {
-            carRepository.deleteAll(cars);
+        try {
+            final Model model = ModelMapper.mapToModel(modelDTO);
+            final Model savedModel = modelRepository.save(model);
+            return ModelMapper.mapToModelResponseDto(savedModel);
+        } catch (Exception e) {
+            logger.error("Error creating model: {}", e.getMessage());
+            throw e;
         }
-
-        modelRepository.deleteById(id);
     }
 
+    @Transactional
+    public void delete (final Long id) {
+        try {
+            Model model = modelRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Model", String.valueOf(id), "id"));
+
+            List<Car> cars = carRepository.findByModel(model);
+
+            if (!cars.isEmpty()) {
+                carRepository.deleteAll(cars);
+            }
+
+            modelRepository.deleteById(id);
+        } catch (Exception e) {
+            logger.error("Error deleting model with id {}: {}", id, e.getMessage());
+            throw e;
+        }
+    }
+
+    @Transactional
     public ModelResponse update (final UpdateModelRequest modelDTO) {
-        final Model model = ModelMapper.mapToModel(modelDTO);
-        final Model savedModel = modelRepository.save(model);
-        return ModelMapper.mapToModelResponseDto(savedModel);
+        try {
+            final Model model = ModelMapper.mapToModel(modelDTO);
+            final Model savedModel = modelRepository.save(model);
+            return ModelMapper.mapToModelResponseDto(savedModel);
+        } catch (Exception e) {
+            logger.error("Error updating model: {}", e.getMessage());
+            throw e;
+        }
     }
 
 }

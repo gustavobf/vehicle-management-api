@@ -9,14 +9,17 @@ import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.security.utils.*;
 import br.com.batista.service.*;
+import jakarta.transaction.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private final OrderRepository orderRepository;
     private final UserService userService;
@@ -41,20 +44,31 @@ public class OrderServiceImpl implements OrderService {
         return OrderMapper.mapToResponse(this.getEntityById(id));
     }
 
+    @Transactional
     public OrderResponse newOrder (CreateOrderRequest dto) {
+        try {
+            Ad ad = adService.getEntityById(dto.getAdId());
 
-        Ad ad = adService.getEntityById(dto.getAdId());
+            User buyer = userService.getById(SecurityUtils.getLoggedUserId());
 
-        User buyer = userService.getById(SecurityUtils.getLoggedUserId());
+            Order saved = orderRepository.save(Order.create(ad, buyer));
 
-        Order saved = orderRepository.save(Order.create(ad, buyer));
-
-        return OrderMapper.mapToResponse(saved);
+            return OrderMapper.mapToResponse(saved);
+        } catch (Exception e) {
+            logger.error("Error creating new order: {}", e.getMessage());
+            throw e;
+        }
     }
 
+    @Transactional
     public void delete (Long id) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Order", String.valueOf(id), "id"));
-        orderRepository.delete(order);
+        try {
+            Order order = orderRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Order", String.valueOf(id), "id"));
+            orderRepository.delete(order);
+        } catch (Exception e) {
+            logger.error("Error deleting order with id {}: {}", id, e.getMessage());
+            throw e;
+        }
     }
 }

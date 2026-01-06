@@ -8,8 +8,9 @@ import br.com.batista.exception.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import jakarta.transaction.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
@@ -18,6 +19,8 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BrandServiceImpl.class);
 
     private final BrandRepository brandRepository;
     private final CarRepository carRepository;
@@ -36,29 +39,48 @@ public class BrandServiceImpl implements BrandService {
         return BrandMapper.mapToBrandResponseDto(this.getEntityById(id));
     }
 
+    @Transactional
     public BrandResponse create (final CreateBrandRequest brandDTO) {
-        final Brand brand = BrandMapper.mapToBrand(brandDTO);
-        final Brand savedBrand = brandRepository.save(brand);
-        return BrandMapper.mapToBrandResponseDto(savedBrand);
-    }
-
-    public void delete (final Long id) {
-        Brand brand = brandRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(id), "id"));
-
-        List<Car> cars = carRepository.findByBrand(brand);
-
-        if (!cars.isEmpty()) {
-            carRepository.deleteAll(cars);
+        try {
+            final Brand brand = BrandMapper.mapToBrand(brandDTO);
+            final Brand savedBrand = brandRepository.save(brand);
+            logger.info("Created Brand: {}", savedBrand);
+            return BrandMapper.mapToBrandResponseDto(savedBrand);
+        } catch (Exception e) {
+            logger.error("Error creating Brand: {}", e.getMessage());
+            throw e;
         }
-
-        brandRepository.deleteById(brand.getId());
     }
 
+    @Transactional
+    public void delete (final Long id) {
+        try {
+            Brand brand = brandRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Brand", String.valueOf(id), "id"));
+
+            List<Car> cars = carRepository.findByBrand(brand);
+
+            if (!cars.isEmpty()) {
+                carRepository.deleteAll(cars);
+            }
+
+            brandRepository.deleteById(brand.getId());
+        } catch (Exception e) {
+            logger.error("Error deleting Brand with id {}: {}", id, e.getMessage());
+            throw e;
+        }
+    }
+
+    @Transactional
     public BrandResponse update (final UpdateBrandRequest brandDTO) {
-        final Brand brand = BrandMapper.mapToBrand(brandDTO);
-        final Brand savedBrand = brandRepository.save(brand);
-        return BrandMapper.mapToBrandResponseDto(savedBrand);
+        try {
+            final Brand brand = BrandMapper.mapToBrand(brandDTO);
+            final Brand savedBrand = brandRepository.save(brand);
+            return BrandMapper.mapToBrandResponseDto(savedBrand);
+        } catch (Exception e) {
+            logger.error("Error updating Brand: {}", e.getMessage());
+            throw e;
+        }
     }
 
 }

@@ -8,14 +8,17 @@ import br.com.batista.exception.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import jakarta.transaction.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 @Service
 @RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AdServiceImpl.class);
 
     private final AdRepository adRepository;
     private final CarService carService;
@@ -40,31 +43,49 @@ public class AdServiceImpl implements AdService {
         return AdMapper.mapToAdResponseDto(this.getEntityById(id));
     }
 
+    @Transactional
     public AdResponse create (CreateAdRequest adDTO) {
-        Car car = carService.getEntityById(adDTO.getCarId());
-        User user = userService.getById(adDTO.getUserId());
-        Ad savedAd = adRepository.save(Ad.create(adDTO, car, user));
-        return AdMapper.mapToAdResponseDto(savedAd);
+        try {
+            Car car = carService.getEntityById(adDTO.getCarId());
+            User user = userService.getById(adDTO.getUserId());
+            Ad savedAd = adRepository.save(Ad.create(adDTO, car, user));
+            return AdMapper.mapToAdResponseDto(savedAd);
+        } catch (Exception e) {
+            logger.error("Error creating Ad: {}", e.getMessage());
+            throw e;
+        }
     }
 
+    @Transactional
     public AdResponse update (UpdateAdRequest adDTO) {
-        Ad existingAd = this.getEntityById(adDTO.getId());
-        Car car = carService.getEntityById(adDTO.getCarId());
-        User user = userService.getById(adDTO.getUserId());
+        try {
+            Ad existingAd = this.getEntityById(adDTO.getId());
+            Car car = carService.getEntityById(adDTO.getCarId());
+            User user = userService.getById(adDTO.getUserId());
 
-        existingAd.setActive(adDTO.isActive());
-        existingAd.setDescription(adDTO.getDescription());
-        existingAd.setPrice(adDTO.getPrice());
-        existingAd.setCar(car);
-        existingAd.setUser(user);
+            existingAd.setActive(adDTO.isActive());
+            existingAd.setDescription(adDTO.getDescription());
+            existingAd.setPrice(adDTO.getPrice());
+            existingAd.setCar(car);
+            existingAd.setUser(user);
 
-        Ad updatedAd = adRepository.save(existingAd);
-        return AdMapper.mapToAdResponseDto(updatedAd);
+            Ad updatedAd = adRepository.save(existingAd);
+            return AdMapper.mapToAdResponseDto(updatedAd);
+        } catch (Exception e) {
+            logger.error("Error updating Ad with id {}: {}", adDTO.getId(), e.getMessage());
+            throw e;
+        }
     }
 
+    @Transactional
     public void delete (Long id) {
-        Ad ad = adRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Ad", String.valueOf(id), "id"));
-        adRepository.delete(ad);
+        try {
+            Ad ad = adRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Ad", String.valueOf(id), "id"));
+            adRepository.delete(ad);
+        } catch (Exception e) {
+            logger.error("Error deleting Ad with id {}: {}", id, e.getMessage());
+            throw e;
+        }
     }
 }

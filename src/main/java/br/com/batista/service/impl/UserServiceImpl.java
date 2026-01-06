@@ -4,14 +4,17 @@ import br.com.batista.entity.User;
 import br.com.batista.exception.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import jakarta.transaction.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
 
@@ -28,7 +31,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByEmail(email);
     }
 
+    @Transactional
     public User save (User user) {
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            logger.error("Error saving user: {}", e.getMessage());
+            throw e;
+        }
     }
 }

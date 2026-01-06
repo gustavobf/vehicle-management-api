@@ -8,15 +8,18 @@ import br.com.batista.exception.*;
 import br.com.batista.mapper.*;
 import br.com.batista.repository.*;
 import br.com.batista.service.*;
+import jakarta.transaction.*;
 import jakarta.validation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 @Service
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CarServiceImpl.class);
 
     private final CarRepository carRepository;
     private final ModelService modelService;
@@ -37,33 +40,51 @@ public class CarServiceImpl implements CarService {
                 .orElseThrow(() -> new ResourceNotFoundException("Car", String.valueOf(id), "id"));
     }
 
+    @Transactional
     public CarResponse create (final @Valid CreateCarRequest carDTO) {
-        final Car car = CarMapper.mapToCar(carDTO);
+        try {
+            final Car car = CarMapper.mapToCar(carDTO);
 
-        Brand brand = brandService.getEntityById(carDTO.getBrandId());
+            Brand brand = brandService.getEntityById(carDTO.getBrandId());
 
-        Model model = modelService.getEntityById(carDTO.getModelId());
+            Model model = modelService.getEntityById(carDTO.getModelId());
 
-        Dealership dealership = dealershipService.getEntityById(carDTO.getDealershipId());
+            Dealership dealership = dealershipService.getEntityById(carDTO.getDealershipId());
 
-        car.setBrand(brand);
-        car.setModel(model);
-        car.setDealership(dealership);
+            car.setBrand(brand);
+            car.setModel(model);
+            car.setDealership(dealership);
 
-        final Car savedCar = carRepository.save(car);
-        return CarMapper.mapToCarResponseDTO(savedCar);
+            final Car savedCar = carRepository.save(car);
+            return CarMapper.mapToCarResponseDTO(savedCar);
+        } catch (Exception e) {
+            logger.error("Error creating Car: {}", e.getMessage());
+            throw e;
+        }
     }
 
+    @Transactional
     public void delete (final Long id) {
-        Car savedCar = carRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Car", String.valueOf(id), "id"));
-        carRepository.deleteById(savedCar.getId());
+        try {
+            Car savedCar = carRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Car", String.valueOf(id), "id"));
+            carRepository.deleteById(savedCar.getId());
+        } catch (Exception e) {
+            logger.error("Error deleting Car: {}", e.getMessage());
+            throw e;
+        }
     }
 
+    @Transactional
     public CarResponse update (final UpdateCarRequest carDTO) {
-        final Car car = CarMapper.mapToCar(carDTO);
-        final Car savedCar = carRepository.save(car);
-        return CarMapper.mapToCarResponseDTO(savedCar);
+        try {
+            final Car car = CarMapper.mapToCar(carDTO);
+            final Car savedCar = carRepository.save(car);
+            return CarMapper.mapToCarResponseDTO(savedCar);
+        } catch (Exception e) {
+            logger.error("Error updating Car: {}", e.getMessage());
+            throw e;
+        }
     }
 
 }

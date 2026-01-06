@@ -1,3 +1,5 @@
 spring:
+  application:
+    name: vehicle-management
   profiles:
     active: ${APP_PROFILE}

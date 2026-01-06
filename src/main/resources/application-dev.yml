@@ -26,8 +26,15 @@ jwt:
 springdoc:
   swagger-ui:
     operationsSorter: alpha
+    path: /swagger-ui.html
+    filter: true
+  api-docs:
+    path: /v3/api-docs
 
 logging:
   level:
     org.hibernate.orm.connections.pooling: warn
     org.hibernate.engine.transaction.jta.platform.internal: warn
+
+server:
+  port: 8080
